@@ -39,18 +39,18 @@ bool findPath(vector<vector<int>>& grid, Point src, Point dst) {
     visited[src.x][src.y] = true;
     bool found = false;
 
-    // Quá trình lan tỏa
+    // Quá trình spreading
     while (!q.empty()) {
         Point curr = q.front();
         q.pop();
 
-        // Nếu chạm đích T thì dừng lại
+        // Nếu chạm T thì stop
         if (curr.x == dst.x && curr.y == dst.y) {
             found = true;
             break;
         }
 
-        // Thử loang ra 4 hướng xung quanh
+        //Spread ra 4 hướng xung quanh
         for (int i = 0; i < 4; i++) {
             int nx = curr.x + dx[i];
             int ny = curr.y + dy[i];
@@ -60,7 +60,7 @@ bool findPath(vector<vector<int>>& grid, Point src, Point dst) {
                 grid[nx][ny] != OBSTACLE && !visited[nx][ny]) {
                 
                 visited[nx][ny] = true;
-                parent[nx][ny] = curr; // Lưu lại ô trước đó
+                parent[nx][ny] = curr; // Lưu lại ô trước 
                 q.push({nx, ny});
             }
         }
