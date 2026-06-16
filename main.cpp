@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <fstream>
+#include <chrono>
 
 using namespace std;
 
@@ -79,24 +81,54 @@ bool findPath(vector<vector<int>>& grid, Point src, Point dst) {
 }
 
 int main() {
-    int rows = 10, cols = 10;
+    ifstream inputFile("chip_layout.txt");
+    if (!inputFile.is_open()) {
+        cout << "[ERROR] Can't open file, check the location of the file" << endl;
+        return 1;
+    }
+
+    int rows, cols;
+    inputFile >> rows >> cols;
     vector<vector<int>> chipGrid(rows, vector<int>(cols, EMPTY));
+    Point src, dst;
 
-    // Đặt tường chắn và điểm S, T
-    chipGrid[3][4] = OBSTACLE; chipGrid[4][4] = OBSTACLE; chipGrid[5][4] = OBSTACLE; chipGrid[3][5] = OBSTACLE;
-    chipGrid[6][4] = OBSTACLE; chipGrid[6][5] = OBSTACLE; chipGrid[6][6] = OBSTACLE; chipGrid[6][7] = OBSTACLE;
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            char ch;
+            inputFile >> ch;
+            if (ch == '#') {
+                chipGrid[i][j] = OBSTACLE;
+            } else if (ch == 'S') {
+                chipGrid[i][j] = START;
+                src = {i, j}; // Tự động lấy tọa độ xuất phát
+            } else if (ch == 'T') {
+                chipGrid[i][j] = TARGET;
+                dst = {i, j}; // Tự động lấy tọa độ đích
+            }
+        }
+    }
 
-    Point src = {4, 2}; Point dst = {4, 7};
-    chipGrid[src.x][src.y] = START; chipGrid[dst.x][dst.y] = TARGET;
+    inputFile.close();
 
+    cout << "\n" << endl;
     printGrid(chipGrid);
 
-    if (findPath(chipGrid, src, dst)) {
-        cout << "" << endl;
+    auto startTime = chrono::high_resolution_clock::now();
+    
+    bool result = findPath(chipGrid, src, dst);
+    
+    auto stopTime = chrono::high_resolution_clock::now();
+    auto duration = chrono::duration_cast<chrono::microseconds>(stopTime - startTime);
+
+    cout << "\n" << endl;
+    if (result) {
         printGrid(chipGrid);
+        cout << "\n[Success]" << endl;
     } else {
-        cout << "Routing Failed" << endl;
+        cout << "\n[Failed]" << endl;
     }
+
+    cout << "Runtime: " << duration.count() << " microseconds." << endl;
 
     return 0;
 }
