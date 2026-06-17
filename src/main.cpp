@@ -3,6 +3,8 @@
 #include <map>
 #include <fstream>
 #include "AStar2D.hpp"
+#include "IRouter.hpp"
+#include "BFS2D.hpp"
 
 void printGrid(const std::vector<std::vector<std::string>>& grid) {
     for (const auto& row : grid) {
@@ -48,20 +50,24 @@ int main() {
     printGrid(grid);
     std::cout << "\n" << std::endl;
 
+    IRouter* router = new BFS2D();
+
     auto start_time = std::chrono::high_resolution_clock::now();
 
     for (const auto& net : netList) {
         std::string symbol = "o" + net.name.substr(3); 
         
-        if (AStarRouter::route(grid, net.src, net.dst, symbol)) {
-            std::cout << "[SUCCESS] " << net.name << " routed successfully." << std::endl;
+        if (router->route(grid, net.src, net.dst, symbol)) {
+            std::cout << "[SUCCESS] " << net.name << " routed successfully" << std::endl;
         } else {
-            std::cout << "[FAIL] " << net.name << " is blocked!" << std::endl;
+            std::cout << "[FAIL] " << net.name << " is blocked" << std::endl;
         }
     }
 
     auto end_time = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
+
+    delete router;
 
     std::cout << "\n" << std::endl;
     printGrid(grid);

@@ -1,13 +1,11 @@
 #ifndef ASTAR_2D_HPP
 #define ASTAR_2D_HPP
 
+#include "IRouter.hpp" 
 #include <vector>
 #include <queue>
 #include <cmath>
 #include <string>
-
-struct Point { int x, y; };
-struct Net { std::string name; Point src, dst; };
 
 struct Node {
     Point p;
@@ -15,13 +13,14 @@ struct Node {
     bool operator>(const Node& other) const { return f > other.f; }
 };
 
-class AStarRouter {
-public:
-    static int getManhattan(Point a, Point b) {
+class AStar2D : public IRouter {
+private:
+    int getManhattan(Point a, Point b) {
         return std::abs(a.x - b.x) + std::abs(a.y - b.y);
     }
 
-    static bool route(std::vector<std::vector<std::string>>& grid, Point src, Point dst, std::string symbol) {
+public:
+    bool route(std::vector<std::vector<std::string>>& grid, Point src, Point dst, std::string symbol) override {
         int rows = grid.size(), cols = grid[0].size();
         std::priority_queue<Node, std::vector<Node>, std::greater<Node>> pq;
         std::vector<std::vector<int>> gScore(rows, std::vector<int>(cols, 1e9));
