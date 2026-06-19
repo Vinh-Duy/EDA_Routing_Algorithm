@@ -6,6 +6,7 @@
 #include <chrono>
 #include "IRouter3D.hpp" 
 #include "AStar3D.hpp"
+#include "BFS3D.hpp"
 
 void printGrid(const std::vector<std::vector<std::vector<std::string>>>& grid) {
     for (size_t z = 0; z < grid.size(); ++z) {
