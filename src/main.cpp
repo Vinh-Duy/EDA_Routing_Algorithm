@@ -3,7 +3,7 @@
 #include <map>
 #include <fstream>
 #include "AStar2D.hpp"
-#include "IRouter.hpp"
+#include "IRouter2D.hpp"
 #include "BFS2D.hpp"
 
 void printGrid(const std::vector<std::vector<std::string>>& grid) {
@@ -50,7 +50,7 @@ int main() {
     printGrid(grid);
     std::cout << "\n" << std::endl;
 
-    IRouter* router = new BFS2D();
+    IRouter2D* router = new BFS2D();
 
     auto start_time = std::chrono::high_resolution_clock::now();
 

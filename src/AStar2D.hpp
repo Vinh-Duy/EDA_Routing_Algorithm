@@ -1,7 +1,7 @@
 #ifndef ASTAR_2D_HPP
 #define ASTAR_2D_HPP
 
-#include "IRouter.hpp" 
+#include "IRouter2D.hpp" 
 #include <vector>
 #include <queue>
 #include <cmath>
@@ -13,7 +13,7 @@ struct Node {
     bool operator>(const Node& other) const { return f > other.f; }
 };
 
-class AStar2D : public IRouter {
+class AStar2D : public IRouter2D {
 private:
     int getManhattan(Point a, Point b) {
         return std::abs(a.x - b.x) + std::abs(a.y - b.y);

@@ -1,10 +1,10 @@
 #ifndef BFS_2D_HPP
 #define BFS_2D_HPP
 
-#include "IRouter.hpp"
+#include "IRouter2D.hpp"
 #include <queue>
 
-class BFS2D : public IRouter {
+class BFS2D : public IRouter2D {
 public:
     bool route(std::vector<std::vector<std::string>>& grid, Point src, Point dst, std::string symbol) override {
         int rows = grid.size(), cols = grid[0].size();
