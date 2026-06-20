@@ -72,19 +72,39 @@ int main() {
 
     std::cout << "" << std::endl;
     printGrid(grid);
+
     IRouter3D* router = new AStar3D(); 
 
     auto start_time = std::chrono::high_resolution_clock::now();
 
+    std::ofstream jsonFile("output.json");
+    jsonFile << "{\n  \"nets\": [\n";
+    bool firstNet = true;
+
     for (const auto& net : netList) {
         std::string symbol = "o" + net.name.substr(3); 
+        std::vector<Point3D> path;
         
-        if (router->route(grid, net.src, net.dst, symbol)) {
+        // Thêm 'path' vào hàm route
+        if (router->route(grid, net.src, net.dst, symbol, path)) {
             std::cout << "[SUCCESS] " << net.name << " routed successfully." << std::endl;
+            
+            // Ghi mảng toạ độ vào JSON
+            if (!firstNet) jsonFile << ",\n";
+            jsonFile << "    {\n      \"name\": \"" << net.name << "\",\n      \"path\": [";
+            for (size_t i = 0; i < path.size(); ++i) {
+                jsonFile << "{\"z\":" << path[i].z << ", \"x\":" << path[i].x << ", \"y\":" << path[i].y << "}";
+                if (i < path.size() - 1) jsonFile << ", ";
+            }
+            jsonFile << "]\n    }";
+            firstNet = false;
         } else {
             std::cout << "[FAIL] " << net.name << " is blocked!" << std::endl;
         }
     }
+    
+    jsonFile << "\n  ]\n}\n";
+    jsonFile.close();
 
     auto end_time = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
