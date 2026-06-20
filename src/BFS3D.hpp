@@ -6,7 +6,7 @@
 
 class BFS3D : public IRouter3D {
 public:
-    bool route(std::vector<std::vector<std::vector<std::string>>>& grid, Point3D src, Point3D dst, std::string symbol) override {
+    bool route(std::vector<std::vector<std::vector<std::string>>>& grid, Point3D src, Point3D dst, std::string symbol, std::vector<Point3D>& path) override {
         int layers = grid.size();
         int rows = grid[0].size();
         int cols = grid[0][0].size();
@@ -46,10 +46,11 @@ public:
             }
         }
 
-        if (!found) return false;
+        path.push_back(dst); // Lưu điểm đích
 
         Point3D cp = parent[dst.z][dst.x][dst.y];
         while (!(cp.z == src.z && cp.x == src.x && cp.y == src.y)) {
+            path.push_back(cp); // Lưu các điểm trên đường đi
             // Nếu phát hiện nhảy layer (xuyên tầng), đánh dấu là VIA (V)
             if (cp.z != parent[cp.z][cp.x][cp.y].z) {
                 grid[cp.z][cp.x][cp.y] = "V"; 
@@ -58,6 +59,9 @@ public:
             }
             cp = parent[cp.z][cp.x][cp.y];
         }
+        
+        path.push_back(src); // 3. Lưu điểm xuất phát
+        
         return true;
     }
 };

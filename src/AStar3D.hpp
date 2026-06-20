@@ -22,7 +22,7 @@ private:
     }
 
 public:
-    bool route(std::vector<std::vector<std::vector<std::string>>>& grid, Point3D src, Point3D dst, std::string symbol) override {
+    bool route(std::vector<std::vector<std::vector<std::string>>>& grid, Point3D src, Point3D dst, std::string symbol, std::vector<Point3D>& path) override {
         int layers = grid.size();
         int rows = grid[0].size();
         int cols = grid[0][0].size();
@@ -43,15 +43,18 @@ public:
 
             if (curr.p.z == dst.z && curr.p.x == dst.x && curr.p.y == dst.y) {
                 Point3D cp = parent[dst.z][dst.x][dst.y];
+                path.push_back(dst); // Lưu điểm đích
                 while (!(cp.z == src.z && cp.x == src.x && cp.y == src.y)) {
-                    // Nếu là đoạn xuyên tầng (khác layer với ô parent), ta có thể in ký hiệu "V" cho VIA
+                    path.push_back(cp); // Lưu các điểm trên đường đi
+
                     if (cp.z != parent[cp.z][cp.x][cp.y].z) {
-                        grid[cp.z][cp.x][cp.y] = "V"; // Đánh dấu VIA
+                        grid[cp.z][cp.x][cp.y] = "V"; 
                     } else {
                         grid[cp.z][cp.x][cp.y] = symbol;
                     }
                     cp = parent[cp.z][cp.x][cp.y];
                 }
+                path.push_back(src); // Lưu điểm xuất phát
                 return true;
             }
 
