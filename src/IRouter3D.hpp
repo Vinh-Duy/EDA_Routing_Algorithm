@@ -9,7 +9,7 @@ struct Net3D { std::string name; Point3D src, dst; };
 
 class IRouter3D {
 public:
-    virtual bool route(std::vector<std::vector<std::vector<std::string>>>& grid, Point3D src, Point3D dst, std::string symbol) = 0;
+    virtual bool route(std::vector<std::vector<std::vector<std::string>>>& grid, Point3D src, Point3D dst, std::string symbol, std::vector<Point3D>& path) = 0;
     virtual ~IRouter3D() {} 
 };
 
