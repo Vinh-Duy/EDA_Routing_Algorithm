@@ -24,7 +24,7 @@ void printGrid(const std::vector<std::vector<std::vector<std::string>>>& grid) {
 }
 
 int main() {
-    std::ifstream inputFile("data/chip_layout_complex.txt");
+    std::ifstream inputFile("data/chip_layout_test.txt");
     if (!inputFile.is_open()) {
         std::cout << "[ERROR] Can not find layout file" << std::endl;
         return 1;
