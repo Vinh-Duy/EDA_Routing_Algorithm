@@ -57,6 +57,7 @@ public:
                     cp = parent[cp.z][cp.x][cp.y];
                 }
                 path.push_back(src);
+                std::reverse(path.begin(), path.end());
                 return true;
             }
 
@@ -87,7 +88,7 @@ public:
                         if (newG < gScore[nz][nx][ny]) {
                             gScore[nz][nx][ny] = newG;
                             parent[nz][nx][ny] = curr.p;
-                            pq.push({{nz, nx, ny}, newG, getHeuristic({nz, nx, ny}, dst)});
+                            pq.push({{nz, nx, ny}, newG, newG + getHeuristic({nz, nx, ny}, dst)});
                         }
                     }
                 }
