@@ -77,32 +77,73 @@ int main() {
 
     auto start_time = std::chrono::high_resolution_clock::now();
 
-    std::ofstream jsonFile("output.json");
-    jsonFile << "{\n  \"nets\": [\n";
-    bool firstNet = true;
+    // Khởi tạo lưới lưu trữ chi phí phạt
+    std::vector<std::vector<std::vector<int>>> penaltyGrid(layers, std::vector<std::vector<int>>(rows, std::vector<int>(cols, 0)));
+    
+    int maxIterations = 10;
+    bool hasConflicts = true;
+    std::vector<std::vector<Point3D>> finalPaths(netList.size()); // Lưu toạ độ xuất ra JSON
 
-    for (const auto& net : netList) {
-        std::string symbol = "o" + net.name.substr(3); 
-        std::vector<Point3D> path;
+    for (int iter = 1; iter <= maxIterations && hasConflicts; ++iter) {
+        std::cout << "\n--- RIP-UP & REROUTE ITERATION " << iter << " ---" << std::endl;
+        hasConflicts = false;
         
-        // Thêm 'path' vào hàm route
-        if (router->route(grid, net.src, net.dst, symbol, path)) {
-            std::cout << "[SUCCESS] " << net.name << " routed successfully." << std::endl;
-            
-            // Ghi mảng toạ độ vào JSON
-            if (!firstNet) jsonFile << ",\n";
-            jsonFile << "    {\n      \"name\": \"" << net.name << "\",\n      \"path\": [";
-            for (size_t i = 0; i < path.size(); ++i) {
-                jsonFile << "{\"z\":" << path[i].z << ", \"x\":" << path[i].x << ", \"y\":" << path[i].y << "}";
-                if (i < path.size() - 1) jsonFile << ", ";
+        // Rip-up toàn bộ dây hiện tại, chỉ giữ lại chân Pin và Vật cản
+        for (int z = 0; z < layers; ++z) {
+            for (int x = 0; x < rows; ++x) {
+                for (int y = 0; y < cols; ++y) {
+                    if (grid[z][x][y].find("o") == 0 || grid[z][x][y] == "V" || grid[z][x][y] == "X") {
+                        grid[z][x][y] = ".";
+                    }
+                }
             }
-            jsonFile << "]\n    }";
-            firstNet = false;
+        }
+
+        // Bắt đầu Reroute từng Net
+        for (size_t i = 0; i < netList.size(); ++i) {
+            std::string symbol = "o" + netList[i].name.substr(3); 
+            std::vector<Point3D> currentPath;
+            
+            router->route(grid, netList[i].src, netList[i].dst, symbol, currentPath, penaltyGrid);
+            finalPaths[i] = currentPath;
+        }
+
+        // Kiểm tra xung đột (Dấu X) và tăng Penalty
+        for (int z = 0; z < layers; ++z) {
+            for (int x = 0; x < rows; ++x) {
+                for (int y = 0; y < cols; ++y) {
+                    if (grid[z][x][y] == "X") {
+                        hasConflicts = true;
+                        penaltyGrid[z][x][y] += 50; // Tăng điểm phạt để vòng sau chúng nó né ô này ra
+                    }
+                }
+            }
+        }
+
+        if (!hasConflicts) {
+            std::cout << "[SUCCESS] 100% Routed without conflicts after " << iter << " iterations." << std::endl;
         } else {
-            std::cout << "[FAIL] " << net.name << " is blocked!" << std::endl;
+            std::cout << "[WARNING] Conflicts detected! Adjusting penalties and re-routing..." << std::endl;
         }
     }
-    
+
+    std::ofstream jsonFile("output.json");
+    jsonFile << "{\n  \"nets\": [\n";
+    for (size_t i = 0; i < netList.size(); ++i) {
+        if (i > 0) jsonFile << ",\n";
+        jsonFile << "    {\n      \"name\": \"" << netList[i].name << "\",\n      \"path\": [";
+        for (size_t j = 0; j < finalPaths[i].size(); ++j) {
+            jsonFile << "{\"z\":" << finalPaths[i][j].z << ", \"x\":" << finalPaths[i][j].x << ", \"y\":" << finalPaths[i][j].y << "}";
+            if (j < finalPaths[i].size() - 1) jsonFile << ", ";
+        }
+        jsonFile << "]\n    }";
+        
+        if (!finalPaths[i].empty()) {
+            std::cout << "[SUCCESS] " << netList[i].name << " routed successfully." << std::endl;
+        } else {
+            std::cout << "[FAIL] " << netList[i].name << " is blocked completely!" << std::endl;
+        }
+    }
     jsonFile << "\n  ]\n}\n";
     jsonFile.close();
 
