@@ -22,7 +22,7 @@ private:
     }
 
 public:
-    bool route(std::vector<std::vector<std::vector<std::string>>>& grid, Point3D src, Point3D dst, std::string symbol, std::vector<Point3D>& path) override {
+    bool route(std::vector<std::vector<std::vector<std::string>>>& grid, Point3D src, Point3D dst, std::string symbol, std::vector<Point3D>& path, std::vector<std::vector<std::vector<int>>>& penaltyGrid) override {
         int layers = grid.size();
         int rows = grid[0].size();
         int cols = grid[0][0].size();
@@ -47,14 +47,16 @@ public:
                 while (!(cp.z == src.z && cp.x == src.x && cp.y == src.y)) {
                     path.push_back(cp); // Lưu các điểm trên đường đi
 
-                    if (cp.z != parent[cp.z][cp.x][cp.y].z) {
+                    if (grid[cp.z][cp.x][cp.y] != "." && grid[cp.z][cp.x][cp.y] != "V" && grid[cp.z][cp.x][cp.y] != symbol) {
+                        grid[cp.z][cp.x][cp.y] = "X"; // Xung đột
+                    } else if (cp.z != parent[cp.z][cp.x][cp.y].z) {
                         grid[cp.z][cp.x][cp.y] = "V"; 
                     } else {
                         grid[cp.z][cp.x][cp.y] = symbol;
                     }
                     cp = parent[cp.z][cp.x][cp.y];
                 }
-                path.push_back(src); // Lưu điểm xuất phát
+                path.push_back(src);
                 return true;
             }
 
@@ -64,16 +66,28 @@ public:
                 int ny = curr.p.y + dy[i];
 
                 if (nz >= 0 && nz < layers && nx >= 0 && nx < rows && ny >= 0 && ny < cols) {
-                    if (grid[nz][nx][ny] == "." || (nz == dst.z && nx == dst.x && ny == dst.y)) {
+                    std::string cell = grid[nz][nx][ny];
+                    
+                    // Cho phép đi vào '.' (trống), 'V' (Via), 'o...' (dây của thằng khác) hoặc đích. 
+                    // KHÔNG cho phép đi vào '#' (vật cản cứng) hoặc chân PIN (S/T) của thằng khác.
+                    bool canMove = (cell == "." || cell == "V" || cell.find("o") == 0 || cell == "X" || (nz == dst.z && nx == dst.x && ny == dst.y));
 
-                        // Tính cost: Nếu thay đổi Z (i >= 4) thì cộng VIA_COST, ngược lại cộng 1
-                        int moveCost = (i >= 4) ? VIA_COST : 1; 
-                        int nextG = curr.g + moveCost;
+                    if (canMove) {
+                        int stepCost = 1; // Base cost
+                        if (nz != curr.p.z) stepCost += 5; // VIA penalty
+                        
+                        // Nếu dẫm lên dây của thằng khác, phạt nặng (100) + penaltyGrid
+                        if (cell != "." && cell != "V" && cell != symbol && !(nz == dst.z && nx == dst.x && ny == dst.y)) {
+                            stepCost += 100; 
+                        }
+                        
+                        stepCost += penaltyGrid[nz][nx][ny]; // Cộng thêm điểm phạt từ lịch sử Rip-up
 
-                        if (nextG < gScore[nz][nx][ny]) {
-                            gScore[nz][nx][ny] = nextG;
+                        int newG = curr.g + stepCost;
+                        if (newG < gScore[nz][nx][ny]) {
+                            gScore[nz][nx][ny] = newG;
                             parent[nz][nx][ny] = curr.p;
-                            pq.push({{nz, nx, ny}, nextG, nextG + getHeuristic({nz, nx, ny}, dst)});
+                            pq.push({{nz, nx, ny}, newG, getHeuristic({nz, nx, ny}, dst)});
                         }
                     }
                 }
