@@ -70,7 +70,8 @@ public:
             cp = parent[cp.z][cp.x][cp.y];
         }
         
-        path.push_back(src); // Lưu điểm xuất phát
+        path.push_back(src);
+        std::reverse(path.begin(), path.end());
         
         return true;
     }
