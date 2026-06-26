@@ -9,9 +9,9 @@ A high-performance **Multi-layer (3D) VLSI routing framework** implemented in C+
     EDA-Router/
     ├── data/                 # Benchmark chip layouts (2D & 3D Multi-layer .txt)
     ├── src/
-    │   ├── main.cpp          # System entry point, auto-parser & orchestration
+    │   ├── main.cpp          # System entry point, auto-parser & Rip-up & Reroute orchestration
     │   ├── IRouter3D.hpp     # Universal 3D Interface definition (Strategy Pattern)
-    │   ├── AStar3D.hpp       # 3D A* search with VIA penalty heuristic
+    │   ├── AStar3D.hpp       # 3D A* search with VIA penalty heuristic & congestion awareness
     │   └── BFS3D.hpp         # 3D Breadth-First Search implementation
     ├── visualize.py          # Python 3D interactive visualization script
     └── README.md
@@ -20,9 +20,10 @@ A high-performance **Multi-layer (3D) VLSI routing framework** implemented in C+
 
 ## Core Features
 
+* **Congestion-Driven Routing (Rip-up and Reroute):** Implemented a robust negotiation-based routing engine using a dynamic `penaltyGrid`. It automatically resolves short-circuits and overlaps by penalizing congested areas, forcing subsequent nets to find alternative paths or switch layers.
 * **Universal 3D Routing Architecture:** The core grid and coordinate systems (`Point3D {z, x, y}`) seamlessly handle both single-layer (2D) and multi-layer (3D) chip layouts. The system dynamically auto-detects the dimensionality from the benchmark files.
 * **3D Interactive Visualization:** Integrated a Python-based Plotly frontend that reads generated JSON coordinates (`output.json`) from the C++ backend. It renders fully interactive, 3D multi-layer routing paths and VIA (vertical interconnect access) intersections in the browser.
-* **Advanced Cost Metrics (VIA Penalty):** The A* implementation incorporates a sophisticated 3D heuristic that mathematically penalizes cross-layer transitions (VIAs). This optimizes routing logic to mimic real-world semiconductor manufacturing constraints.
+* **Advanced Cost Metrics (VIA & Conflict Penalty):** The A* implementation incorporates a sophisticated 3D heuristic that mathematically penalizes cross-layer transitions (VIAs) and dynamically avoids conflicting routes. This optimizes routing logic to mimic real-world semiconductor manufacturing constraints.
 * **Extensible Architecture:** Implements the Strategy Pattern (`IRouter3D` interface), allowing seamless integration of new routing algorithms without modifying the core parsing and orchestration logic.
 * **Automated Data Processing:** Dynamically parses grid layouts, automatically maps multi-net connectivity (Source-Target pairs), and handles boundary checking across metal layers.
 * **Performance Benchmarking:** Integrated with `<chrono>` to provide microsecond-level (µs) execution time analysis, proving the efficiency of heuristic searches versus brute-force algorithms.
@@ -58,8 +59,8 @@ From the root directory, follow these steps to compile the algorithm and visuali
 
 ## Future Roadmap
 
-* **Congestion-Driven Routing (Rip-up and Reroute):** Implement negotiation-based routing to automatically resolve conflicts and short-circuits when multiple nets attempt to occupy the same grid spaces.
 * **Multi-Terminal Nets:** Extend the routing capability from simple 2-pin (Source-Target) connections to complex multi-pin subnets using Rectilinear Steiner Minimum Trees (RSMT).
+* **Design Rule Checking (DRC) Integration:** Implement pre-routing and post-routing verification to ensure strict spacing and width constraints are met across all metal layers.
 
 ---
 
