@@ -1,1 +1,7 @@
 router
+build/
+.venv/
+__pycache__/
+*.pyc
+**/routes/
+benchmarks/figures/*.html
