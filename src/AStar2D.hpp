@@ -21,7 +21,12 @@ private:
 
 public:
     bool route(std::vector<std::vector<std::string>>& grid, Point src, Point dst, std::string symbol) override {
-        int rows = grid.size(), cols = grid[0].size();
+        if (grid.empty() || grid[0].empty()) return false;
+        int rows = static_cast<int>(grid.size()), cols = static_cast<int>(grid[0].size());
+        for (const auto& row : grid) if (static_cast<int>(row.size()) != cols) return false;
+        auto legal = [&](Point p) { return p.x >= 0 && p.x < rows && p.y >= 0 && p.y < cols; };
+        if (!legal(src) || !legal(dst) || grid[src.x][src.y] == "#" || grid[dst.x][dst.y] == "#") return false;
+        if (src.x == dst.x && src.y == dst.y) return true;
         std::priority_queue<Node, std::vector<Node>, std::greater<Node>> pq;
         std::vector<std::vector<int>> gScore(rows, std::vector<int>(cols, 1e9));
         std::vector<std::vector<Point>> parent(rows, std::vector<Point>(cols, {-1, -1}));
@@ -34,6 +39,7 @@ public:
 
         while (!pq.empty()) {
             Node curr = pq.top(); pq.pop();
+            if (curr.g != gScore[curr.p.x][curr.p.y]) continue;
 
             if (curr.p.x == dst.x && curr.p.y == dst.y) {
                 Point cp = parent[dst.x][dst.y];

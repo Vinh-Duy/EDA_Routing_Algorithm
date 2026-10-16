@@ -7,7 +7,12 @@
 class BFS2D : public IRouter2D {
 public:
     bool route(std::vector<std::vector<std::string>>& grid, Point src, Point dst, std::string symbol) override {
-        int rows = grid.size(), cols = grid[0].size();
+        if (grid.empty() || grid[0].empty()) return false;
+        int rows = static_cast<int>(grid.size()), cols = static_cast<int>(grid[0].size());
+        for (const auto& row : grid) if (static_cast<int>(row.size()) != cols) return false;
+        auto legal = [&](Point p) { return p.x >= 0 && p.x < rows && p.y >= 0 && p.y < cols; };
+        if (!legal(src) || !legal(dst) || grid[src.x][src.y] == "#" || grid[dst.x][dst.y] == "#") return false;
+        if (src.x == dst.x && src.y == dst.y) return true;
         std::vector<std::vector<bool>> visited(rows, std::vector<bool>(cols, false));
         std::vector<std::vector<Point>> parent(rows, std::vector<Point>(cols, {-1, -1}));
         
