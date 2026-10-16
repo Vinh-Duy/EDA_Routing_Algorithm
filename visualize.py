@@ -1,55 +1,58 @@
+"""Plot ordered JSON routes, pins, obstacles, conflicts, and explicit VIA segments."""
+import argparse
 import json
+from pathlib import Path
 import plotly.graph_objects as go
+from plotly.colors import qualitative
+
+
+def build_figure(data):
+    fig = go.Figure()
+    for idx, net in enumerate(data.get('nets', [])):
+        path = net.get('path', [])  # Source-to-target order; never mutate input.
+        color = qualitative.Dark24[idx % len(qualitative.Dark24)]
+        name = net['name']
+        status = 'valid' if net.get('valid', bool(path)) else ('unrouted' if not path else 'conflicted/invalid')
+        coords = {axis: [p[axis] for p in path] for axis in ('x','y','z')}
+        fig.add_trace(go.Scatter3d(**coords, mode='lines', name=f'{name} ({status})',
+                                  line=dict(color=color, width=5, dash='solid' if status=='valid' else 'dash')))
+        for a,b in zip(path,path[1:]):
+            if a['z'] != b['z']:
+                fig.add_trace(go.Scatter3d(**{k:[a[k],b[k]] for k in ('x','y','z')},
+                    mode='lines+markers', name=f'{name} VIA', legendgroup=name, showlegend=False,
+                    line=dict(color=color,width=10), marker=dict(size=5,symbol='diamond',color=color),
+                    hovertemplate=f'{name} VIA<br>row=%{{x}}, col=%{{y}}, layer=%{{z}}<extra></extra>'))
+        source = net.get('source', path[0] if path else None)
+        target = net.get('target', path[-1] if path else None)
+        pins = [(p,label) for p,label in [(source,'S'),(target,'T')] if p is not None]
+        if pins:
+            fig.add_trace(go.Scatter3d(**{k:[p[k] for p,_ in pins] for k in ('x','y','z')},
+                mode='markers+text', text=[label+name.removeprefix('Net') for _,label in pins],
+                textposition='top center', marker=dict(size=6,color=color), showlegend=False, name=name+' pins'))
+    for key,color,symbol,size in [('obstacles','#777777','square',3),('conflicts','#ff0000','x',9)]:
+        points = [c['cell'] for c in data.get(key,[])] if key=='conflicts' else data.get(key,[])
+        if points:
+            fig.add_trace(go.Scatter3d(**{k:[p[k] for p in points] for k in ('x','y','z')},
+                mode='markers', name=key.title(), marker=dict(size=size,color=color,symbol=symbol,opacity=0.5)))
+    status = 'validated success' if data.get('success') else 'incomplete / legacy output'
+    fig.update_layout(title=f'Grid routing — {status}',
+        scene=dict(xaxis=dict(title='Row (x)',dtick=1), yaxis=dict(title='Column (y)',dtick=1),
+                   zaxis=dict(title='Layer (z)',dtick=1)), margin=dict(l=0,r=0,b=0,t=45))
+    return fig
+
 
 def main():
-    with open('output.json', 'r') as f:
-        data = json.load(f)
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--input', default='output.json')
+    parser.add_argument('--html', help='Write a self-contained interactive HTML figure')
+    parser.add_argument('--no-show', action='store_true', help='Do not open a browser')
+    args = parser.parse_args()
+    fig = build_figure(json.loads(Path(args.input).read_text()))
+    if args.html:
+        fig.write_html(args.html, include_plotlyjs=True)
+    if not args.no_show:
+        fig.show()
 
-    fig = go.Figure()
-    colors = ['#FF0000', '#00FF00', '#0000FF', '#FF00FF', '#00FFFF', '#FFA500']
 
-    for idx, net in enumerate(data['nets']):
-        name = net['name']
-        path = net['path']
-        
-        path.reverse() 
-        
-        x_vals = [p['x'] for p in path]
-        y_vals = [p['y'] for p in path]
-        z_vals = [p['z'] for p in path]
-        
-        color = colors[idx % len(colors)]
-
-        fig.add_trace(go.Scatter3d(
-            x=x_vals, y=y_vals, z=z_vals,
-            mode='lines+markers',
-            name=name,
-            line=dict(color=color, width=6),
-            marker=dict(size=4, color=color)
-        ))
-
-        fig.add_trace(go.Scatter3d(
-            x=[x_vals[0], x_vals[-1]],
-            y=[y_vals[0], y_vals[-1]],
-            z=[z_vals[0], z_vals[-1]],
-            mode='text',
-            text=[f'S{name[3:]}', f'T{name[3:]}'],
-            textposition="top center",
-            textfont=dict(size=14, color=color),
-            showlegend=False
-        ))
-
-    fig.update_layout(
-        title='3D VLSI Routing Visualization',
-        scene=dict(
-            xaxis=dict(title='Rows (X)', dtick=1),
-            yaxis=dict(title='Cols (Y)', dtick=1),
-            zaxis=dict(title='Layers (Z)', dtick=1),
-        ),
-        margin=dict(l=0, r=0, b=0, t=40)
-    )
-
-    fig.show()
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
