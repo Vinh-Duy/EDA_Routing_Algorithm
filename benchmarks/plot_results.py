@@ -22,10 +22,17 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--csv', type=Path, default=ROOT/'benchmarks/results.csv')
     parser.add_argument('--output-dir', type=Path, default=ROOT/'benchmarks/figures')
-    parser.add_argument('--route', type=Path, default=ROOT/'output.json')
+    parser.add_argument('--route', type=Path, help='Optional route JSON for a separate representative figure')
+    parser.add_argument('--format', choices=('png','svg','both'), default='both')
+    parser.add_argument('--report', type=Path, help='Summary Markdown destination (default: beside CSV)')
     args = parser.parse_args()
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    rows = list(csv.DictReader(args.csv.open()))
+    with args.csv.open() as file:
+        rows = list(csv.DictReader(file))
+    if not rows:
+        parser.error('CSV has no observations')
+    if args.route is not None and not args.route.is_file():
+        parser.error('Route JSON does not exist')
     grouped = defaultdict(list)
     for row in rows:
         grouped[(row['dataset'], row['algorithm'])].append(row)
@@ -73,8 +80,8 @@ def main():
         handles.append(Patch(facecolor='white',edgecolor='black',hatch='///',label='Routing failed (×); partial quality only'))
         ax.legend(handles=handles, loc='upper left', bbox_to_anchor=(0,1.16), ncol=4, frameon=False)
         fig.tight_layout()
-        fig.savefig(args.output_dir/f'{filename}.png',dpi=170)
-        fig.savefig(args.output_dir/f'{filename}.svg')
+        for extension in (('png','svg') if args.format=='both' else (args.format,)):
+            fig.savefig(args.output_dir/f'{filename}.{extension}',dpi=170)
         plt.close(fig)
     table = ['# Recorded benchmark measurements', '',
              'Generated from `results.csv`. Runtime is median / mean / sample standard deviation in ms. '
@@ -96,26 +103,32 @@ def main():
                          f"{r['routed_nets']}/{r['total_nets']} | {r['unresolved_conflicts']} | {r['wirelength']} | "
                          f"{r['via_count']} | {r['weighted_cost']} | {r['routing_passes']} | {r['nodes_expanded']} | "
                          f"{statistics.median(times):.6f} / {statistics.mean(times):.6f} / {sd:.6f} |")
-    (args.csv.parent/'RESULTS.md').write_text('\n'.join(table)+'\n')
+    report = args.report or args.csv.parent/'RESULTS.md'
+    report.write_text('\n'.join(table)+'\n')
     # A static, shareable route view complements the interactive Plotly HTML.
-    if args.route.exists():
+    if args.route is not None:
         data=json.loads(args.route.read_text())
         fig=plt.figure(figsize=(10,8)); ax=fig.add_subplot(111,projection='3d')
         for i,net in enumerate(data['nets']):
             path=net['path']; color=plt.get_cmap('tab20')(i%20)
-            if not path:
-                continue
-            ax.plot([p['x'] for p in path],[p['y'] for p in path],[p['z'] for p in path],color=color,label=net['name'])
+            ax.plot([p['x'] for p in path],[p['y'] for p in path],[p['z'] for p in path],
+                    color=color,label=net['name'],linestyle='-' if net.get('valid') else '--')
             for a,b in zip(path,path[1:]):
                 if a['z']!=b['z']:
                     ax.plot([a['x'],b['x']],[a['y'],b['y']],[a['z'],b['z']],color=color,linewidth=4)
             for p,label in [(net['source'],'S'),(net['target'],'T')]:
                 ax.scatter(p['x'],p['y'],p['z'],color=color,s=20)
                 ax.text(p['x'],p['y'],p['z'],label+net['name'][3:],fontsize=7)
-        ax.set(xlabel='Row (x)',ylabel='Column (y)',zlabel='Layer (z)',title=f"{data['algorithm']}: chip_layout_hell (thick segments = VIAs)")
+        conflicts=[c['cell'] for c in data.get('conflicts',[])]
+        if conflicts:
+            ax.scatter([p['x'] for p in conflicts],[p['y'] for p in conflicts],
+                       [p['z'] for p in conflicts],color='red',marker='x',label='Conflicts')
+        status='validated success' if data.get('success') else 'incomplete routing'
+        ax.set(xlabel='Row (x)',ylabel='Column (y)',zlabel='Layer (z)',
+               title=f"{data['algorithm']}: {args.route.name} — {status} (thick segments = VIAs)")
         ax.legend(loc='upper left',fontsize=8)
         fig.tight_layout(); fig.savefig(args.output_dir/'routing_example.png',dpi=170); plt.close(fig)
-    print(f'Figures: {args.output_dir}; table: {args.csv.parent / "RESULTS.md"}')
+    print(f'Figures: {args.output_dir}; table: {report}')
 
 
 if __name__ == '__main__':
