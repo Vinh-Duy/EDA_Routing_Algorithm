@@ -8,10 +8,8 @@
 
 inline void checkSearchInputs(const Layout& l, const std::vector<int>& occupancy,
                               const std::vector<Cost>& history) {
-    if (l.layers <= 0 || l.rows <= 0 || l.cols <= 0 ||
-        l.layers > 1000000 / l.rows || l.layers * l.rows > 1000000 / l.cols ||
-        static_cast<std::int64_t>(l.layers)*l.rows*l.cols != static_cast<std::int64_t>(l.cells.size()) ||
-        occupancy.size() != l.cells.size() || history.size() != l.cells.size())
+    l.validateShape();
+    if (occupancy.size() != l.cells.size() || history.size() != l.cells.size())
         throw std::invalid_argument("Invalid search grid dimensions");
     // Bound penalties so accumulated costs cannot overflow even along a simple path.
     const Cost limit = std::numeric_limits<Cost>::max() / 8 / static_cast<Cost>(l.cells.size());

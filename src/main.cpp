@@ -5,27 +5,34 @@
 #include "JsonOutput.hpp"
 #include <iostream>
 #include <memory>
+#include <filesystem>
 
 int main(int argc, char** argv) {
     try {
         std::string input="data/chip_layout_hell.txt", output="output.json", algorithm="astar";
         int maxIterations=10;
+        NetOrder order=NetOrder::Numeric;
         for (int i=1;i<argc;++i) {
             std::string arg=argv[i];
             if (arg=="--help") {
                 std::cout << "Usage: router [--input FILE] [--algorithm astar|bfs|dijkstra]\n"
-                             "              [--output FILE] [--max-iterations N] [--help]\n"
+                             "              [--output FILE] [--max-iterations N] [--net-order numeric|reverse] [--help]\n"
                              "Defaults: data/chip_layout_hell.txt, astar, output.json, 10 total passes.\n"
                              "Exit: 0 validated success; 2 routing incomplete/conflicted; 1 input/I/O error.\n";
                 return 0;
             }
-            if (arg!="--input" && arg!="--output" && arg!="--algorithm" && arg!="--max-iterations")
+            if (arg!="--input" && arg!="--output" && arg!="--algorithm" && arg!="--max-iterations" && arg!="--net-order")
                 throw std::invalid_argument("Unknown option: "+arg);
             if (++i>=argc) throw std::invalid_argument("Missing value for "+arg);
             std::string value=argv[i];
             if (arg=="--input") input=value;
             else if (arg=="--output") output=value;
             else if (arg=="--algorithm") algorithm=value;
+            else if (arg=="--net-order") {
+                if (value!="numeric" && value!="reverse")
+                    throw std::invalid_argument("net-order must be numeric or reverse");
+                order=value=="reverse" ? NetOrder::Reverse : NetOrder::Numeric;
+            }
             else maxIterations=positiveInteger(value);
         }
         std::unique_ptr<IRouter3D> router;
@@ -33,8 +40,12 @@ int main(int argc, char** argv) {
         else if (algorithm=="bfs") router=std::make_unique<BFS3D>();
         else if (algorithm=="dijkstra") router=std::make_unique<Dijkstra3D>();
         else throw std::invalid_argument("Algorithm must be astar, bfs, or dijkstra");
+        // equivalent() detects relative aliases, symlinks, and hardlinks alike.
+        // Check before opening an output stream, which would truncate the input.
+        if (std::filesystem::exists(output) && std::filesystem::equivalent(input,output))
+            throw std::invalid_argument("Input and output must refer to different files");
         Layout layout=readLayoutFile(input);
-        RoutingRun run=routeAll(layout,*router,maxIterations);
+        RoutingRun run=routeAll(layout,*router,maxIterations,order);
         writeRun(output,algorithm,layout,run);
         std::cout << (run.validation.success ? "SUCCESS" : "INCOMPLETE") << ": "
                   << run.validation.routed_nets << '/' << layout.nets.size() << " valid nets, "

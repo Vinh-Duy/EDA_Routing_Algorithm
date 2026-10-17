@@ -92,8 +92,28 @@ int main() {
         for(auto r:routers) {
             require(routeAll(good,*r,3).validation.success,"separate nets");
             auto run=routeAll(bad,*r,3);
-            require(!run.validation.success && run.validation.unresolved_conflicts==1 && run.passes==3,"unavoidable overlap");
+            require(!run.validation.success && run.validation.unresolved_conflicts==1 &&
+                    run.passes==(r->respondsToCongestion() ? 3 : 1),"unavoidable overlap");
         }
+    });
+    test("BFS stops unchanged reroutes without hiding conflicts",[&] {
+        auto l=readLayoutFile("benchmarks/layouts/congestion.txt");
+        auto first=routeAll(l,bfs,1), later=routeAll(l,bfs,10000);
+        require(later.paths==first.paths && later.expanded==first.expanded && later.passes==1,
+                "BFS repeated unchanged work");
+        require(!later.validation.success && later.validation.unresolved_conflicts>0 &&
+                later.termination_reason=="congestion_insensitive", "BFS hid unresolved conflicts");
+        require(later.search_costs==first.search_costs,"cost must reflect executed pass");
+        for (auto r:{static_cast<const IRouter3D*>(&astar),static_cast<const IRouter3D*>(&dijkstra)}) {
+            auto shortRun=routeAll(l,*r,1), resolved=routeAll(l,*r,10);
+            require(shortRun.termination_reason=="iteration_limit" && !shortRun.validation.success,
+                    "weighted pass limit");
+            require(resolved.validation.success && resolved.passes>1 && resolved.termination_reason=="success",
+                    "weighted reroutes stopped early");
+        }
+        auto impossible=parse("1 3\nS1 # T1\n");
+        for(auto r:routers) require(routeAll(impossible,*r,10).termination_reason=="unreachable",
+                                   "unreachable stop reason");
     });
     test("history resolves congestion with consistent occupancy",[&] {
         auto l=readLayoutFile("benchmarks/layouts/congestion.txt");
@@ -134,6 +154,48 @@ int main() {
             grid.clear(); require(!r->route(grid,{0,0},{0,0},"o1"),"empty grid");
             grid={{".","#"}}; require(!r->route(grid,{0,0},{0,1},"o1"),"blocked destination");
         }
+    });
+    test("malformed API layouts rejected before indexing",[&] {
+        for (auto l:std::vector<Layout>{
+            {1,1,2,{"."},{{"Net1",{0,0,1},{0,0,1}}}},
+            {0,1,1,{"."},{}}, {1,-1,1,{},{}},
+            {2147483647,2147483647,2147483647,{},{}}}) {
+            bool rejected=false;
+            try { validateRoutes(l,{{{0,0,1}}}); } catch(const std::invalid_argument&) { rejected=true; }
+            require(rejected,"validator indexed malformed storage");
+            rejected=false;
+            try { routeAll(l,astar,1); } catch(const std::invalid_argument&) { rejected=true; }
+            require(rejected,"driver accepted malformed storage");
+        }
+    });
+    test("extreme penalties rejected and bounded large costs stay exact",[&] {
+        auto l=parse("1 2\nS1 T1\n");
+        for(auto r:routers) {
+            bool rejected=false;
+            try { r->route(l,l.nets[0],{0,0},{0,std::numeric_limits<Cost>::max()}); }
+            catch(const std::invalid_argument&) { rejected=true; }
+            require(rejected,"overflowing penalty accepted");
+            Cost h=std::numeric_limits<Cost>::max()/8/2;
+            auto result=r->route(l,l.nets[0],{0,1},{0,h});
+            require(result.search_cost==h+101,"large cost overflow");
+        }
+    });
+    test("reverse schedule preserves net identity and default ordering",[&] {
+        auto l=readLayoutFile("benchmarks/layouts/congestion.txt");
+        for(auto r:routers) {
+            auto original=routeAll(l,*r,10), explicitDefault=routeAll(l,*r,10,NetOrder::Numeric);
+            require(original.paths==explicitDefault.paths && original.expanded==explicitDefault.expanded,
+                    "default ordering changed");
+            auto reverse=routeAll(l,*r,10,NetOrder::Reverse), again=routeAll(l,*r,10,NetOrder::Reverse);
+            require(reverse.paths==again.paths && reverse.net_order=="reverse","reverse not deterministic");
+            for(std::size_t i=0;i<l.nets.size();++i)
+                require(!reverse.paths[i].empty() && reverse.paths[i].front()==l.nets[i].src &&
+                        reverse.paths[i].back()==l.nets[i].dst,"net/path identity lost");
+            auto checked=validateRoutes(l,reverse.paths);
+            require(checked.invalid_nets==0 && checked.success==reverse.validation.success,"reverse validity mismatch");
+        }
+        require(routeAll(l,astar,1,NetOrder::Reverse).validation.success,
+                "reverse order should resolve this fixture in one pass");
     });
     std::cout << passed << " C++ test groups passed\n";
 }

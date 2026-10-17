@@ -3,6 +3,8 @@
 #include "RouteValidation.hpp"
 #include <chrono>
 
+enum class NetOrder { Numeric, Reverse };
+
 struct RoutingRun {
     std::vector<Path> paths;
     std::vector<Cost> search_costs;
@@ -10,11 +12,16 @@ struct RoutingRun {
     int passes=0;
     std::uint64_t expanded=0;
     double runtime_ms=0;
+    std::string termination_reason="iteration_limit";
+    std::string net_order="numeric";
 };
-inline RoutingRun routeAll(const Layout& l, const IRouter3D& router, int maxIterations) {
+inline RoutingRun routeAll(const Layout& l, const IRouter3D& router, int maxIterations,
+                           NetOrder order=NetOrder::Numeric) {
     if (maxIterations<1 || maxIterations>10000) throw std::invalid_argument("max-iterations must be 1..10000");
+    l.validateShape();
     auto start=std::chrono::steady_clock::now();
     RoutingRun run;
+    run.net_order=order==NetOrder::Reverse ? "reverse" : "numeric";
     run.paths.resize(l.nets.size()); run.search_costs.resize(l.nets.size());
     std::vector<int> occupancy(l.cells.size(),0);
     std::vector<Cost> history(l.cells.size(),0);
@@ -22,14 +29,27 @@ inline RoutingRun routeAll(const Layout& l, const IRouter3D& router, int maxIter
         ++run.passes;
         // Full rip-up: all occupancy is rebuilt, never erased via display symbols.
         std::fill(occupancy.begin(),occupancy.end(),0);
-        for (std::size_t n=0;n<l.nets.size();++n) {
+        // Keep stored net/path indices canonical; only the search schedule changes.
+        for (std::size_t position=0;position<l.nets.size();++position) {
+            const std::size_t n=order==NetOrder::Reverse ? l.nets.size()-1-position : position;
             auto result=router.route(l,l.nets[n],occupancy,history);
             run.expanded+=result.expanded;
             run.paths[n]=std::move(result.path); run.search_costs[n]=result.search_cost;
             for (Point3D p: run.paths[n]) ++occupancy.at(l.index(p));
         }
         run.validation=validateRoutes(l,run.paths);
-        if (run.validation.success || run.validation.unresolved_conflicts==0) break;
+        if (run.validation.success) {
+            run.termination_reason="success";
+            break;
+        }
+        if (run.validation.unresolved_conflicts==0) {
+            run.termination_reason="unreachable";
+            break;
+        }
+        if (!router.respondsToCongestion()) {
+            run.termination_reason="congestion_insensitive";
+            break;
+        }
         for (std::size_t cell=0;cell<history.size();++cell)
             if (run.validation.owners[cell].size()>1) history[cell]+=HISTORY_INCREMENT;
     }

@@ -13,7 +13,10 @@ inline void writeRun(const std::string& filename, const std::string& algorithm,
     const auto& v=run.validation;
     out << std::boolalpha << std::setprecision(12)
         << "{\n  \"schema_version\": 2,\n  \"algorithm\": \"" << algorithm << "\",\n"
-        << "  \"success\": " << v.success << ",\n  \"dimensions\": [" << l.layers << ',' << l.rows << ',' << l.cols << "],\n"
+        << "  \"success\": " << v.success << ",\n"
+        << "  \"termination_reason\": \"" << run.termination_reason << "\",\n"
+        << "  \"net_order\": \"" << run.net_order << "\",\n"
+        << "  \"dimensions\": [" << l.layers << ',' << l.rows << ',' << l.cols << "],\n"
         << "  \"cost_model\": {\"planar\":1,\"via\":6,\"occupied_cell\":100,\"history_increment\":50},\n"
         << "  \"metrics\": {\n"
         << "    \"total_nets\": " << l.nets.size() << ",\n    \"routed_nets\": " << v.routed_nets

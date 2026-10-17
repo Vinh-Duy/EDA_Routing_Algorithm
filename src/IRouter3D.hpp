@@ -24,6 +24,12 @@ struct Layout {
     int layers = 0, rows = 0, cols = 0;
     std::vector<std::string> cells;
     std::vector<Net3D> nets;
+    void validateShape() const {
+        if (layers <= 0 || rows <= 0 || cols <= 0 ||
+            layers > 1000000 / rows || layers * rows > 1000000 / cols ||
+            static_cast<std::int64_t>(layers)*rows*cols != static_cast<std::int64_t>(cells.size()))
+            throw std::invalid_argument("Invalid layout dimensions or cell storage");
+    }
     bool contains(Point3D p) const {
         return p.z >= 0 && p.z < layers && p.x >= 0 && p.x < rows && p.y >= 0 && p.y < cols;
     }
@@ -49,6 +55,9 @@ struct SearchResult {
 };
 class IRouter3D {
 public:
+    // False only when fixed-layout, fixed-order reruns cannot change the paths.
+    // Default conservatively to true for other routing strategies.
+    virtual bool respondsToCongestion() const { return true; }
     virtual SearchResult route(const Layout& layout, const Net3D& net,
                                const std::vector<int>& occupancy,
                                const std::vector<Cost>& history) const = 0;

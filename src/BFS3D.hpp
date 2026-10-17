@@ -3,6 +3,7 @@
 #include "Search3D.hpp"
 class BFS3D : public IRouter3D {
 public:
+    bool respondsToCongestion() const override { return false; }
     SearchResult route(const Layout& l, const Net3D& net, const std::vector<int>& occ,
                        const std::vector<Cost>& history) const override {
         checkSearchInputs(l,occ,history);

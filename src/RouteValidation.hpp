@@ -13,6 +13,7 @@ struct Validation {
 };
 // Independent of search results, cost estimates, grid symbols, and driver occupancy.
 inline Validation validateRoutes(const Layout& l, const std::vector<Path>& paths) {
+    l.validateShape();
     Validation v;
     v.valid.assign(l.nets.size(),false); v.local_valid=v.valid;
     v.owners.resize(l.cells.size());
