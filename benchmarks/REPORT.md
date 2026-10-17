@@ -1,5 +1,15 @@
 # Independent Technical Project — VLSI Routing and Algorithm Evaluation
 
+The measurements below document commit `62022a0`, before BFS early termination.
+They remain historical evidence with their original source/executable hashes.
+The subsequent early-stop snapshot is preserved in the [update notes](early_stop/NOTES.md)
+and [its archived measurements](early_stop/RESULTS.md). The latest
+[engineering audit](../docs/ENGINEERING_AUDIT.md) adds CI, stricter validation,
+build provenance, and the separate [robustness/order experiment](ROBUSTNESS.md).
+The historical commands below describe that old source snapshot. The current
+runner refuses existing result directories; use the fresh-output commands in the
+README to keep historical suites intact.
+
 This is an undergraduate independent engineering project and technical report,
 not a peer-reviewed paper, faculty-supervised study, or industrial routing tool.
 A*, breadth-first search (BFS), Dijkstra's algorithm, and rip-up/reroute are

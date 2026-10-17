@@ -1,0 +1,30 @@
+./build/test_router
+PASS single net and adjacent endpoints
+PASS unreachable is failure with zero conflicts
+PASS VIA at target and multi-layer accounting
+PASS obstacle avoidance and deterministic repeat
+PASS source equals destination and invalid endpoints
+PASS validator rejects jumps obstacles pins cycles wrong endpoints
+PASS overlap at VIA cell retains both net identities
+PASS input validation and nonconsecutive net ids
+PASS successful and impossible multi-net
+PASS BFS stops unchanged reroutes without hiding conflicts
+PASS history resolves congestion with consistent occupancy
+PASS 200 seeded graphs vs independent weighted and unit-cost oracle
+PASS negative penalties and broken reconstruction rejected
+PASS legacy 2D implementations edge cases
+14 C++ test groups passed
+python3 -m unittest discover -s tests -v
+test_all_original_and_generated_datasets (test_cli.CLITests) ... ok
+test_benchmark_execution_errors_have_no_invented_metrics (test_cli.CLITests) ... ok
+test_help_and_bad_options (test_cli.CLITests) ... ok
+test_input_cannot_be_overwritten_through_aliases (test_cli.CLITests) ... ok
+test_invalid_layout_and_output (test_cli.CLITests) ... ok
+test_output_cost_model_and_termination_are_checked (test_cli.CLITests) ... ok
+test_python_validator_rejects_tampering (test_cli.CLITests) ... ok
+test_visualizer_empty_vias_and_order (test_cli.CLITests) ... skipped 'Plotly optional; install requirements.txt to test rendering'
+
+----------------------------------------------------------------------
+Ran 8 tests in 1.090s
+
+OK (skipped=1)

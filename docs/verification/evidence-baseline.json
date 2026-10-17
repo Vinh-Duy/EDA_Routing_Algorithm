@@ -1,0 +1,50 @@
+[
+  {
+    "folder": "benchmarks",
+    "measurements": 840,
+    "successes": 640,
+    "head_mismatches": [],
+    "working_mismatches": [
+      "src/BFS3D.hpp",
+      "src/IRouter3D.hpp",
+      "src/JsonOutput.hpp",
+      "src/RoutingEngine.hpp",
+      "src/main.cpp",
+      "benchmarks/run_benchmarks.py",
+      "benchmarks/validate_output.py"
+    ],
+    "errors": []
+  },
+  {
+    "folder": "benchmarks/single_pass",
+    "measurements": 840,
+    "successes": 600,
+    "head_mismatches": [],
+    "working_mismatches": [
+      "src/BFS3D.hpp",
+      "src/IRouter3D.hpp",
+      "src/JsonOutput.hpp",
+      "src/RoutingEngine.hpp",
+      "src/main.cpp",
+      "benchmarks/run_benchmarks.py",
+      "benchmarks/validate_output.py"
+    ],
+    "errors": []
+  },
+  {
+    "folder": "benchmarks/early_stop",
+    "measurements": 840,
+    "successes": 640,
+    "head_mismatches": [
+      "src/BFS3D.hpp",
+      "src/IRouter3D.hpp",
+      "src/JsonOutput.hpp",
+      "src/RoutingEngine.hpp",
+      "src/main.cpp",
+      "benchmarks/run_benchmarks.py",
+      "benchmarks/validate_output.py"
+    ],
+    "working_mismatches": [],
+    "errors": []
+  }
+]

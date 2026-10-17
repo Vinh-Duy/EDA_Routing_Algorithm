@@ -1,0 +1,169 @@
+diff --git a/benchmarks/run_benchmarks.py b/benchmarks/run_benchmarks.py
+index 3a546f5..ced894a 100644
+--- a/benchmarks/run_benchmarks.py
++++ b/benchmarks/run_benchmarks.py
+@@ -58,7 +58,7 @@ def main():
+                    '--output', str(output), '--max-iterations', str(args.max_iterations)]
+         row = dict(dataset=path.stem, input=str(path.relative_to(ROOT)), algorithm=algorithm,
+                    repetition=repetition, status='execution_error', returncode='', success='',
+-                   output_verified=False, error='')
++                   output_verified=False, termination_reason='', error='')
+         begin = time.perf_counter()
+         try:
+             output.unlink(missing_ok=True)
+@@ -81,6 +81,7 @@ def main():
+             fingerprints[key] = signature
+             row.update({key: data['metrics'][key] for key in METRICS})
+             row.update(success=success, output_verified=True, status='success' if success else 'routing_failed')
++            row['termination_reason'] = data.get('termination_reason', '')
+         except (subprocess.TimeoutExpired, ValueError, OSError, KeyError) as error:
+             row['error'] = str(error)
+             errors.append(f'{path.stem}/{algorithm}/{repetition}: {error}')
+@@ -95,7 +96,7 @@ def main():
+             rows.append(execute(path, algorithm, repetition))
+         print(f'Completed repetition {repetition+1}/{args.repetitions}', flush=True)
+     fields = ['dataset', 'input', 'algorithm', 'repetition', 'status', 'returncode', 'success',
+-              'output_verified', *METRICS, 'process_wall_ms', 'error']
++              'output_verified', 'termination_reason', *METRICS, 'process_wall_ms', 'error']
+     with (output_dir / 'results.csv').open('w', newline='') as file:
+         writer = csv.DictWriter(file, fieldnames=fields)
+         writer.writeheader(); writer.writerows(rows)
+@@ -107,7 +108,8 @@ def main():
+             runtimes = [r['runtime_ms'] for r in verified]
+             summary = dict(dataset=path.stem, algorithm=algorithm, repetitions=len(group),
+                            verified_runs=len(verified), successful_runs=sum(r['success'] is True for r in group),
+-                           execution_errors=len(group)-len(verified))
++                           execution_errors=len(group)-len(verified),
++                           termination_reason=verified[0]['termination_reason'] if verified else '')
+             for key, fn in [('median_ms',statistics.median),('mean_ms',statistics.mean),
+                             ('stdev_ms',lambda xs: statistics.stdev(xs) if len(xs)>1 else 0),
+                             ('min_ms',min),('max_ms',max)]:
+diff --git a/benchmarks/validate_output.py b/benchmarks/validate_output.py
+index 1f91353..ececd33 100644
+--- a/benchmarks/validate_output.py
++++ b/benchmarks/validate_output.py
+@@ -50,6 +50,8 @@ def validate(layout_path, data):
+             errors.append(message)
+     check(data.get('schema_version') == 2, 'Schema version')
+     check(data.get('dimensions') == dims, 'Dimensions mismatch')
++    check(data.get('cost_model') == dict(planar=1, via=6, occupied_cell=100, history_increment=50),
++          'Cost model mismatch')
+     nets = data['nets']
+     check(len(nets) == len(sources), 'Net count')
+     check({n['name'] for n in nets} == set(sources), 'Net identities')
+@@ -108,6 +110,19 @@ def validate(layout_path, data):
+     check(m['runtime_ms'] >= 0 and math.isfinite(m['runtime_ms']), 'Runtime')
+     check(m['nodes_expanded'] >= 0, 'Expanded nodes')
+     check(m['search_cost'] == sum(n['search_cost'] for n in nets), 'Search cost sum')
++    # Additive schema-v2 field: historical benchmark outputs may omit it.
++    reason = data.get('termination_reason')
++    if 'termination_reason' in data:
++        check(reason in ('success', 'unreachable', 'congestion_insensitive', 'iteration_limit'),
++              'Unknown termination reason')
++        check((reason == 'success') == (routed == len(sources)), 'Termination success mismatch')
++        if reason == 'unreachable':
++            check(empty > 0 and not conflicts, 'Unreachable termination mismatch')
++        elif reason in ('congestion_insensitive', 'iteration_limit'):
++            check(bool(conflicts), 'Conflicted termination without conflicts')
++        if reason == 'congestion_insensitive':
++            check(data.get('algorithm') == 'bfs' and m['routing_passes'] == 1,
++                  'Congestion-insensitive termination mismatch')
+     if errors:
+         raise ValueError('; '.join(errors))
+     return data['success']
+diff --git a/src/BFS3D.hpp b/src/BFS3D.hpp
+index bc06909..21cfe3d 100644
+--- a/src/BFS3D.hpp
++++ b/src/BFS3D.hpp
+@@ -3,6 +3,7 @@
+ #include "Search3D.hpp"
+ class BFS3D : public IRouter3D {
+ public:
++    bool respondsToCongestion() const override { return false; }
+     SearchResult route(const Layout& l, const Net3D& net, const std::vector<int>& occ,
+                        const std::vector<Cost>& history) const override {
+         checkSearchInputs(l,occ,history);
+diff --git a/src/IRouter3D.hpp b/src/IRouter3D.hpp
+index b6f1300..6500222 100644
+--- a/src/IRouter3D.hpp
++++ b/src/IRouter3D.hpp
+@@ -49,6 +49,9 @@ struct SearchResult {
+ };
+ class IRouter3D {
+ public:
++    // False only when fixed-layout, fixed-order reruns cannot change the paths.
++    // Default conservatively to true for other routing strategies.
++    virtual bool respondsToCongestion() const { return true; }
+     virtual SearchResult route(const Layout& layout, const Net3D& net,
+                                const std::vector<int>& occupancy,
+                                const std::vector<Cost>& history) const = 0;
+diff --git a/src/JsonOutput.hpp b/src/JsonOutput.hpp
+index e6f3508..079d1cf 100644
+--- a/src/JsonOutput.hpp
++++ b/src/JsonOutput.hpp
+@@ -13,7 +13,9 @@ inline void writeRun(const std::string& filename, const std::string& algorithm,
+     const auto& v=run.validation;
+     out << std::boolalpha << std::setprecision(12)
+         << "{\n  \"schema_version\": 2,\n  \"algorithm\": \"" << algorithm << "\",\n"
+-        << "  \"success\": " << v.success << ",\n  \"dimensions\": [" << l.layers << ',' << l.rows << ',' << l.cols << "],\n"
++        << "  \"success\": " << v.success << ",\n"
++        << "  \"termination_reason\": \"" << run.termination_reason << "\",\n"
++        << "  \"dimensions\": [" << l.layers << ',' << l.rows << ',' << l.cols << "],\n"
+         << "  \"cost_model\": {\"planar\":1,\"via\":6,\"occupied_cell\":100,\"history_increment\":50},\n"
+         << "  \"metrics\": {\n"
+         << "    \"total_nets\": " << l.nets.size() << ",\n    \"routed_nets\": " << v.routed_nets
+diff --git a/src/RoutingEngine.hpp b/src/RoutingEngine.hpp
+index 8cf0025..1ce8102 100644
+--- a/src/RoutingEngine.hpp
++++ b/src/RoutingEngine.hpp
+@@ -10,6 +10,7 @@ struct RoutingRun {
+     int passes=0;
+     std::uint64_t expanded=0;
+     double runtime_ms=0;
++    std::string termination_reason="iteration_limit";
+ };
+ inline RoutingRun routeAll(const Layout& l, const IRouter3D& router, int maxIterations) {
+     if (maxIterations<1 || maxIterations>10000) throw std::invalid_argument("max-iterations must be 1..10000");
+@@ -29,7 +30,18 @@ inline RoutingRun routeAll(const Layout& l, const IRouter3D& router, int maxIter
+             for (Point3D p: run.paths[n]) ++occupancy.at(l.index(p));
+         }
+         run.validation=validateRoutes(l,run.paths);
+-        if (run.validation.success || run.validation.unresolved_conflicts==0) break;
++        if (run.validation.success) {
++            run.termination_reason="success";
++            break;
++        }
++        if (run.validation.unresolved_conflicts==0) {
++            run.termination_reason="unreachable";
++            break;
++        }
++        if (!router.respondsToCongestion()) {
++            run.termination_reason="congestion_insensitive";
++            break;
++        }
+         for (std::size_t cell=0;cell<history.size();++cell)
+             if (run.validation.owners[cell].size()>1) history[cell]+=HISTORY_INCREMENT;
+     }
+diff --git a/src/main.cpp b/src/main.cpp
+index f3f6adb..9be3194 100644
+--- a/src/main.cpp
++++ b/src/main.cpp
+@@ -5,6 +5,7 @@
+ #include "JsonOutput.hpp"
+ #include <iostream>
+ #include <memory>
++#include <filesystem>
+ 
+ int main(int argc, char** argv) {
+     try {
+@@ -33,6 +34,10 @@ int main(int argc, char** argv) {
+         else if (algorithm=="bfs") router=std::make_unique<BFS3D>();
+         else if (algorithm=="dijkstra") router=std::make_unique<Dijkstra3D>();
+         else throw std::invalid_argument("Algorithm must be astar, bfs, or dijkstra");
++        // equivalent() detects relative aliases, symlinks, and hardlinks alike.
++        // Check before opening an output stream, which would truncate the input.
++        if (std::filesystem::exists(output) && std::filesystem::equivalent(input,output))
++            throw std::invalid_argument("Input and output must refer to different files");
+         Layout layout=readLayoutFile(input);
+         RoutingRun run=routeAll(layout,*router,maxIterations);
+         writeRun(output,algorithm,layout,run);

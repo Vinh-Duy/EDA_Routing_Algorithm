@@ -1,170 +1,146 @@
 # Independent Technical Project — VLSI Routing and Algorithm Evaluation
 
-A C++17 grid-routing project exploring how graph search, layer transitions, and
-congestion interact in simplified VLSI interconnect routing. I developed this
-independently as an undergraduate Computer Science student to connect algorithm
-implementation with semiconductor design concepts.
+A C++17 project exploring how graph search connects circuit terminals across
+multiple routing layers while avoiding obstacles and conflicts. The simplified
+grid model connects algorithm implementation with concepts from semiconductor
+interconnect design. It is an undergraduate educational project, not an industrial
+EDA tool or a complete physical-design workflow.
 
-The project implements established A*, BFS, Dijkstra, and rip-up/reroute methods.
-Its engineering work includes explicit routing constraints, independent route
-validation, deterministic tests, and reproducible algorithm comparisons. It is an
-educational model, not an industrial EDA tool or published research.
+The project implements established A*, Dijkstra, BFS, and rip-up/reroute methods.
+Its engineering work includes explicit constraints, independent validation,
+deterministic testing, visualization, and reproducible comparisons. No new
+shortest-path algorithm or global routing optimality is claimed.
 
-## Implemented methods
+## Routing model
 
-- **A***: weighted shortest-path search with a consistent 3D Manhattan heuristic.
-- **Dijkstra**: the same weighted costs with no heuristic, for controlled comparison.
-- **BFS**: shortest unweighted paths; a layer transition counts as one edge.
-- **Rip-up/reroute**: sequential net routing, full rip-up, and historical congestion penalties.
-- **Validation**: checks ordered paths, endpoints, obstacles, unrelated pins, adjacency,
-  VIA accounting, and per-cell net ownership. All nets must pass for success.
-
-Planar moves cost 1; a VIA costs 6. Weighted search additionally charges occupied
-cells and historical congestion. A* and BFS optimize different objectives; neither
-is claimed universally superior. The C++ Strategy Pattern (`IRouter3D`) separates
-search selection from the driver, validation, and visualization.
-
-## Repository structure
-
-```text
-src/                         C++ algorithms, parser, validator, driver, JSON writer
-  main.cpp                   Command-line entry point
-  IRouter3D.hpp               Layout, net, search-result types and strategy interface
-  AStar3D.hpp / Dijkstra3D.hpp Weighted-search strategies
-  BFS3D.hpp                  Unweighted strategy
-  Search3D.hpp               Shared weighted costs and safe reconstruction
-  RouteValidation.hpp        Independent geometry and ownership checks
-  RoutingEngine.hpp          Rip-up/reroute and timing
-  *2D.hpp                    Preserved standalone 2D interfaces/algorithms
-data/                       Six original layouts (two documented row repairs)
-tests/                      C++ unit/oracle tests and Python integration tests
-benchmarks/                 Generator, runner, raw CSV, summaries, report, plots
-  layouts/                   Eight deterministic scenarios
-  single_pass/               Supplemental one-pass measurements
-docs/AUDIT.md               Bugs, dataset repairs, and API compatibility notes
-visualize.py                Plotly 3D visualization
-output.json                 Generated, validated A* example on chip_layout_hell
-Makefile                    Build, tests, sanitizers, benchmarks, figures
-```
+- **A*** and **Dijkstra** use the same weighted costs; A* adds a consistent
+  Manhattan heuristic. **BFS** minimizes unweighted graph-edge count.
+- Planar edges cost 1; adjacent-layer transitions (VIAs) cost 6. Occupied cells
+  and past conflicts add temporary search penalties.
+- All required nets must have legal, nonempty, mutually disjoint paths. A low-cost
+  but conflicting collection of paths is an unsuccessful result.
+- Numeric net order is the default. Optional reverse order changes scheduling
+  while preserving net identities. Full rip-up/reroute retains congestion history.
+  BFS stops after one pass because these weights cannot change its paths.
 
 ## Build and run
 
-Requires a C++17 compiler and Make. No third-party C++ dependencies are needed.
-Run commands from the repository root:
+Requires a C++17 compiler, Make, and Python 3.10+. No third-party C++ dependencies.
+Run from the repository root:
 
 ```sh
 make
-./router --input data/chip_layout_hell.txt --algorithm astar --output output.json --max-iterations 10
+./router --input data/chip_layout_hell.txt --algorithm astar --output build/route.json --max-iterations 10
 ./router --help
 ```
 
-`--algorithm` accepts `astar`, `bfs`, or `dijkstra`. `--max-iterations` bounds total
-routing passes, including the initial attempt. `./router` defaults to the command
-above. Exit codes: **0** = all routes validated; **2** = incomplete/conflicted
-routing (diagnostic JSON still written); **1** = invalid input/options or I/O error.
-An existing output file is replaced after a run; do not use the input layout as
-the output filename.
+Algorithms: `astar`, `dijkstra`, `bfs`. Optional `--net-order numeric|reverse`;
+`--max-iterations` bounds total passes. Defaults remain the hell layout, A*,
+numeric order, ten passes, and `output.json`.
 
-The input header is `rows cols` or `layers rows cols`. Each nonblank following row
-must have exactly `cols` whitespace-separated tokens: `.` empty, `#` blocked,
-`S1` source, `T1` target, etc. Net IDs may be nonconsecutive; duplicate/missing pins
-are rejected. A source and target cannot share a text cell; the C++ API supports
-a zero-edge path for coincident endpoints. See [audit notes](docs/AUDIT.md) for
-legacy input repairs and the updated 3D C++ interface.
+Exit codes: **0** validated complete routing, **2** incomplete/conflicted routing
+with diagnostic JSON, **1** invalid input/options or I/O failure. JSON distinguishes
+termination reasons, locally valid candidates, globally valid nets, and conflicts.
+Input/output aliases, including symlinks and hardlinks, are rejected. A distinct
+existing output file can still be replaced; writes are not transactional.
+
+Input headers are `rows cols` or `layers rows cols`. Each nonblank row contains
+exactly `cols` tokens: `.` empty, `#` obstacle, `S<number>` source, `T<number>`
+target. Duplicate/missing pins and malformed dimensions are rejected. Net IDs may
+have gaps. The six original datasets are unchanged by the current audit; earlier
+row repairs are documented in [the original audit](docs/AUDIT.md).
 
 ## Test and visualize
 
-Python 3.10+ runs the benchmark and integration tools. Only plotting requires
-external Python packages:
+Core correctness uses the Python standard library. Plotly/Matplotlib are optional
+for core tests; install them for the complete local gate and figures:
 
 ```sh
 python3 -m venv .venv
 .venv/bin/python -m pip install -r requirements.txt
+make clean
 make test PYTHON=.venv/bin/python
 make sanitize
-.venv/bin/python benchmarks/validate_output.py --input data/chip_layout_hell.txt --output output.json
-.venv/bin/python visualize.py --input output.json --html benchmarks/figures/routing_example.html --no-show
+python3 tests/smoke_cli.py
+python3 benchmarks/verify_evidence.py
+.venv/bin/python visualize.py --input output.json --html build/routing.html --no-show
 ```
 
-Open the generated HTML to inspect routes and thick VIA segments. Run
-`.venv/bin/python visualize.py` to launch Plotly's browser renderer. The original
-`nets[].name`/`path` JSON shape remains supported. Unrouted pins and conflicts are
-shown explicitly, and path order is preserved. Without plotting dependencies,
-`make test` runs core checks and skips the optional Plotly test.
+The latest local verification passed **17 C++ groups, 16 Python tests, and
+ASan/UBSan**, with no skips in the configured virtualenv. Plain `make test` passed
+15 Python tests and skipped the optional Plotly test. Coverage includes 200
+seeded Bellman–Ford oracle comparisons, every original fixture, reverse order,
+malformed API layouts, arithmetic bounds, invalid JSON, timeouts, and evidence
+preservation. See [the engineering audit](docs/ENGINEERING_AUDIT.md) and
+[recorded commands/exit codes](docs/verification/final.json).
 
-The recorded verification passed **13 C++ test groups and 6 Python tests**, with
-no failures or skips in the configured virtual environment. C++ tests also passed
-AddressSanitizer and UndefinedBehaviorSanitizer. Coverage includes 200 seeded
-graphs checked against an independent Bellman–Ford oracle, every dataset with all
-three algorithms, invalid inputs, overlapping VIA cells, empty paths, deterministic
-reruns, and benchmark execution failures.
+[GitHub Actions](.github/workflows/eda-validation.yml) configures Ubuntu GCC/Clang
+core jobs, a separate sanitizer job, and headless Plotly tests. The workflow and
+shell syntax were checked locally; **GitHub execution is not yet verified**.
+No full 840-run benchmark is scheduled on each push.
 
-![Validated A* routes on chip_layout_hell](benchmarks/figures/routing_example.png)
+![Representative validated A* routes](benchmarks/figures/routing_example.png)
 
-## Reproduce the experiments
+The representative image and `output.json` come from earlier verified runs;
+current tests confirm that their route/schema conventions remain supported.
+
+## Evidence and reproduction
+
+The three archived suites each contain **840 measured runs**, with 20 repetitions
+per dataset/algorithm pair. They describe distinct source snapshots:
+
+- [Original default-pass results](benchmarks/RESULTS.md) and
+  [one-pass results](benchmarks/single_pass/RESULTS.md): commit `62022a0`.
+- [BFS early-stop results](benchmarks/early_stop/RESULTS.md): the earlier local
+  source snapshot, reconstructable using [this saved patch](docs/verification/early-stop-source.patch)
+  on `62022a0`. These are historical measurements, not timings of today's source.
+
+The new [robustness appendix](benchmarks/ROBUSTNESS.md) records **150 measured
+runs** on five new obstacle seeds, three algorithms, two net orders, and five
+repetitions per combination. A* and Dijkstra succeed on all five inputs under
+either order; BFS fails all five because conflicts remain. Each input has 12 nets.
+On seed 20261018, A* physical cost changes from 874 to 838 when reversed; on seed
+20261021 it changes from 858 to 902. Neither order is universally better.
+
+For a new full-suite run, choose a fresh result directory:
 
 ```sh
-# Generation is separate; committed fixture files can be used directly.
-.venv/bin/python benchmarks/generate_layouts.py
-.venv/bin/python benchmarks/run_benchmarks.py --repetitions 20
-.venv/bin/python benchmarks/run_benchmarks.py --repetitions 20 --max-iterations 1 --results-dir benchmarks/single_pass
-.venv/bin/python benchmarks/plot_results.py
-.venv/bin/python benchmarks/plot_results.py --csv benchmarks/single_pass/results.csv --output-dir benchmarks/single_pass/figures
+python3 benchmarks/run_benchmarks.py --repetitions 20 --results-dir build/reproduction
+.venv/bin/python benchmarks/plot_results.py --csv build/reproduction/results.csv --output-dir build/reproduction/figures --format png
+python3 benchmarks/verify_evidence.py --suite build/reproduction
 ```
 
-The main suite contains **840 measured runs**: 14 layouts × 3 algorithms × 20
-repetitions, plus excluded warm-ups. A separate 840-run one-pass suite helps
-separate search behavior from repeated rerouting. Each output is independently
-checked against the layout; errors and failed routes are retained. The runner
-records actual timings, mean/median/sample standard deviation, geometry, expanded
-nodes, validity, and input/source/executable hashes. Avoid running other heavy
-work during timing experiments.
-
-Selected **measured** results from the main suite follow. Runtime is median
-algorithm milliseconds (including driver/validation, excluding parsing and I/O),
-measured on macOS x86_64 with Apple Clang 14, `-O2`. Wirelength counts planar edges;
-VIAs are separate; physical weighted cost is `wirelength + 6 × VIAs`.
-
-| Dataset | Algorithm | Valid nets | Wire | VIAs | Physical cost | Median ms |
-|---|---|---:|---:|---:|---:|---:|
-| `chip_layout_hell` | astar | 10/10 | 86 | 17 | 188 | 0.550117 |
-| `chip_layout_hell` | dijkstra | 10/10 | 98 | 15 | 188 | 1.318910 |
-| `chip_layout_hell` | bfs | 8/10 | 84 | 15 | 174 † | 10.241392 |
-| `via_sensitive` | astar | 1/1 | 10 | 0 | 10 | 0.052457 |
-| `via_sensitive` | dijkstra | 1/1 | 10 | 0 | 10 | 0.057272 |
-| `via_sensitive` | bfs | 1/1 | 6 | 2 | 18 | 0.040226 |
-| `stress_seeded` | astar | 12/12 | 716 | 26 | 872 | 10.258510 |
-| `stress_seeded` | dijkstra | 12/12 | 714 | 32 | 906 | 37.030697 |
-| `stress_seeded` | bfs | 0/12 | 684 | 26 | 840 † | 188.334152 |
-
-† Failed routing: candidate-path cost, not a feasible solution.
-
-Full measurements and definitions: [technical report](benchmarks/REPORT.md),
-[all result rows](benchmarks/RESULTS.md), [raw CSV](benchmarks/results.csv),
-[summary CSV](benchmarks/summary.csv), [environment](benchmarks/metadata.json), and
-[one-pass results](benchmarks/single_pass/RESULTS.md). Failed routing geometry is
-candidate-path data, not the quality of a feasible solution. Local timing results
-are not a hardware-independent performance claim.
+The runner refuses to overwrite recorded CSV/metadata, independently validates
+outputs, retains failures, checks repeatability, and records source/input/binary
+hashes plus the compiler invocation associated with a Make-built executable.
+Unrecorded external binaries explicitly have unavailable build provenance.
+For plotting an archived CSV, use both a fresh `--output-dir` and `--report`;
+plot regeneration writes those destinations. Additional-seed and order commands
+are in [ROBUSTNESS.md](benchmarks/ROBUSTNESS.md). Avoid concurrent heavy work when
+measuring runtime.
 
 ## Engineering observations and limitations
 
-On the hell layout, A* and Dijkstra both achieve cost 188 but choose different
-wirelength/VIA trade-offs. On the VIA-sensitive layout, BFS minimizes 8 graph
-edges (cost 18), while weighted search chooses 10 planar edges (cost 10). These
-results reflect different objectives. A* expands fewer nodes than Dijkstra on
-several recorded cases, but initialization, queue overhead, and measurement noise
-also affect runtime.
+BFS and weighted search optimize different objectives. A* and Dijkstra optimize
+a single net in a fixed context, but earlier choices change later nets' occupancy.
+Fewer expanded nodes need not mean less runtime: allocation, queues, validation,
+cache behavior, and system load also matter. Physical cost is planar wirelength
+plus six times VIA count; historical search cost is a separate quantity.
 
-Some BFS paths overlap. BFS ignores history weights, so repeated passes do not
-resolve those conflicts; its ten-pass runtime must not be treated as a pure
-single-search comparison. Rip-up/reroute remains heuristic and may fail without
-proving infeasibility. Equal-cost early route choices also change constraints for
-later nets, so single-net optimality does not imply global multi-net optimality.
+This model has two-pin nets and unit-capacity cells. It does not model wire
+width/spacing, process rules, timing, parasitics, preferred layer directions, or
+manufacturability. Rerouting can cycle or exhaust its budget. Five new synthetic
+obstacle layouts and measurements on one machine do not establish statistical or
+industrial superiority. Future work includes more layouts and pin placements,
+selective rip-up, parameter sensitivity, and geometric constraints.
 
-This model has unit-capacity cells and two-pin nets. It does not model wire
-width/spacing, preferred routing directions, real process rules, timing,
-parasitics, or manufacturability. The fixtures are small synthetic layouts, with
-one generated random stress seed. Future work includes more seeds and instances,
-net-order experiments, selective rip-up, parameter sensitivity, multi-pin nets,
-and geometric design-rule constraints. The [report](benchmarks/REPORT.md) explains
-these limits and the evidence behind each result.
+## Repository guide
+
+`src/` contains strategies, layout parsing, routing, validation, and JSON output;
+`tests/` contains C++/Python checks and the CI smoke gate. `benchmarks/` holds
+scripts and preserved experiments; `docs/verification/` holds audit logs and
+preservation hashes. `visualize.py` displays ordered routes and VIA transitions.
+
+Further reading: [technical report](benchmarks/REPORT.md),
+[current audit](docs/ENGINEERING_AUDIT.md),
+[admissions summary and interview questions](docs/PROJECT_SUMMARY.md).

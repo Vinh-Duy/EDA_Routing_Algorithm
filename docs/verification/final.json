@@ -1,0 +1,58 @@
+[
+  {
+    "command": [
+      "make",
+      "clean"
+    ],
+    "returncode": 0,
+    "log": "final-0.log"
+  },
+  {
+    "command": [
+      "make"
+    ],
+    "returncode": 0,
+    "log": "final-1.log"
+  },
+  {
+    "command": [
+      "make",
+      "test"
+    ],
+    "returncode": 0,
+    "log": "final-2.log"
+  },
+  {
+    "command": [
+      "make",
+      "test",
+      "PYTHON=.venv/bin/python"
+    ],
+    "returncode": 0,
+    "log": "final-3.log"
+  },
+  {
+    "command": [
+      "make",
+      "sanitize"
+    ],
+    "returncode": 0,
+    "log": "final-4.log"
+  },
+  {
+    "command": [
+      "python3",
+      "tests/smoke_cli.py"
+    ],
+    "returncode": 0,
+    "log": "final-5.log"
+  },
+  {
+    "command": [
+      "python3",
+      "benchmarks/verify_evidence.py"
+    ],
+    "returncode": 0,
+    "log": "final-6.log"
+  }
+]

@@ -1,0 +1,52 @@
+[
+  {
+    "command": [
+      ".venv/bin/python",
+      "benchmarks/run_benchmarks.py",
+      "--skip-build",
+      "--repetitions",
+      "5",
+      "--net-order",
+      "numeric",
+      "--results-dir",
+      "benchmarks/robustness/numeric",
+      "--input",
+      "benchmarks/robustness/layouts/stress_20261017.txt",
+      "--input",
+      "benchmarks/robustness/layouts/stress_20261018.txt",
+      "--input",
+      "benchmarks/robustness/layouts/stress_20261019.txt",
+      "--input",
+      "benchmarks/robustness/layouts/stress_20261020.txt",
+      "--input",
+      "benchmarks/robustness/layouts/stress_20261021.txt"
+    ],
+    "returncode": 0,
+    "log": "robustness-numeric.log"
+  },
+  {
+    "command": [
+      ".venv/bin/python",
+      "benchmarks/run_benchmarks.py",
+      "--skip-build",
+      "--repetitions",
+      "5",
+      "--net-order",
+      "reverse",
+      "--results-dir",
+      "benchmarks/robustness/reverse",
+      "--input",
+      "benchmarks/robustness/layouts/stress_20261017.txt",
+      "--input",
+      "benchmarks/robustness/layouts/stress_20261018.txt",
+      "--input",
+      "benchmarks/robustness/layouts/stress_20261019.txt",
+      "--input",
+      "benchmarks/robustness/layouts/stress_20261020.txt",
+      "--input",
+      "benchmarks/robustness/layouts/stress_20261021.txt"
+    ],
+    "returncode": 0,
+    "log": "robustness-reverse.log"
+  }
+]

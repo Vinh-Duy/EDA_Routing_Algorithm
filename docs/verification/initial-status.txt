@@ -1,0 +1,14 @@
+ M README.md
+ M benchmarks/REPORT.md
+ M benchmarks/run_benchmarks.py
+ M benchmarks/validate_output.py
+ M docs/VERIFICATION.md
+ M output.json
+ M src/BFS3D.hpp
+ M src/IRouter3D.hpp
+ M src/JsonOutput.hpp
+ M src/RoutingEngine.hpp
+ M src/main.cpp
+ M tests/test_cli.py
+ M tests/test_router.cpp
+?? benchmarks/early_stop/

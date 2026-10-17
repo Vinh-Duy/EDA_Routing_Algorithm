@@ -1,0 +1,2 @@
+c++ -std=c++17 -O2 -Wall -Wextra -Wpedantic src/main.cpp -o router
+python3 benchmarks/record_build.py --compiler="c++" --flags="-std=c++17 -O2 -Wall -Wextra -Wpedantic"

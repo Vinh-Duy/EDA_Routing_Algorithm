@@ -1,0 +1,9 @@
+All 42 default dataset/algorithm outputs match the starting early-stop snapshot except runtime and additive net_order.
+Eight original generated fixtures reproduce byte-for-byte; no data/ file regenerated.
+Five new seeded layouts reproduce byte-for-byte.
+Existing tracked JSON example remains valid under the stricter checker.
+numeric: 75 measured route files independently revalidated; source/input/executable hashes and PNG signatures checked.
+reverse: 75 measured route files independently revalidated; source/input/executable hashes and PNG signatures checked.
+All relative links in README, docs, technical report, early-stop notes, and robustness appendix resolve.
+Admissions English summary: 123 words.
+Hosted GitHub Actions, GNU GCC/Linux execution, actionlint, and manual browser interaction: NOT RUN.

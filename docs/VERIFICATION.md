@@ -1,6 +1,12 @@
 # Final verification record
 
-Completed locally on 2026-10-16.
+For the latest portfolio gate, see [ENGINEERING_AUDIT.md](ENGINEERING_AUDIT.md)
+and [recorded final commands](verification/final.json). The record below is retained
+as historical evidence, not a claim about the latest source.
+
+Historical verification of commit `62022a0`, completed locally on 2026-10-16.
+For verification of the subsequent early-termination and file-protection changes,
+see [the update record](../benchmarks/early_stop/NOTES.md).
 
 - C++17 release build: passed, with `-O2 -Wall -Wextra -Wpedantic`.
 - C++ correctness suite: 13 test groups passed, including 200 seeded graph/oracle cases.

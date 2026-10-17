@@ -1,0 +1,1 @@
+Verified all benchmarks/early_stop/metadata.json source/input SHA-256 hashes after applying early-stop-source.patch to files from commit 62022a0 in a temporary directory.

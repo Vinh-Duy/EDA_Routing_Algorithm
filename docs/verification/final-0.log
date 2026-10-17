@@ -1,0 +1,1 @@
+rm -f router build/test_router build/test_router_sanitized build/router-build.json

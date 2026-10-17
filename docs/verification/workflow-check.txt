@@ -1,0 +1,1 @@
+YAML parsed with PyYAML BaseLoader. Matrix, permissions, triggers checked. All run blocks passed bash -n. No continue-on-error or suppressed required failures. GitHub execution and actionlint NOT RUN.

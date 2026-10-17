@@ -1,0 +1,24 @@
+{
+  "seeds": [
+    20261017,
+    20261018,
+    20261019,
+    20261020,
+    20261021
+  ],
+  "dimensions": [
+    4,
+    40,
+    40
+  ],
+  "nets": 12,
+  "obstacle_probability": 0.18,
+  "pin_policy": "Original stress_seeded coordinates; pins override obstacles",
+  "sha256": {
+    "stress_20261017.txt": "c8acf9bf4c03acc1fad2d35b3fc6751ad97d0185117becadc3941da0db122d1a",
+    "stress_20261018.txt": "d2f970353860da983df640b7b76b79c07b49eb0f30acfd9d1fcf81769f74c5f7",
+    "stress_20261019.txt": "c19fd1dfad309e6e5e141088eec6b7d6e21d3bc182ec3a2a18e5368a811338df",
+    "stress_20261020.txt": "2e088100cf995bbbe2d0e6a3012da966ce9a32990b6486aad4503c719d39f54e",
+    "stress_20261021.txt": "9c327f124b0ff2d1da1488f7cb17ac2e7cdfa06ad094f221c7d99f120982f58c"
+  }
+}
