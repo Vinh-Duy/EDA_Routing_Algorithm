@@ -57,7 +57,10 @@ by their original net identities under either schedule.
   Thirty warm-up invocations are excluded from those statistics.
 - The latest local gate passed 17 C++ groups, 16 Python tests with plotting
   dependencies installed, ASan/UBSan, and a small CLI/benchmark smoke test.
-- GitHub Actions is configured but has not been executed for these changes.
+- Separately, [EDA validation run #1](https://github.com/Vinh-Duy/EDA_Routing_Algorithm/actions/runs/38993901220)
+  passed on October 17, 2026, for `bef67d0`: Ubuntu 24.04 GCC/Clang correctness,
+  sanitizer, and headless visualization jobs all succeeded. CI runs a small smoke
+  experiment; it does not reproduce or replace the local benchmark measurements above.
 
 ## F. What the results show
 
