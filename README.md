@@ -74,10 +74,13 @@ malformed API layouts, arithmetic bounds, invalid JSON, timeouts, and evidence
 preservation. See [the engineering audit](docs/ENGINEERING_AUDIT.md) and
 [recorded commands/exit codes](docs/verification/final.json).
 
-[GitHub Actions](.github/workflows/eda-validation.yml) configures Ubuntu GCC/Clang
-core jobs, a separate sanitizer job, and headless Plotly tests. The workflow and
-shell syntax were checked locally; **GitHub execution is not yet verified**.
-No full 840-run benchmark is scheduled on each push.
+[EDA validation run #1](https://github.com/Vinh-Duy/EDA_Routing_Algorithm/actions/runs/38993901220)
+**passed on October 17, 2026, for commit `bef67d0`**. All four Ubuntu 24.04 jobs
+succeeded: GCC and Clang correctness, sanitizers, and headless Plotly visualization.
+The [workflow](.github/workflows/eda-validation.yml) runs a small benchmark smoke
+check, not the full archived experiments. This hosted CI result is separate from
+the earlier local test counts and benchmark measurements below; it does not
+remeasure their timings or establish universal portability or performance.
 
 ![Representative validated A* routes](benchmarks/figures/routing_example.png)
 
