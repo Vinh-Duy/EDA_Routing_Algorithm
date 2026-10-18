@@ -12,7 +12,8 @@ as the user's starting work, not discarded or attributed to this audit.
 The review covered all source headers/main, tests, Makefile, requirements, ignore
 rules, six original datasets, generated fixtures, JSON example, benchmark scripts,
 CSV/metadata/report files, and visualization. No separate RTL repository was read
-or changed. No commit, push, PR, or remote workflow run was performed.
+or changed. No commit, push, PR, or remote workflow run was performed during the
+initial local audit. The subsequent hosted CI result is recorded separately below.
 
 ## VERIFIED — Baseline checks
 
@@ -108,7 +109,7 @@ remain included. Default numeric scheduling produces the same routes and
 non-timing search/quality metrics as the starting early-stop snapshot; the new
 `net_order` JSON field is additive.
 
-## FIXED — CI configuration; NOT RUN — hosted results
+## VERIFIED — CI configuration and hosted results
 
 [eda-validation.yml](../.github/workflows/eda-validation.yml) uses Ubuntu 24.04,
 read-only repository permission, and independent GCC/Clang core jobs. Each prints
@@ -124,9 +125,24 @@ locally. Official action definitions were consulted for
 [checkout v6](https://github.com/actions/checkout/blob/v6/action.yml),
 [setup-python v6](https://github.com/actions/setup-python/blob/v6/action.yml), and
 [upload-artifact v6](https://github.com/actions/upload-artifact/blob/v6/action.yml).
-This is syntax/configuration review, not a hosted integration test. GitHub Actions,
-Ubuntu execution, genuine GNU GCC, and actionlint were **NOT RUN** locally.
-`/usr/bin/g++` on this Mac reports Apple Clang, so it is not claimed as GCC evidence.
+Those initial checks were local syntax/configuration review. Hosted execution and
+genuine GNU GCC/Linux tests had not yet run at that stage; `/usr/bin/g++` on the
+Mac reports Apple Clang. The original [workflow check](verification/workflow-check.txt)
+and [release check](verification/release-check.txt) remain unchanged historical
+records. Their **NOT RUN** statements describe the pre-push audit, not current CI
+status. Actionlint and manual browser interaction remain unverified.
+
+[EDA validation run #1](https://github.com/Vinh-Duy/EDA_Routing_Algorithm/actions/runs/38993901220)
+completed successfully on October 17, 2026, for commit
+`bef67d03dd14c6ad89de2c44f9e35134e24edc24`. The public run summary and
+[job results](https://api.github.com/repos/Vinh-Duy/EDA_Routing_Algorithm/actions/runs/38993901220/jobs)
+confirm success for all four Ubuntu 24.04 jobs: `correctness (g++)`,
+`correctness (clang++)`, `sanitizers`, and `visualization`.
+
+This verifies the configured hosted checks for that commit, including the small
+CLI/benchmark smoke gate. It does not rerun the three archived 840-observation
+suites or the 150-observation robustness experiment. Their local measurements,
+source snapshots, compiler records, and timing claims remain separate and unchanged.
 
 ## VERIFIED — Benchmark integrity and new experiments
 
@@ -160,7 +176,7 @@ solves none because shared cells remain. Reverse can help or hurt weighted cost
 and pass count. Five layouts are not 25 independent designs, and no statistical
 or universal performance superiority is claimed.
 
-## VERIFIED — Final gate
+## VERIFIED — Final local gate
 
 [Exact commands, exit codes, and logs](verification/final.json):
 
@@ -185,8 +201,8 @@ verified. The final logs contain no compiler warnings or ResourceWarnings.
 
 The project is suitable as an undergraduate educational engineering portfolio,
 provided its scope and measured failures are explained honestly. This is not an
-admissions prediction. Hosted CI still needs to run after an authorized push;
-until then Linux/GCC portability is configured but unverified. Rerouting has no
+admissions prediction. Hosted Ubuntu 24.04 GCC/Clang checks passed for `bef67d0`;
+this does not establish portability across every compiler or platform. Rerouting has no
 convergence/global-optimality guarantee, inputs are synthetic, and no process
 geometry/electrical/fabrication validation is implemented. The public API expects
 valid net semantics when bypassing the parser. CLI output writes are not atomic

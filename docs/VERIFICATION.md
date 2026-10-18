@@ -1,8 +1,16 @@
 # Final verification record
 
-For the latest portfolio gate, see [ENGINEERING_AUDIT.md](ENGINEERING_AUDIT.md)
-and [recorded final commands](verification/final.json). The record below is retained
-as historical evidence, not a claim about the latest source.
+For the latest local portfolio gate, see [ENGINEERING_AUDIT.md](ENGINEERING_AUDIT.md)
+and [recorded final commands](verification/final.json).
+
+Separately, [EDA validation run #1](https://github.com/Vinh-Duy/EDA_Routing_Algorithm/actions/runs/38993901220)
+passed on October 17, 2026, for `bef67d0`. All four Ubuntu 24.04 jobs succeeded:
+GCC correctness, Clang correctness, sanitizers, and headless visualization.
+The hosted smoke checks do not replace or remeasure the local benchmark suites.
+The original files in `docs/verification/` retain their pre-push observations;
+their hosted-CI **NOT RUN** statements are historical, as explained in the audit.
+
+The record below is retained as historical evidence, not a claim about the latest source.
 
 Historical verification of commit `62022a0`, completed locally on 2026-10-16.
 For verification of the subsequent early-termination and file-protection changes,
