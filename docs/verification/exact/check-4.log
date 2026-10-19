@@ -1,0 +1,3 @@
+Historical measurements, figures, and original datasets unchanged
+benchmarks/robustness/numeric: 75 observations, statistics/inputs verified; 0 source differences from current checkout
+benchmarks/robustness/reverse: 75 observations, statistics/inputs verified; 0 source differences from current checkout

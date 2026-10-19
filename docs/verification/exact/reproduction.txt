@@ -1,0 +1,3 @@
+Six oracle verdicts, witness paths, and all 36 router comparisons reproduced exactly.
+All recorded source, input, and executable hashes match the measured snapshot.
+No timing measurements were collected in the saved exact-quality study.

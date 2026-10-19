@@ -1,0 +1,47 @@
+[
+  {
+    "command": [
+      "make",
+      "test",
+      "PYTHON=.venv/bin/python"
+    ],
+    "returncode": 0,
+    "log": "check-0.log"
+  },
+  {
+    "command": [
+      "make",
+      "sanitize"
+    ],
+    "returncode": 0,
+    "log": "check-1.log"
+  },
+  {
+    "command": [
+      "python3",
+      "tests/smoke_cli.py"
+    ],
+    "returncode": 0,
+    "log": "check-2.log"
+  },
+  {
+    "command": [
+      "python3",
+      "benchmarks/verify_evidence.py"
+    ],
+    "returncode": 0,
+    "log": "check-3.log"
+  },
+  {
+    "command": [
+      "python3",
+      "benchmarks/verify_evidence.py",
+      "--suite",
+      "benchmarks/robustness/numeric",
+      "--suite",
+      "benchmarks/robustness/reverse"
+    ],
+    "returncode": 0,
+    "log": "check-4.log"
+  }
+]

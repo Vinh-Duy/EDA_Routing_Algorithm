@@ -1,7 +1,14 @@
 # Final verification record
 
+The October 18 [exact-reference extension](EXACT_ROUTING.md) passed 17 C++ groups,
+23 Python tests with plotting dependencies, ASan/UBSan, and CLI smoke checks.
+[Its command records](verification/exact/checks.json) and
+[reproduction check](verification/exact/reproduction.txt) are separate from the
+October 17 records below. The earlier hosted run does not verify the new tests.
+
 For the latest local portfolio gate, see [ENGINEERING_AUDIT.md](ENGINEERING_AUDIT.md)
-and [recorded final commands](verification/final.json).
+and the October 18 records above; [the previous final commands](verification/final.json)
+remain historical evidence.
 
 Separately, [EDA validation run #1](https://github.com/Vinh-Duy/EDA_Routing_Algorithm/actions/runs/38993901220)
 passed on October 17, 2026, for `bef67d0`. All four Ubuntu 24.04 jobs succeeded:

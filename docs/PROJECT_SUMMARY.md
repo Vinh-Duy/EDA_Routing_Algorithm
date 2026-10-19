@@ -23,7 +23,8 @@ workflow.
 - Separated immutable layout data, routing state, and independent validation;
   checked endpoints, obstacle/pin legality, adjacency, VIA accounting, and ownership.
 - Built deterministic correctness tests, 200 seeded oracle comparisons, sanitizer
-  checks, CLI regression tests, and a GCC/Clang CI configuration.
+  checks, CLI regression tests, and a GCC/Clang CI configuration; added a tiny
+  multi-net exact reference checked against 60 independent edge-subset cases.
 - Developed reproducible experiments with raw CSV, input/source hashes, measured
   timing variation, explicit failures, and controlled seed/order comparisons.
 
@@ -55,12 +56,16 @@ by their original net identities under either schedule.
 - The new experiment contains 150 measured invocations: five new obstacle seeds,
   three algorithms, two net orders, and five timing repetitions per combination.
   Thirty warm-up invocations are excluded from those statistics.
-- The latest local gate passed 17 C++ groups, 16 Python tests with plotting
+- The October 17 local gate passed 17 C++ groups, 16 Python tests with plotting
   dependencies installed, ASan/UBSan, and a small CLI/benchmark smoke test.
 - Separately, [EDA validation run #1](https://github.com/Vinh-Duy/EDA_Routing_Algorithm/actions/runs/38993901220)
   passed on October 17, 2026, for `bef67d0`: Ubuntu 24.04 GCC/Clang correctness,
   sanitizer, and headless visualization jobs all succeeded. CI runs a small smoke
   experiment; it does not reproduce or replace the local benchmark measurements above.
+- On October 18, six selected tiny layouts supplied 36 exact-quality comparisons,
+  separating global infeasibility, heuristic failure, and suboptimal feasible routing.
+  The local gate passed 17 C++ groups, 23 Python tests, and ASan/UBSan. Hosted CI
+  has not yet verified this addition; it is not covered by the earlier run.
 
 ## F. What the results show
 
@@ -70,6 +75,11 @@ Ordering changes weighted route geometry, cost, and sometimes pass count. For
 example, A* on seed 20261021 costs 858 in numeric order and 902 in reverse order;
 on seed 20261018, reverse order reduces its cost from 874 to 838. Neither order
 is consistently best. See [the robustness appendix](../benchmarks/ROBUSTNESS.md).
+
+The [exact-reference study](EXACT_ROUTING.md) provides a concrete global-quality
+counterexample: numeric A*/Dijkstra return cost 11 where the exact optimum is 7,
+while reverse order attains 7. It also shows a feasible layout on which BFS fails.
+These intentionally selected tiny examples explain limitations, not their frequency.
 
 ## G. What the results do not establish
 

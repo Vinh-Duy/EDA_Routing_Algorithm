@@ -1,5 +1,11 @@
 # Engineering quality audit — 2026-10-17
 
+Follow-up on October 18: the [tiny exact-reference study](EXACT_ROUTING.md) adds
+global feasibility/quality checks without changing the routing source or the
+historical measurements audited below. Its local gate passed 17 C++ groups,
+23 Python tests, and ASan/UBSan; [commands and logs](verification/exact/checks.json)
+are separate from this original audit. Hosted CI for that addition is not yet verified.
+
 ## VERIFIED — Starting point and scope
 
 Initial commit: `62022a05a95c8a9a536586db1b8c6f8b40fbdd1c` (`main`).

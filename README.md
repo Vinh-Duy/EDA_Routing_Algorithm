@@ -66,21 +66,24 @@ python3 benchmarks/verify_evidence.py
 .venv/bin/python visualize.py --input output.json --html build/routing.html --no-show
 ```
 
-The latest local verification passed **17 C++ groups, 16 Python tests, and
-ASan/UBSan**, with no skips in the configured virtualenv. Plain `make test` passed
-15 Python tests and skipped the optional Plotly test. Coverage includes 200
-seeded Bellman–Ford oracle comparisons, every original fixture, reverse order,
+The October 18 local verification passed **17 C++ groups, 23 Python tests, and
+ASan/UBSan**, with no skips in the configured virtualenv. The earlier October 17
+gate passed 16 Python tests (15 plus an optional Plotly skip without dependencies).
+Coverage includes 200 seeded Bellman–Ford oracle comparisons, every original fixture, reverse order,
 malformed API layouts, arithmetic bounds, invalid JSON, timeouts, and evidence
-preservation. See [the engineering audit](docs/ENGINEERING_AUDIT.md) and
-[recorded commands/exit codes](docs/verification/final.json).
+preservation, plus 60 tiny multi-net cases checked against an independent exhaustive
+edge-subset reference. See [the engineering audit](docs/ENGINEERING_AUDIT.md),
+[earlier local records](docs/verification/final.json), and
+[October 18 commands/exit codes](docs/verification/exact/checks.json).
 
 [EDA validation run #1](https://github.com/Vinh-Duy/EDA_Routing_Algorithm/actions/runs/38993901220)
 **passed on October 17, 2026, for commit `bef67d0`**. All four Ubuntu 24.04 jobs
 succeeded: GCC and Clang correctness, sanitizers, and headless Plotly visualization.
 The [workflow](.github/workflows/eda-validation.yml) runs a small benchmark smoke
 check, not the full archived experiments. This hosted CI result is separate from
-the earlier local test counts and benchmark measurements below; it does not
+the local verification records and benchmark measurements below; it does not
 remeasure their timings or establish universal portability or performance.
+That run predates the new exact-reference tests; their hosted execution is not yet verified.
 
 ![Representative validated A* routes](benchmarks/figures/routing_example.png)
 
@@ -104,6 +107,14 @@ repetitions per combination. A* and Dijkstra succeed on all five inputs under
 either order; BFS fails all five because conflicts remain. Each input has 12 nets.
 On seed 20261018, A* physical cost changes from 874 to 838 when reversed; on seed
 20261021 it changes from 858 to 902. Neither order is universally better.
+
+The separate [tiny exact-reference study](docs/EXACT_ROUTING.md) checks global
+feasibility and optimal physical cost on six selected examples. It distinguishes
+proven infeasibility from heuristic failure and quantifies feasible solution gaps.
+On one example, numeric A*/Dijkstra cost 11 while the exact optimum is 7; reverse
+order attains 7. These are explanatory counterexamples, not performance statistics.
+The exhaustive tool is capped at 16 traversable cells and four nets; budget
+exhaustion returns `unknown` rather than claiming infeasibility.
 
 For a new full-suite run, choose a fresh result directory:
 
