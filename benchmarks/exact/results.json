@@ -1,0 +1,1865 @@
+{
+  "schema_version": 1,
+  "experiment": "tiny_exact_quality",
+  "created_at_utc": "2026-10-18T12:35:21.012407+00:00",
+  "git_commit": "682153fc373d7e2fa301fc3a75e3dfc432ecce38",
+  "working_tree_dirty": true,
+  "source_sha256": {
+    "src/AStar2D.hpp": "c335150700a63869429c2440807256fccf012d90548cdf65c87acd5ddba562d8",
+    "src/AStar3D.hpp": "89f07a7bcec819ddd89388cc73975d4982a2edcbbb2dda82b7528bac455e9be2",
+    "src/BFS2D.hpp": "75a689ecfc7d4ae161645e9d12e5e986cbe6d2e57dc0bb7e499a337f46980699",
+    "src/BFS3D.hpp": "e324fbf69e6bd6ca062813bf4d53511e75f91516c78333513e6d037e9078c869",
+    "src/Dijkstra3D.hpp": "19d5cf34f992b4d0431e63add7120e091cdb5134618f5d95b1e8017286f639c7",
+    "src/IRouter2D.hpp": "369cdda14bca7ad398a03f361ee635519c34dcea1b96ef99d9fa964cb3ecec6e",
+    "src/IRouter3D.hpp": "b125d03c25e357d31db08b808860b3c1eb6961f7d8267320ca9da5db8c95cc16",
+    "src/JsonOutput.hpp": "3494242a5dcc88f0c9158ed547b4417acdf125f1ebe43e63205076ba9e4e24de",
+    "src/LayoutIO.hpp": "e24e0e304ee8d993e6651f5d522ca27300735255e04899a8807997fd40227045",
+    "src/RouteValidation.hpp": "1a7c81f2322456c6d3fbaa4ee01b33f2a5a8fcc606124a64534a4b3c25c6a17d",
+    "src/RoutingEngine.hpp": "7037d974ec5c697c43447f826a083cc4e71a52dab63982bf22b6928f9785f803",
+    "src/Search3D.hpp": "646d2d7f59b6bbee618d41b734898391ce56bcf238468c309af15a2c284e33be",
+    "src/main.cpp": "7e9d3008b888a3e61cca971d1270376f218efddfb29d7709ee7a7e8bad367578",
+    "benchmarks/exact_oracle.py": "7f0c9fbafaa0d6ee6e8f2dbfc7e81b954e41032d53c3e564c142f3d0ecc387d6",
+    "benchmarks/check_exact.py": "9cc62e6a3f42fc7a777b7a12d0b07a31d1329365fab6891e2d4d76948a0ecf2a",
+    "benchmarks/validate_output.py": "3c85a294139a14cdfc9574db5d34297f4712e9b290c9bf7ce74ded99516be751"
+  },
+  "input_sha256": {
+    "benchmarks/exact/layouts/bottleneck.txt": "aa6ac411b9b3be6fdf6400107fb2265fecfcb44a45e583f1c226c2bb67316e75",
+    "benchmarks/exact/layouts/disconnected.txt": "d7bd61629202b5a33d81f0dcbf435a38ac72e73f3abf1e2bf8799f3abc4835cf",
+    "benchmarks/exact/layouts/feasible_conflict.txt": "3fb6373304d4255e5b657cc2a3e89389692434e9cbc24990e40a99723a8a0d61",
+    "benchmarks/exact/layouts/order_sensitive.txt": "da8f78654e08cfb724388d700c950fc83afe9bd73f352644cdf0dd458af026da",
+    "benchmarks/exact/layouts/parallel.txt": "35c6540fb9973a316bab005c2b479e03b355f1ebf73be3af269881f1057a101b",
+    "benchmarks/exact/layouts/via.txt": "f40da44b1542b1e51cb928a2241d6a077633d327b459f8c167fde3be2e880cb5"
+  },
+  "executable_sha256": "4f7627013068e33d233706a9e3907a547d18bd3c04c25a255410a4b1db566783",
+  "max_states": 200000,
+  "max_iterations": 10,
+  "physical_cost_model": {
+    "planar": 1,
+    "via": 6
+  },
+  "cases": [
+    {
+      "input": "benchmarks/exact/layouts/bottleneck.txt",
+      "oracle": {
+        "status": "infeasible",
+        "optimal_cost": null,
+        "independent_lower_bound": 4,
+        "paths": {},
+        "states_examined": 10,
+        "candidate_paths": {
+          "Net1": 1,
+          "Net2": 1
+        },
+        "reason": "no_disjoint_combination"
+      },
+      "comparisons": [
+        {
+          "algorithm": "astar",
+          "net_order": "numeric",
+          "router_success": false,
+          "classification": "infeasible_layout",
+          "absolute_gap": null,
+          "relative_gap_percent": null,
+          "physical_cost": null,
+          "routing_passes": 10,
+          "conflicting_cells": 1,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 0,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 2,
+                "y": 1
+              }
+            ],
+            "Net2": [
+              {
+                "z": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 2
+              }
+            ]
+          }
+        },
+        {
+          "algorithm": "dijkstra",
+          "net_order": "numeric",
+          "router_success": false,
+          "classification": "infeasible_layout",
+          "absolute_gap": null,
+          "relative_gap_percent": null,
+          "physical_cost": null,
+          "routing_passes": 10,
+          "conflicting_cells": 1,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 0,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 2,
+                "y": 1
+              }
+            ],
+            "Net2": [
+              {
+                "z": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 2
+              }
+            ]
+          }
+        },
+        {
+          "algorithm": "bfs",
+          "net_order": "numeric",
+          "router_success": false,
+          "classification": "infeasible_layout",
+          "absolute_gap": null,
+          "relative_gap_percent": null,
+          "physical_cost": null,
+          "routing_passes": 1,
+          "conflicting_cells": 1,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 0,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 2,
+                "y": 1
+              }
+            ],
+            "Net2": [
+              {
+                "z": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 2
+              }
+            ]
+          }
+        },
+        {
+          "algorithm": "astar",
+          "net_order": "reverse",
+          "router_success": false,
+          "classification": "infeasible_layout",
+          "absolute_gap": null,
+          "relative_gap_percent": null,
+          "physical_cost": null,
+          "routing_passes": 10,
+          "conflicting_cells": 1,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 0,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 2,
+                "y": 1
+              }
+            ],
+            "Net2": [
+              {
+                "z": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 2
+              }
+            ]
+          }
+        },
+        {
+          "algorithm": "dijkstra",
+          "net_order": "reverse",
+          "router_success": false,
+          "classification": "infeasible_layout",
+          "absolute_gap": null,
+          "relative_gap_percent": null,
+          "physical_cost": null,
+          "routing_passes": 10,
+          "conflicting_cells": 1,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 0,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 2,
+                "y": 1
+              }
+            ],
+            "Net2": [
+              {
+                "z": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 2
+              }
+            ]
+          }
+        },
+        {
+          "algorithm": "bfs",
+          "net_order": "reverse",
+          "router_success": false,
+          "classification": "infeasible_layout",
+          "absolute_gap": null,
+          "relative_gap_percent": null,
+          "physical_cost": null,
+          "routing_passes": 1,
+          "conflicting_cells": 1,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 0,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 2,
+                "y": 1
+              }
+            ],
+            "Net2": [
+              {
+                "z": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "input": "benchmarks/exact/layouts/disconnected.txt",
+      "oracle": {
+        "status": "infeasible",
+        "optimal_cost": null,
+        "independent_lower_bound": null,
+        "paths": {},
+        "states_examined": 0,
+        "candidate_paths": {},
+        "reason": "individually_unreachable"
+      },
+      "comparisons": [
+        {
+          "algorithm": "astar",
+          "net_order": "numeric",
+          "router_success": false,
+          "classification": "infeasible_layout",
+          "absolute_gap": null,
+          "relative_gap_percent": null,
+          "physical_cost": null,
+          "routing_passes": 1,
+          "conflicting_cells": 0,
+          "paths": {
+            "Net1": []
+          }
+        },
+        {
+          "algorithm": "dijkstra",
+          "net_order": "numeric",
+          "router_success": false,
+          "classification": "infeasible_layout",
+          "absolute_gap": null,
+          "relative_gap_percent": null,
+          "physical_cost": null,
+          "routing_passes": 1,
+          "conflicting_cells": 0,
+          "paths": {
+            "Net1": []
+          }
+        },
+        {
+          "algorithm": "bfs",
+          "net_order": "numeric",
+          "router_success": false,
+          "classification": "infeasible_layout",
+          "absolute_gap": null,
+          "relative_gap_percent": null,
+          "physical_cost": null,
+          "routing_passes": 1,
+          "conflicting_cells": 0,
+          "paths": {
+            "Net1": []
+          }
+        },
+        {
+          "algorithm": "astar",
+          "net_order": "reverse",
+          "router_success": false,
+          "classification": "infeasible_layout",
+          "absolute_gap": null,
+          "relative_gap_percent": null,
+          "physical_cost": null,
+          "routing_passes": 1,
+          "conflicting_cells": 0,
+          "paths": {
+            "Net1": []
+          }
+        },
+        {
+          "algorithm": "dijkstra",
+          "net_order": "reverse",
+          "router_success": false,
+          "classification": "infeasible_layout",
+          "absolute_gap": null,
+          "relative_gap_percent": null,
+          "physical_cost": null,
+          "routing_passes": 1,
+          "conflicting_cells": 0,
+          "paths": {
+            "Net1": []
+          }
+        },
+        {
+          "algorithm": "bfs",
+          "net_order": "reverse",
+          "router_success": false,
+          "classification": "infeasible_layout",
+          "absolute_gap": null,
+          "relative_gap_percent": null,
+          "physical_cost": null,
+          "routing_passes": 1,
+          "conflicting_cells": 0,
+          "paths": {
+            "Net1": []
+          }
+        }
+      ]
+    },
+    {
+      "input": "benchmarks/exact/layouts/feasible_conflict.txt",
+      "oracle": {
+        "status": "optimal",
+        "optimal_cost": 8,
+        "independent_lower_bound": 6,
+        "paths": {
+          "Net1": [
+            {
+              "z": 0,
+              "x": 1,
+              "y": 2
+            },
+            {
+              "z": 0,
+              "x": 1,
+              "y": 1
+            },
+            {
+              "z": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "z": 0,
+              "x": 0,
+              "y": 0
+            }
+          ],
+          "Net2": [
+            {
+              "z": 0,
+              "x": 2,
+              "y": 2
+            },
+            {
+              "z": 0,
+              "x": 2,
+              "y": 3
+            },
+            {
+              "z": 0,
+              "x": 1,
+              "y": 3
+            },
+            {
+              "z": 0,
+              "x": 0,
+              "y": 3
+            },
+            {
+              "z": 0,
+              "x": 0,
+              "y": 2
+            },
+            {
+              "z": 0,
+              "x": 0,
+              "y": 1
+            }
+          ]
+        },
+        "states_examined": 46,
+        "candidate_paths": {
+          "Net1": 2,
+          "Net2": 3
+        },
+        "reason": "exhaustive_search"
+      },
+      "comparisons": [
+        {
+          "algorithm": "astar",
+          "net_order": "numeric",
+          "router_success": true,
+          "classification": "optimal",
+          "absolute_gap": 0,
+          "relative_gap_percent": 0.0,
+          "physical_cost": 8,
+          "routing_passes": 1,
+          "conflicting_cells": 0,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 1,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 0
+              }
+            ],
+            "Net2": [
+              {
+                "z": 0,
+                "x": 2,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 2,
+                "y": 3
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 3
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 3
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 1
+              }
+            ]
+          }
+        },
+        {
+          "algorithm": "dijkstra",
+          "net_order": "numeric",
+          "router_success": true,
+          "classification": "optimal",
+          "absolute_gap": 0,
+          "relative_gap_percent": 0.0,
+          "physical_cost": 8,
+          "routing_passes": 1,
+          "conflicting_cells": 0,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 1,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 0
+              }
+            ],
+            "Net2": [
+              {
+                "z": 0,
+                "x": 2,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 2,
+                "y": 3
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 3
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 3
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 1
+              }
+            ]
+          }
+        },
+        {
+          "algorithm": "bfs",
+          "net_order": "numeric",
+          "router_success": false,
+          "classification": "heuristic_failure",
+          "absolute_gap": null,
+          "relative_gap_percent": null,
+          "physical_cost": null,
+          "routing_passes": 1,
+          "conflicting_cells": 1,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 1,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 0
+              }
+            ],
+            "Net2": [
+              {
+                "z": 0,
+                "x": 2,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 2,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 1
+              }
+            ]
+          }
+        },
+        {
+          "algorithm": "astar",
+          "net_order": "reverse",
+          "router_success": true,
+          "classification": "optimal",
+          "absolute_gap": 0,
+          "relative_gap_percent": 0.0,
+          "physical_cost": 8,
+          "routing_passes": 2,
+          "conflicting_cells": 0,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 1,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 0
+              }
+            ],
+            "Net2": [
+              {
+                "z": 0,
+                "x": 2,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 2,
+                "y": 3
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 3
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 3
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 1
+              }
+            ]
+          }
+        },
+        {
+          "algorithm": "dijkstra",
+          "net_order": "reverse",
+          "router_success": true,
+          "classification": "optimal",
+          "absolute_gap": 0,
+          "relative_gap_percent": 0.0,
+          "physical_cost": 8,
+          "routing_passes": 2,
+          "conflicting_cells": 0,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 1,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 0
+              }
+            ],
+            "Net2": [
+              {
+                "z": 0,
+                "x": 2,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 2,
+                "y": 3
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 3
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 3
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 1
+              }
+            ]
+          }
+        },
+        {
+          "algorithm": "bfs",
+          "net_order": "reverse",
+          "router_success": false,
+          "classification": "heuristic_failure",
+          "absolute_gap": null,
+          "relative_gap_percent": null,
+          "physical_cost": null,
+          "routing_passes": 1,
+          "conflicting_cells": 1,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 1,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 0
+              }
+            ],
+            "Net2": [
+              {
+                "z": 0,
+                "x": 2,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 2,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "input": "benchmarks/exact/layouts/order_sensitive.txt",
+      "oracle": {
+        "status": "optimal",
+        "optimal_cost": 7,
+        "independent_lower_bound": 5,
+        "paths": {
+          "Net1": [
+            {
+              "z": 0,
+              "x": 2,
+              "y": 3
+            },
+            {
+              "z": 0,
+              "x": 1,
+              "y": 3
+            },
+            {
+              "z": 0,
+              "x": 0,
+              "y": 3
+            },
+            {
+              "z": 0,
+              "x": 0,
+              "y": 2
+            },
+            {
+              "z": 0,
+              "x": 0,
+              "y": 1
+            },
+            {
+              "z": 0,
+              "x": 1,
+              "y": 1
+            }
+          ],
+          "Net2": [
+            {
+              "z": 0,
+              "x": 1,
+              "y": 2
+            },
+            {
+              "z": 0,
+              "x": 2,
+              "y": 2
+            },
+            {
+              "z": 0,
+              "x": 3,
+              "y": 2
+            }
+          ]
+        },
+        "states_examined": 234,
+        "candidate_paths": {
+          "Net1": 9,
+          "Net2": 11
+        },
+        "reason": "exhaustive_search"
+      },
+      "comparisons": [
+        {
+          "algorithm": "astar",
+          "net_order": "numeric",
+          "router_success": true,
+          "classification": "suboptimal",
+          "absolute_gap": 4,
+          "relative_gap_percent": 57.142857142857146,
+          "physical_cost": 11,
+          "routing_passes": 1,
+          "conflicting_cells": 0,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 2,
+                "y": 3
+              },
+              {
+                "z": 0,
+                "x": 2,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 2,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              }
+            ],
+            "Net2": [
+              {
+                "z": 0,
+                "x": 1,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 2,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 3,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 3,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 3,
+                "y": 2
+              }
+            ]
+          }
+        },
+        {
+          "algorithm": "dijkstra",
+          "net_order": "numeric",
+          "router_success": true,
+          "classification": "suboptimal",
+          "absolute_gap": 4,
+          "relative_gap_percent": 57.142857142857146,
+          "physical_cost": 11,
+          "routing_passes": 1,
+          "conflicting_cells": 0,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 2,
+                "y": 3
+              },
+              {
+                "z": 0,
+                "x": 2,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 2,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              }
+            ],
+            "Net2": [
+              {
+                "z": 0,
+                "x": 1,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 2,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 3,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 3,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 3,
+                "y": 2
+              }
+            ]
+          }
+        },
+        {
+          "algorithm": "bfs",
+          "net_order": "numeric",
+          "router_success": false,
+          "classification": "heuristic_failure",
+          "absolute_gap": null,
+          "relative_gap_percent": null,
+          "physical_cost": null,
+          "routing_passes": 1,
+          "conflicting_cells": 1,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 2,
+                "y": 3
+              },
+              {
+                "z": 0,
+                "x": 2,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 2,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              }
+            ],
+            "Net2": [
+              {
+                "z": 0,
+                "x": 1,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 2,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 3,
+                "y": 2
+              }
+            ]
+          }
+        },
+        {
+          "algorithm": "astar",
+          "net_order": "reverse",
+          "router_success": true,
+          "classification": "optimal",
+          "absolute_gap": 0,
+          "relative_gap_percent": 0.0,
+          "physical_cost": 7,
+          "routing_passes": 1,
+          "conflicting_cells": 0,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 2,
+                "y": 3
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 3
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 3
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              }
+            ],
+            "Net2": [
+              {
+                "z": 0,
+                "x": 1,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 2,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 3,
+                "y": 2
+              }
+            ]
+          }
+        },
+        {
+          "algorithm": "dijkstra",
+          "net_order": "reverse",
+          "router_success": true,
+          "classification": "optimal",
+          "absolute_gap": 0,
+          "relative_gap_percent": 0.0,
+          "physical_cost": 7,
+          "routing_passes": 1,
+          "conflicting_cells": 0,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 2,
+                "y": 3
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 3
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 3
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              }
+            ],
+            "Net2": [
+              {
+                "z": 0,
+                "x": 1,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 2,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 3,
+                "y": 2
+              }
+            ]
+          }
+        },
+        {
+          "algorithm": "bfs",
+          "net_order": "reverse",
+          "router_success": false,
+          "classification": "heuristic_failure",
+          "absolute_gap": null,
+          "relative_gap_percent": null,
+          "physical_cost": null,
+          "routing_passes": 1,
+          "conflicting_cells": 1,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 2,
+                "y": 3
+              },
+              {
+                "z": 0,
+                "x": 2,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 2,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              }
+            ],
+            "Net2": [
+              {
+                "z": 0,
+                "x": 1,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 2,
+                "y": 2
+              },
+              {
+                "z": 0,
+                "x": 3,
+                "y": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "input": "benchmarks/exact/layouts/parallel.txt",
+      "oracle": {
+        "status": "optimal",
+        "optimal_cost": 4,
+        "independent_lower_bound": 4,
+        "paths": {
+          "Net1": [
+            {
+              "z": 0,
+              "x": 0,
+              "y": 0
+            },
+            {
+              "z": 0,
+              "x": 0,
+              "y": 1
+            },
+            {
+              "z": 0,
+              "x": 0,
+              "y": 2
+            }
+          ],
+          "Net2": [
+            {
+              "z": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "z": 0,
+              "x": 1,
+              "y": 1
+            },
+            {
+              "z": 0,
+              "x": 1,
+              "y": 2
+            }
+          ]
+        },
+        "states_examined": 13,
+        "candidate_paths": {
+          "Net1": 1,
+          "Net2": 1
+        },
+        "reason": "exhaustive_search"
+      },
+      "comparisons": [
+        {
+          "algorithm": "astar",
+          "net_order": "numeric",
+          "router_success": true,
+          "classification": "optimal",
+          "absolute_gap": 0,
+          "relative_gap_percent": 0.0,
+          "physical_cost": 4,
+          "routing_passes": 1,
+          "conflicting_cells": 0,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 0,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 2
+              }
+            ],
+            "Net2": [
+              {
+                "z": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 2
+              }
+            ]
+          }
+        },
+        {
+          "algorithm": "dijkstra",
+          "net_order": "numeric",
+          "router_success": true,
+          "classification": "optimal",
+          "absolute_gap": 0,
+          "relative_gap_percent": 0.0,
+          "physical_cost": 4,
+          "routing_passes": 1,
+          "conflicting_cells": 0,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 0,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 2
+              }
+            ],
+            "Net2": [
+              {
+                "z": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 2
+              }
+            ]
+          }
+        },
+        {
+          "algorithm": "bfs",
+          "net_order": "numeric",
+          "router_success": true,
+          "classification": "optimal",
+          "absolute_gap": 0,
+          "relative_gap_percent": 0.0,
+          "physical_cost": 4,
+          "routing_passes": 1,
+          "conflicting_cells": 0,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 0,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 2
+              }
+            ],
+            "Net2": [
+              {
+                "z": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 2
+              }
+            ]
+          }
+        },
+        {
+          "algorithm": "astar",
+          "net_order": "reverse",
+          "router_success": true,
+          "classification": "optimal",
+          "absolute_gap": 0,
+          "relative_gap_percent": 0.0,
+          "physical_cost": 4,
+          "routing_passes": 1,
+          "conflicting_cells": 0,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 0,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 2
+              }
+            ],
+            "Net2": [
+              {
+                "z": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 2
+              }
+            ]
+          }
+        },
+        {
+          "algorithm": "dijkstra",
+          "net_order": "reverse",
+          "router_success": true,
+          "classification": "optimal",
+          "absolute_gap": 0,
+          "relative_gap_percent": 0.0,
+          "physical_cost": 4,
+          "routing_passes": 1,
+          "conflicting_cells": 0,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 0,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 2
+              }
+            ],
+            "Net2": [
+              {
+                "z": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 2
+              }
+            ]
+          }
+        },
+        {
+          "algorithm": "bfs",
+          "net_order": "reverse",
+          "router_success": true,
+          "classification": "optimal",
+          "absolute_gap": 0,
+          "relative_gap_percent": 0.0,
+          "physical_cost": 4,
+          "routing_passes": 1,
+          "conflicting_cells": 0,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 0,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 0,
+                "y": 2
+              }
+            ],
+            "Net2": [
+              {
+                "z": 0,
+                "x": 1,
+                "y": 0
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 1
+              },
+              {
+                "z": 0,
+                "x": 1,
+                "y": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "input": "benchmarks/exact/layouts/via.txt",
+      "oracle": {
+        "status": "optimal",
+        "optimal_cost": 6,
+        "independent_lower_bound": 6,
+        "paths": {
+          "Net1": [
+            {
+              "z": 0,
+              "x": 0,
+              "y": 0
+            },
+            {
+              "z": 1,
+              "x": 0,
+              "y": 0
+            }
+          ]
+        },
+        "states_examined": 5,
+        "candidate_paths": {
+          "Net1": 1
+        },
+        "reason": "exhaustive_search"
+      },
+      "comparisons": [
+        {
+          "algorithm": "astar",
+          "net_order": "numeric",
+          "router_success": true,
+          "classification": "optimal",
+          "absolute_gap": 0,
+          "relative_gap_percent": 0.0,
+          "physical_cost": 6,
+          "routing_passes": 1,
+          "conflicting_cells": 0,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 0,
+                "y": 0
+              },
+              {
+                "z": 1,
+                "x": 0,
+                "y": 0
+              }
+            ]
+          }
+        },
+        {
+          "algorithm": "dijkstra",
+          "net_order": "numeric",
+          "router_success": true,
+          "classification": "optimal",
+          "absolute_gap": 0,
+          "relative_gap_percent": 0.0,
+          "physical_cost": 6,
+          "routing_passes": 1,
+          "conflicting_cells": 0,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 0,
+                "y": 0
+              },
+              {
+                "z": 1,
+                "x": 0,
+                "y": 0
+              }
+            ]
+          }
+        },
+        {
+          "algorithm": "bfs",
+          "net_order": "numeric",
+          "router_success": true,
+          "classification": "optimal",
+          "absolute_gap": 0,
+          "relative_gap_percent": 0.0,
+          "physical_cost": 6,
+          "routing_passes": 1,
+          "conflicting_cells": 0,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 0,
+                "y": 0
+              },
+              {
+                "z": 1,
+                "x": 0,
+                "y": 0
+              }
+            ]
+          }
+        },
+        {
+          "algorithm": "astar",
+          "net_order": "reverse",
+          "router_success": true,
+          "classification": "optimal",
+          "absolute_gap": 0,
+          "relative_gap_percent": 0.0,
+          "physical_cost": 6,
+          "routing_passes": 1,
+          "conflicting_cells": 0,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 0,
+                "y": 0
+              },
+              {
+                "z": 1,
+                "x": 0,
+                "y": 0
+              }
+            ]
+          }
+        },
+        {
+          "algorithm": "dijkstra",
+          "net_order": "reverse",
+          "router_success": true,
+          "classification": "optimal",
+          "absolute_gap": 0,
+          "relative_gap_percent": 0.0,
+          "physical_cost": 6,
+          "routing_passes": 1,
+          "conflicting_cells": 0,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 0,
+                "y": 0
+              },
+              {
+                "z": 1,
+                "x": 0,
+                "y": 0
+              }
+            ]
+          }
+        },
+        {
+          "algorithm": "bfs",
+          "net_order": "reverse",
+          "router_success": true,
+          "classification": "optimal",
+          "absolute_gap": 0,
+          "relative_gap_percent": 0.0,
+          "physical_cost": 6,
+          "routing_passes": 1,
+          "conflicting_cells": 0,
+          "paths": {
+            "Net1": [
+              {
+                "z": 0,
+                "x": 0,
+                "y": 0
+              },
+              {
+                "z": 1,
+                "x": 0,
+                "y": 0
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
