@@ -23,6 +23,15 @@ def main():
                 raise RuntimeError(f'{name}/{algorithm}: expected {expected}, got {proc.returncode}: {proc.stderr}')
             if validate(layout,json.loads(output.read_text())) != (expected==0):
                 raise RuntimeError('Independent validation disagrees')
+        for path in sorted((ROOT/'benchmarks/multiterminal/layouts').glob('*.txt')):
+            expected=2 if path.stem=='incomplete_terminal' else 0
+            output=directory/f'{path.stem}_{algorithm}.json'
+            proc=subprocess.run([str(ROOT/'router'),'--input',str(path),'--algorithm',algorithm,
+                                 '--output',str(output)],capture_output=True,text=True)
+            if proc.returncode!=expected:
+                raise RuntimeError(f'{path.stem}/{algorithm}: expected {expected}, got {proc.returncode}: {proc.stderr}')
+            if validate(path,json.loads(output.read_text())) != (expected==0):
+                raise RuntimeError('Multi-terminal independent validation disagrees')
     invalid=directory/'invalid.txt';invalid.write_text('1 2\nS1\n')
     proc=subprocess.run([str(ROOT/'router'),'--input',str(invalid),'--output',str(directory/'bad.json')],capture_output=True)
     if proc.returncode != 1 or (directory/'bad.json').exists():
@@ -33,14 +42,17 @@ def main():
         raise RuntimeError('Validator script accepted invalid input')
     command=[sys.executable,str(ROOT/'benchmarks/run_benchmarks.py'),'--skip-build',
              '--repetitions','2','--results-dir',str(directory/'benchmark')]
-    for name in ('simple_2d','multilayer','impossible'):
-        command+=['--input',str(ROOT/f'benchmarks/layouts/{name}.txt')]
+    for path in [ROOT/'benchmarks/layouts/simple_2d.txt',
+                 *sorted((ROOT/'benchmarks/multiterminal/layouts').glob('*.txt'))]:
+        command+=['--input',str(path)]
     subprocess.run(command,check=True,cwd=ROOT)
     with (directory/'benchmark/results.csv').open() as file:
         rows=list(csv.DictReader(file))
-    if len(rows)!=18 or any(r['output_verified']!='True' for r in rows):
+    if len(rows)!=30 or any(r['output_verified']!='True' for r in rows):
         raise RuntimeError('Benchmark smoke results incomplete')
-    print(f'Smoke passed: 12 routing cases, invalid input/script checks, 18 benchmark observations. Logs: {directory}')
+    if any('net_failures' not in r or not r['termination_reason'] for r in rows):
+        raise RuntimeError('Benchmark termination/per-net failure records missing')
+    print(f'Smoke passed: 24 routing cases, invalid input/script checks, 30 benchmark observations. Logs: {directory}')
 
 
 if __name__ == '__main__':
