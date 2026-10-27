@@ -4,17 +4,18 @@
 
 This independent technical project explores simplified VLSI interconnect routing
 through a C++17 implementation of A*, Dijkstra, and breadth-first search. It models
-two-pin nets on layered grids with obstacles, layer-transition costs, and limited
-cell capacity. A separate validator checks path geometry and shared-cell conflicts,
-preventing short but infeasible routes from being reported as successful solutions.
+two-terminal nets and deterministic multi-terminal tree growth on layered grids
+with obstacles, layer-transition costs, and limited cell capacity. A separate
+validator checks path/tree geometry, terminal connectivity, and shared-cell conflicts,
+preventing partial or infeasible routes from being reported as successful solutions.
 The project combines deterministic oracle tests, sanitizer checks, a command-line
 interface, Python visualization, and reproducible benchmark records. Experiments
 examine the differences between unweighted and weighted objectives, the effects
 of congestion history, and sensitivity to net ordering across additional obstacle
 seeds. Results demonstrate engineering trade-offs rather than universal algorithmic
-superiority. The model is educational: it does not implement manufacturing design
-rules, electrical analysis, multi-terminal routing, or a complete physical-design
-workflow.
+superiority. Multi-terminal growth is a heuristic rather than an exact Steiner
+solver. The model is educational: it does not implement manufacturing design rules,
+electrical analysis, or a complete physical-design workflow.
 
 ## B. Four technical contributions
 
@@ -27,12 +28,16 @@ workflow.
   multi-net exact reference checked against 60 independent edge-subset cases.
 - Developed reproducible experiments with raw CSV, input/source hashes, measured
   timing variation, explicit failures, and controlled seed/order comparisons.
+- Added backwards-compatible `P<id>` terminals, multi-source tree growth, edge-tree
+  JSON, independent tree validation, and visualization of shared branches. Existing
+  two-pin input and JSON paths remain supported.
 
 ## C. Problem addressed
 
-Connect every two-pin net on a layered grid while respecting obstacles and
-unit-capacity cells. An individually legal path can still conflict with another
-net. Success requires every required net to be locally legal and mutually disjoint.
+Connect all required terminals of each net on a layered grid while respecting
+obstacles and unit-capacity cells between different nets. Same-net branches may
+share cells and edges. Success requires every terminal to belong to a locally legal,
+connected, acyclic route tree and every net to be mutually disjoint from the others.
 
 ## D. Engineering decisions and trade-offs
 
@@ -45,7 +50,11 @@ Full rip-up/reroute is simple to understand, but can repeat work or fail to
 converge. Deterministic BFS does not respond to those weights, so it stops after
 one pass while retaining its failure status. Numeric net order remains the
 default; reverse order is an optional controlled experiment. Paths remain indexed
-by their original net identities under either schedule.
+by their original net identities under either schedule. For a multi-terminal net,
+the router starts at S and attaches T followed by P terminals in row-major input
+order. Each attachment is a multi-source search from the existing tree to the new
+terminal. This greedy schedule is deterministic but may miss a better branch order
+or globally shorter tree. Shared branches are stored as unique undirected edges.
 
 ## E. Actual experiments completed
 
@@ -66,6 +75,17 @@ by their original net identities under either schedule.
   separating global infeasibility, heuristic failure, and suboptimal feasible routing.
   The local gate passed 17 C++ groups, 23 Python tests, and ASan/UBSan. Hosted CI
   has not yet verified this addition; it is not covered by the earlier run.
+- The multi-terminal extension has 21 C++ test groups and 26 Python tests; two
+  plotting tests are skipped in the current local environment because Plotly is
+  not installed. The CLI smoke gate validates 24 route executions and 30 benchmark
+  observations. A 120-observation fixed-layout experiment compares each tree case
+  with its S/T-only projection; all outputs passed independent validation. These
+  projections require fewer terminals and are not a like-for-like quality baseline.
+  The [raw results and comparison](../benchmarks/multiterminal/experiment_20261026_final/RESULTS.md)
+  include per-net failures, termination reasons, and recorded hashes. The updated
+  GitHub workflow has not yet run. A separate [compatibility check](../benchmarks/multiterminal/COMPATIBILITY.md)
+  matched route geometry and core metrics against the prior source snapshot on all
+  42 original two-pin layout/algorithm pairs.
 
 ## F. What the results show
 
@@ -80,20 +100,23 @@ The [exact-reference study](EXACT_ROUTING.md) provides a concrete global-quality
 counterexample: numeric A*/Dijkstra return cost 11 where the exact optimum is 7,
 while reverse order attains 7. It also shows a feasible layout on which BFS fails.
 These intentionally selected tiny examples explain limitations, not their frequency.
+For multi-terminal routing, exhaustive edge-subset enumeration confirms that the
+five-terminal 3×3 branch fixture has a four-edge optimum, which all three growth
+variants attain. This single tiny case is not evidence of general Steiner optimality.
 
 ## G. What the results do not establish
 
 The project does not establish statistical superiority across real circuits,
-industrial EDA performance, global multi-net optimality, or manufacturability.
+industrial EDA performance, global multi-net or Steiner optimality, or manufacturability.
 Five independent obstacle layouts are a small synthetic sample. Repeated timings
 measure run-to-run variation, not additional independent designs. These results
 are neither a publication nor a completed fabrication workflow.
 
 ## H. CV-ready description
 
-Implemented and evaluated C++17 A*, Dijkstra, and BFS routing on multilayer grids,
-with independent path validation, congestion rerouting, oracle and sanitizer
-tests, and reproducible experiments on routing cost, feasibility, and net order.
+Implemented and evaluated C++17 A*, Dijkstra, BFS, and deterministic incremental
+multi-terminal tree growth on multilayer grids, with independent route validation,
+congestion rerouting, small-instance oracle tests, and reproducible experiments.
 
 ## I–J. Five likely interview questions and answers
 
@@ -117,8 +140,9 @@ global optimality or convergence guarantee.
 
 A low physical cost can describe overlapping candidate paths. The validator
 rebuilds cell ownership and marks every net sharing a cell as globally invalid.
-Empty paths also fail. All required nets must pass before the executable returns
-success; a cheaper conflicted candidate is not a better feasible solution.
+Disconnected partial trees also fail. All required terminals must be connected and
+all nets conflict-free before the executable returns success; a cheaper partial
+candidate is not a feasible solution.
 
 **4. What do VIA costs and congestion history do?**
 
@@ -131,6 +155,6 @@ moment of search. BFS ignores these weights while choosing its path.
 **5. What is missing compared with industrial VLSI routing?**
 
 The grid lacks real process geometry, wire width and spacing, layer preferences,
-timing, parasitics, crosstalk, antenna constraints, multi-pin connectivity, and
-manufacturing checks. Its inputs are synthetic educational layouts. A validated
-route satisfies this discrete model only; it is not a sign-off-ready chip layout.
+timing, parasitics, crosstalk, antenna constraints, and manufacturing checks. Its
+inputs are synthetic educational layouts. A validated route satisfies this discrete
+model only; it is not a sign-off-ready chip layout.

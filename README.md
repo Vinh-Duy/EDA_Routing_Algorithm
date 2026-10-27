@@ -17,8 +17,9 @@ shortest-path algorithm or global routing optimality is claimed.
   Manhattan heuristic. **BFS** minimizes unweighted graph-edge count.
 - Planar edges cost 1; adjacent-layer transitions (VIAs) cost 6. Occupied cells
   and past conflicts add temporary search penalties.
-- All required nets must have legal, nonempty, mutually disjoint paths. A low-cost
-  but conflicting collection of paths is an unsuccessful result.
+- A net may have the legacy S/T pair or additional P terminals. Every terminal
+  must connect into a legal, mutually disjoint route tree. Partial trees and
+  cross-net conflicts are unsuccessful results.
 - Numeric net order is the default. Optional reverse order changes scheduling
   while preserving net identities. Full rip-up/reroute retains congestion history.
   BFS stops after one pass because these weights cannot change its paths.
@@ -46,9 +47,18 @@ existing output file can still be replaced; writes are not transactional.
 
 Input headers are `rows cols` or `layers rows cols`. Each nonblank row contains
 exactly `cols` tokens: `.` empty, `#` obstacle, `S<number>` source, `T<number>`
-target. Duplicate/missing pins and malformed dimensions are rejected. Net IDs may
-have gaps. The six original datasets are unchanged by the current audit; earlier
-row repairs are documented in [the original audit](docs/AUDIT.md).
+target, and zero or more `P<number>` additional terminals. P tokens repeat the
+owning net ID; each P requires a matching S/T pair. Duplicate S/T pins and
+malformed dimensions are rejected. Net IDs may have gaps. Two-terminal JSON
+keeps its ordered `path`; a multi-terminal net returns a deduplicated `tree_edges`
+list and all terminals. The six original datasets are unchanged by the current
+audit; earlier row repairs are documented in [the original audit](docs/AUDIT.md).
+
+Multi-terminal routing grows a tree deterministically, attaching T and then P
+terminals in input order with A*/Dijkstra multi-source weighted search or
+multi-source BFS. This is a heuristic, not a Rectilinear Steiner Minimum Tree
+solver. Its only geometric capacity rule is exclusive grid-cell ownership across
+nets; shared cells and edges within one net are allowed.
 
 ## Test and visualize
 
@@ -84,6 +94,9 @@ check, not the full archived experiments. This hosted CI result is separate from
 the local verification records and benchmark measurements below; it does not
 remeasure their timings or establish universal portability or performance.
 That run predates the new exact-reference tests; their hosted execution is not yet verified.
+The current workflow's `make test` and CLI smoke gate now include multi-terminal
+fixtures and the tiny edge-subset reference. The updated workflow itself has not
+yet been run by GitHub Actions.
 
 ![Representative validated A* routes](benchmarks/figures/routing_example.png)
 
@@ -141,19 +154,25 @@ Fewer expanded nodes need not mean less runtime: allocation, queues, validation,
 cache behavior, and system load also matter. Physical cost is planar wirelength
 plus six times VIA count; historical search cost is a separate quantity.
 
-This model has two-pin nets and unit-capacity cells. It does not model wire
+The grid model uses exclusive cells between nets and does not model wire
 width/spacing, process rules, timing, parasitics, preferred layer directions, or
-manufacturability. Rerouting can cycle or exhaust its budget. Five new synthetic
-obstacle layouts and measurements on one machine do not establish statistical or
-industrial superiority. Future work includes more layouts and pin placements,
-selective rip-up, parameter sensitivity, and geometric constraints.
+manufacturability. Tree growth is order-dependent, may produce a nonminimal tree,
+and has no convergence or optimality guarantee. The multi-terminal experiment
+compares fixed tree inputs with S/T-only projections, which have fewer required
+terminals; it is a compatibility/work-effort control, not an equal-connectivity
+quality comparison. Measurements on one machine and a few hand-designed layouts
+do not establish statistical or industrial superiority. See the
+[design specification](docs/MULTI_TERMINAL_DESIGN.md) and
+[recorded experiment](benchmarks/multiterminal/experiment_20261026_final/RESULTS.md)
+and [its artifact index](benchmarks/multiterminal/README.md).
 
 ## Repository guide
 
 `src/` contains strategies, layout parsing, routing, validation, and JSON output;
 `tests/` contains C++/Python checks and the CI smoke gate. `benchmarks/` holds
 scripts and preserved experiments; `docs/verification/` holds audit logs and
-preservation hashes. `visualize.py` displays ordered routes and VIA transitions.
+preservation hashes. `visualize.py` displays ordered paths or shared tree edges,
+all terminals, obstacles, conflicts, and VIA transitions.
 
 Further reading: [technical report](benchmarks/REPORT.md),
 [current audit](docs/ENGINEERING_AUDIT.md),
