@@ -19,7 +19,7 @@ from validate_output import validate
 ROOT = Path(__file__).resolve().parents[1]
 ALGORITHMS = ('astar', 'dijkstra', 'bfs')
 METRICS = ('total_nets', 'routed_nets', 'success_rate', 'unrouted_nets', 'invalid_nets',
-           'unresolved_conflicts', 'wirelength', 'via_count', 'graph_steps', 'weighted_cost',
+           'unresolved_conflicts', 'unconnected_terminals', 'branch_count', 'wirelength', 'via_count', 'graph_steps', 'weighted_cost',
            'search_cost', 'routing_passes', 'reroute_iterations', 'runtime_ms', 'nodes_expanded')
 
 
@@ -107,6 +107,13 @@ def main():
                 raise ValueError('Nondeterministic route or quality metrics')
             fingerprints[key] = signature
             row.update({key: data['metrics'][key] for key in METRICS})
+            row['net_failures'] = json.dumps([
+                {'name': net['name'],
+                 'reason': ('unconnected_terminals' if net.get('unconnected_terminals', 0) else
+                            'invalid_route' if not net['local_valid'] else 'cross_net_conflict'),
+                 'connected_terminals': net.get('connected_terminals', 0),
+                 'unconnected_terminals': net.get('unconnected_terminals', 0)}
+                for net in data['nets'] if not net['valid']], separators=(',', ':'))
             row.update(success=success, output_verified=True, status='success' if success else 'routing_failed')
             row['termination_reason'] = data.get('termination_reason', '')
         except (subprocess.TimeoutExpired, ValueError, OSError, KeyError, TypeError, IndexError) as error:
@@ -123,7 +130,7 @@ def main():
             rows.append(execute(path, algorithm, repetition))
         print(f'Completed repetition {repetition+1}/{args.repetitions}', flush=True)
     fields = ['dataset', 'input', 'algorithm', 'repetition', 'status', 'returncode', 'success',
-              'output_verified', 'termination_reason', 'net_order', *METRICS, 'process_wall_ms', 'error']
+              'output_verified', 'termination_reason', 'net_order', *METRICS, 'net_failures', 'process_wall_ms', 'error']
     with (output_dir / 'results.csv').open('w', newline='') as file:
         writer = csv.DictWriter(file, fieldnames=fields)
         writer.writeheader(); writer.writerows(rows)
@@ -137,6 +144,7 @@ def main():
                            verified_runs=len(verified), successful_runs=sum(r['success'] is True for r in group),
                            execution_errors=len(group)-len(verified),
                            termination_reason=verified[0]['termination_reason'] if verified else '',
+                           net_failures=verified[0].get('net_failures', '') if verified else '',
                            net_order=args.net_order)
             for key, fn in [('median_ms',statistics.median),('mean_ms',statistics.mean),
                             ('stdev_ms',lambda xs: statistics.stdev(xs) if len(xs)>1 else 0),
