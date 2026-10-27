@@ -28,7 +28,9 @@ class CLITests(unittest.TestCase):
     def test_all_original_and_generated_datasets(self):
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory)/'route.json'
-            for path in sorted((ROOT/'data').glob('*.txt'))+sorted((ROOT/'benchmarks/layouts').glob('*.txt')):
+            paths=(sorted((ROOT/'data').glob('*.txt'))+sorted((ROOT/'benchmarks/layouts').glob('*.txt'))+
+                   sorted((ROOT/'benchmarks/multiterminal/layouts').glob('*.txt')))
+            for path in paths:
                 for algorithm in ('astar','dijkstra','bfs'):
                     with self.subTest(path=path.name,algorithm=algorithm):
                         proc=self.run_router('--input',str(path),'--algorithm',algorithm,'--output',str(output))
@@ -52,7 +54,9 @@ class CLITests(unittest.TestCase):
     def test_reverse_order_all_datasets(self):
         with tempfile.TemporaryDirectory() as directory:
             out=Path(directory)/'out.json'
-            for path in sorted((ROOT/'data').glob('*.txt'))+sorted((ROOT/'benchmarks/layouts').glob('*.txt')):
+            paths=(sorted((ROOT/'data').glob('*.txt'))+sorted((ROOT/'benchmarks/layouts').glob('*.txt'))+
+                   sorted((ROOT/'benchmarks/multiterminal/layouts').glob('*.txt')))
+            for path in paths:
                 for algorithm in ('astar','dijkstra','bfs'):
                     proc=self.run_router('--input',str(path),'--algorithm',algorithm,
                         '--net-order','reverse','--output',str(out))
@@ -67,6 +71,32 @@ class CLITests(unittest.TestCase):
             self.run_router('--input',str(layout),'--output',str(out))
             data=json.loads(out.read_text()); data['nets'][0]['path'][0]['x']=999
             with self.assertRaises(ValueError): validate(layout,data)
+
+    @unittest.skipUnless(importlib.util.find_spec('plotly'), 'Plotly optional; install requirements.txt to test rendering')
+    def test_multiterminal_outputs_and_tree_rendering(self):
+        from visualize import build_figure
+        with tempfile.TemporaryDirectory() as directory:
+            out=Path(directory)/'route.json'
+            for layout in sorted((ROOT/'benchmarks/multiterminal/layouts').glob('*.txt')):
+                for algorithm in ('astar','dijkstra','bfs'):
+                    proc=self.run_router('--input',str(layout),'--algorithm',algorithm,'--output',str(out))
+                    self.assertIn(proc.returncode,(0,2),proc.stderr)
+                    data=json.loads(out.read_text())
+                    self.assertEqual(validate(layout,data),proc.returncode==0)
+                    fig=build_figure(data)
+                    net=data['nets'][0]
+                    if len(net['terminals'])>2:
+                        self.assertEqual(len(net['tree_edges']),len({tuple(tuple(p[k] for k in ('z','x','y')) for p in e) for e in net['tree_edges']}))
+                        self.assertTrue(any(t.name.endswith('shared tree') for t in fig.data))
+                        pins=next(t for t in fig.data if t.name==net['name']+' pins')
+                        self.assertEqual(len(pins.x),len(net['terminals']))
+
+    def test_python_layout_parser_rejects_malformed_extra_terminals(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)/'bad.txt'
+            for content in ('1 3\nS1 P2 T1\n','1 3\nP1 S1 T1\n','1 4\nS1 T1 T1 P1\n'):
+                path.write_text(content)
+                with self.assertRaises(ValueError):validate(path, {})
 
     def test_input_cannot_be_overwritten_through_aliases(self):
         with tempfile.TemporaryDirectory() as directory:
