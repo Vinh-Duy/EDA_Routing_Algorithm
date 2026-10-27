@@ -12,19 +12,37 @@ def build_figure(data):
         path = net.get('path', [])  # Source-to-target order; never mutate input.
         color = qualitative.Dark24[idx % len(qualitative.Dark24)]
         name = net['name']
-        status = 'valid' if net.get('valid', bool(path)) else ('unrouted' if not path else 'conflicted/invalid')
+        tree_edges = net.get('tree_edges', [])
+        status = 'valid' if net.get('valid', bool(path or tree_edges)) else ('unrouted' if not path and not tree_edges else 'conflicted/invalid')
         coords = {axis: [p[axis] for p in path] for axis in ('x','y','z')}
         fig.add_trace(go.Scatter3d(**coords, mode='lines', name=f'{name} ({status})',
                                   line=dict(color=color, width=5, dash='solid' if status=='valid' else 'dash')))
+        if tree_edges:
+            # One trace with None separators renders each shared tree edge once.
+            x, y, z = [], [], []
+            for a, b in tree_edges:
+                x.extend([a['x'], b['x'], None]); y.extend([a['y'], b['y'], None]); z.extend([a['z'], b['z'], None])
+                if a['z'] != b['z']:
+                    fig.add_trace(go.Scatter3d(**{k:[a[k],b[k]] for k in ('x','y','z')},
+                        mode='lines+markers', name=f'{name} VIA', legendgroup=name, showlegend=False,
+                        line=dict(color=color,width=10), marker=dict(size=5,symbol='diamond',color=color),
+                        hovertemplate=f'{name} VIA<br>row=%{{x}}, col=%{{y}}, layer=%{{z}}<extra></extra>'))
+            fig.add_trace(go.Scatter3d(x=x, y=y, z=z, mode='lines', name=f'{name} shared tree',
+                                      legendgroup=name, line=dict(color=color,width=5,dash='solid' if status=='valid' else 'dash')))
         for a,b in zip(path,path[1:]):
             if a['z'] != b['z']:
                 fig.add_trace(go.Scatter3d(**{k:[a[k],b[k]] for k in ('x','y','z')},
                     mode='lines+markers', name=f'{name} VIA', legendgroup=name, showlegend=False,
                     line=dict(color=color,width=10), marker=dict(size=5,symbol='diamond',color=color),
                     hovertemplate=f'{name} VIA<br>row=%{{x}}, col=%{{y}}, layer=%{{z}}<extra></extra>'))
-        source = net.get('source', path[0] if path else None)
-        target = net.get('target', path[-1] if path else None)
-        pins = [(p,label) for p,label in [(source,'S'),(target,'T')] if p is not None]
+        terminals = net.get('terminals', [])
+        if terminals:
+            labels = ['S', 'T'] + ['P'] * max(0, len(terminals)-2)
+            pins = list(zip(terminals, labels))
+        else:
+            source = net.get('source', path[0] if path else None)
+            target = net.get('target', path[-1] if path else None)
+            pins = [(p,label) for p,label in [(source,'S'),(target,'T')] if p is not None]
         if pins:
             fig.add_trace(go.Scatter3d(**{k:[p[k] for p,_ in pins] for k in ('x','y','z')},
                 mode='markers+text', text=[label+name.removeprefix('Net') for _,label in pins],

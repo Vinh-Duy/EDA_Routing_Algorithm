@@ -43,6 +43,8 @@ def main():
              ('via_count', 'VIA count (adjacent layer transitions)', 'vias'),
              ('success_rate', 'Conflict-free valid nets (%)', 'success_rate'),
              ('nodes_expanded', 'Search nodes expanded (all routing passes)', 'nodes_expanded')]
+    if all('branch_count' in row for row in rows):
+        plots.append(('branch_count', 'Unique degree-three-or-more branch vertices', 'branch_count'))
     for metric, ylabel, filename in plots:
         fig, ax = plt.subplots(figsize=(15, 6.5))
         for a, (algorithm, color) in enumerate(zip(ALGORITHMS, COLORS)):
@@ -87,21 +89,21 @@ def main():
              'Generated from `results.csv`. Runtime is median / mean / sample standard deviation in ms. '
              'Quality is deterministic across verified repetitions. Failed runs retain partial-path quality; '
              'it is not a complete routing solution.', '',
-             '| Dataset | Algorithm | Runs verified | Successful runs | Valid nets | Conflicts | Wire | VIAs | Cost | Passes | Expanded | Runtime ms (median / mean / SD) |',
-             '|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|']
+             '| Dataset | Algorithm | Runs verified | Successful runs | Valid nets | Conflicts | Wire | VIAs | Branches | Cost | Passes | Expanded | Runtime ms (median / mean / SD) |',
+             '|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|']
     for dataset in datasets:
         for algorithm in ALGORITHMS:
             group = grouped[dataset,algorithm]
             verified = [r for r in group if r['output_verified']=='True']
             if not verified:
-                table.append(f'| {dataset} | {algorithm} | 0 | 0 | — | — | — | — | — | — | — | execution failure |')
+                table.append(f'| {dataset} | {algorithm} | 0 | 0 | — | — | — | — | — | — | — | — | execution failure |')
                 continue
             r=verified[0]; times=[float(x['runtime_ms']) for x in verified]
             success=sum(x['success']=='True' for x in verified)
             sd=statistics.stdev(times) if len(times)>1 else 0
             table.append(f"| {dataset} | {algorithm} | {len(verified)}/{len(group)} | {success} | "
                          f"{r['routed_nets']}/{r['total_nets']} | {r['unresolved_conflicts']} | {r['wirelength']} | "
-                         f"{r['via_count']} | {r['weighted_cost']} | {r['routing_passes']} | {r['nodes_expanded']} | "
+                         f"{r['via_count']} | {r.get('branch_count','—')} | {r['weighted_cost']} | {r['routing_passes']} | {r['nodes_expanded']} | "
                          f"{statistics.median(times):.6f} / {statistics.mean(times):.6f} / {sd:.6f} |")
     report = args.report or args.csv.parent/'RESULTS.md'
     report.write_text('\n'.join(table)+'\n')
@@ -110,13 +112,18 @@ def main():
         data=json.loads(args.route.read_text())
         fig=plt.figure(figsize=(10,8)); ax=fig.add_subplot(111,projection='3d')
         for i,net in enumerate(data['nets']):
-            path=net['path']; color=plt.get_cmap('tab20')(i%20)
+            path=net['path']; edges=net.get('tree_edges', []); color=plt.get_cmap('tab20')(i%20)
             ax.plot([p['x'] for p in path],[p['y'] for p in path],[p['z'] for p in path],
                     color=color,label=net['name'],linestyle='-' if net.get('valid') else '--')
-            for a,b in zip(path,path[1:]):
+            segments=edges if edges else list(zip(path,path[1:]))
+            for a,b in segments:
                 if a['z']!=b['z']:
                     ax.plot([a['x'],b['x']],[a['y'],b['y']],[a['z'],b['z']],color=color,linewidth=4)
-            for p,label in [(net['source'],'S'),(net['target'],'T')]:
+                else:
+                    ax.plot([a['x'],b['x']],[a['y'],b['y']],[a['z'],b['z']],color=color,linewidth=2)
+            terminals=net.get('terminals', [])
+            pins=list(zip(terminals,['S','T']+['P']*max(0,len(terminals)-2))) if terminals else [(net['source'],'S'),(net['target'],'T')]
+            for p,label in pins:
                 ax.scatter(p['x'],p['y'],p['z'],color=color,s=20)
                 ax.text(p['x'],p['y'],p['z'],label+net['name'][3:],fontsize=7)
         conflicts=[c['cell'] for c in data.get('conflicts',[])]
