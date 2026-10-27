@@ -7,12 +7,25 @@
 #include <cstdlib>
 #include <stdexcept>
 #include <string>
+#include <tuple>
 #include <vector>
 
 struct Point3D { int z, x, y; };
 inline bool operator==(Point3D a, Point3D b) { return a.z == b.z && a.x == b.x && a.y == b.y; }
 inline bool operator!=(Point3D a, Point3D b) { return !(a == b); }
-struct Net3D { std::string name; Point3D src, dst; };
+struct Net3D {
+    std::string name;
+    Point3D src, dst;
+    // Canonical order is source, target, then extra terminals in input order.
+    std::vector<Point3D> terminals;
+};
+inline bool pointLess(Point3D a, Point3D b) {
+    return std::tie(a.z,a.x,a.y) < std::tie(b.z,b.x,b.y);
+}
+struct TreeEdge3D { Point3D a, b; };
+inline bool operator==(TreeEdge3D x, TreeEdge3D y) { return x.a==y.a && x.b==y.b; }
+struct RouteTree3D { std::vector<TreeEdge3D> edges; };
+inline bool operator==(const RouteTree3D& a,const RouteTree3D& b) { return a.edges==b.edges; }
 using Cost = std::int64_t;
 using Path = std::vector<Point3D>;
 constexpr Cost VIA_STEP_COST = 6; // One graph edge plus five units of VIA penalty.
@@ -38,7 +51,11 @@ struct Layout {
     bool legal(Point3D p, const Net3D& net) const {
         if (!contains(p)) return false;
         const auto& cell = cells.at(index(p));
-        return cell != "#" && (cell == "." || p == net.src || p == net.dst);
+        if (cell=="#") return false;
+        if (cell==".") return true;
+        if (!net.terminals.empty())
+            return std::find(net.terminals.begin(),net.terminals.end(),p)!=net.terminals.end();
+        return p == net.src || p == net.dst;
     }
 };
 inline int distance(Point3D a, Point3D b) {
@@ -61,6 +78,12 @@ public:
     virtual SearchResult route(const Layout& layout, const Net3D& net,
                                const std::vector<int>& occupancy,
                                const std::vector<Cost>& history) const = 0;
+    // Extend a connected tree from any of its cells to one remaining terminal.
+    virtual SearchResult routeToTree(const Layout& layout, const Net3D& net,
+                                     const std::vector<int>& treeSources, int target,
+                                     const std::vector<int>& occupancy,
+                                     const std::vector<Cost>& history,
+                                     const std::vector<bool>& ownTree) const = 0;
     virtual ~IRouter3D() = default;
 };
 #endif

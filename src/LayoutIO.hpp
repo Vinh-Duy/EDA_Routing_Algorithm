@@ -4,6 +4,7 @@
 #include <fstream>
 #include <map>
 #include <sstream>
+#include <set>
 
 inline int positiveInteger(const std::string& text) {
     if (text.empty() || text[0] < '1' || text[0] > '9' ||
@@ -29,6 +30,8 @@ inline Layout readLayout(std::istream& input) {
     if (l.layers>maxCells/l.rows || l.layers*l.rows>maxCells/l.cols)
         throw std::runtime_error("Layout exceeds 1,000,000 cells");
     std::map<int,Point3D> sources,targets;
+    std::map<int,std::vector<Point3D>> extras;
+    std::set<std::pair<char,int>> seenPins;
     int row=0, lineNumber=1;
     while (std::getline(input,line)) {
         ++lineNumber;
@@ -41,12 +44,16 @@ inline Layout readLayout(std::istream& input) {
         for (int y=0;y<l.cols;++y) {
             const auto& cell=cells[y];
             if (cell != "." && cell != "#") {
-                if (cell.size()<2 || (cell[0]!='S' && cell[0]!='T'))
+                if (cell.size()<2 || (cell[0]!='S' && cell[0]!='T' && cell[0]!='P'))
                     throw std::runtime_error("Unknown cell token: " + cell);
+                char role=cell[0];
                 int id=positiveInteger(cell.substr(1));
-                auto& pins=cell[0]=='S' ? sources : targets;
-                if (!pins.emplace(id,Point3D{row/l.rows,row%l.rows,y}).second)
+                if (role!='P' && !seenPins.emplace(role,id).second)
                     throw std::runtime_error("Duplicate pin: " + cell);
+                Point3D pin{row/l.rows,row%l.rows,y};
+                if (role=='S') sources.emplace(id,pin);
+                else if (role=='T') targets.emplace(id,pin);
+                else extras[id].push_back(pin);
             }
             l.cells.push_back(cell);
         }
@@ -55,9 +62,18 @@ inline Layout readLayout(std::istream& input) {
     if (row != l.layers*l.rows) throw std::runtime_error("Incomplete layout: missing rows");
     if (sources.empty() || sources.size()!=targets.size())
         throw std::runtime_error("Layout needs at least one complete source/target pair");
+    for (const auto& [id,pins]: extras) {
+        (void)pins;
+        if (!sources.count(id) || !targets.count(id))
+            throw std::runtime_error("Additional pin has no matching source/target: P"+std::to_string(id));
+    }
     for (const auto& [id,src]: sources) {
         if (!targets.count(id)) throw std::runtime_error("Missing target for S" + std::to_string(id));
-        l.nets.push_back({"Net"+std::to_string(id),src,targets.at(id)});
+        std::vector<Point3D> terminals{src,targets.at(id)};
+        auto additional=extras.find(id);
+        if (additional!=extras.end())
+            terminals.insert(terminals.end(),additional->second.begin(),additional->second.end());
+        l.nets.push_back({"Net"+std::to_string(id),src,targets.at(id),std::move(terminals)});
     }
     return l;
 }
