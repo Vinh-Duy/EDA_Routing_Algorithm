@@ -10,7 +10,7 @@ import statistics
 
 ROOT=Path(__file__).resolve().parents[1]
 QUALITY=('total_nets','routed_nets','success_rate','unrouted_nets','invalid_nets',
-         'unresolved_conflicts','wirelength','via_count','graph_steps','weighted_cost',
+         'unresolved_conflicts','unconnected_terminals','branch_count','wirelength','via_count','graph_steps','weighted_cost',
          'search_cost','routing_passes','reroute_iterations','nodes_expanded')
 
 
@@ -46,7 +46,7 @@ def verify_suite(folder, require_current=False):
         require(sum(r['success']=='True' for r in verified)==int(s['successful_runs']),f'{key}: success count')
         for r in group:
             if r['output_verified']!='True':
-                require(r['status']=='execution_error' and all(r[k]=='' for k in (*QUALITY,'runtime_ms')),f'{key}: invented error metrics')
+                require(r['status']=='execution_error' and all(r[k]=='' for k in (*QUALITY,'runtime_ms') if k in r),f'{key}: invented error metrics')
                 continue
             require(r['status']==('success' if r['success']=='True' else 'routing_failed'),f'{key}: failure classification')
             require(r['returncode']==('0' if r['success']=='True' else '2'),f'{key}: exit status')
@@ -61,7 +61,10 @@ def verify_suite(folder, require_current=False):
                              ('stdev_ms',lambda a: statistics.stdev(a) if len(a)>1 else 0),
                              ('min_ms',min),('max_ms',max)]:
                 require(math.isclose(float(s[field]),fn(times),rel_tol=1e-12,abs_tol=1e-12),f'{key}: {field}')
+            # Older preserved CSVs predate these additive tree metrics.
             for field in QUALITY:
+                if field not in r or field not in s:
+                    continue
                 require(all(r[field]==s[field] for r in verified),f'{key}: nondeterministic/mismatched {field}')
     mismatches=[]
     for name,h in meta['sha256'].items():

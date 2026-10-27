@@ -11,7 +11,7 @@ import json
 from pathlib import Path
 import sys
 
-from validate_output import read_layout, validate
+from validate_output import read_layout_with_extras, validate
 
 MAX_CELLS = 16
 MAX_NETS = 4
@@ -25,7 +25,9 @@ class BudgetExceeded(Exception):
 def solve(layout_path, max_states=DEFAULT_MAX_STATES):
     if type(max_states) is not int or max_states < 1:
         raise ValueError('max_states must be a positive integer')
-    _, cells, sources, targets = read_layout(layout_path)
+    _, cells, sources, targets, extras = read_layout_with_extras(layout_path)
+    if extras:
+        raise ValueError('The two-terminal exact oracle does not accept multi-terminal nets')
     points = sorted(p for p, token in cells.items() if token != '#')
     names = sorted(sources, key=lambda name: int(name[3:]))
     if len(points) > MAX_CELLS or len(names) > MAX_NETS:
