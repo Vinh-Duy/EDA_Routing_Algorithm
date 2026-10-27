@@ -197,5 +197,54 @@ int main() {
         require(routeAll(l,astar,1,NetOrder::Reverse).validation.success,
                 "reverse order should resolve this fixture in one pass");
     });
+    test("incremental multi-terminal growth shares branches deterministically",[&] {
+        auto l=readLayoutFile("benchmarks/multiterminal/layouts/four_terminal_branch.txt");
+        require(l.nets.size()==1 && l.nets[0].terminals.size()==5,"P terminals were not grouped");
+        for (auto r:routers) {
+            auto first=routeAll(l,*r,10),again=routeAll(l,*r,10);
+            require(first.validation.success && first.trees==again.trees,"tree growth not deterministic");
+            require(first.paths[0].empty() && first.trees[0].edges.size()==4,"tree edge representation");
+            require(first.validation.wirelength==4 && first.validation.via_count==0 &&
+                    first.validation.branch_count==1 && first.validation.unconnected_terminals==0,
+                    "four-terminal tree metrics");
+            auto checked=validateRouteTrees(l,first.trees);
+            require(checked.success && checked.branch_counts[0]==1,"independent tree validation");
+        }
+    });
+    test("multi-terminal VIA cost and obstacle avoidance",[&] {
+        auto via=readLayoutFile("benchmarks/multiterminal/layouts/multilayer_via.txt");
+        auto detour=readLayoutFile("benchmarks/multiterminal/layouts/obstacle_detour.txt");
+        for(auto r:routers) {
+            auto a=routeAll(via,*r,10);
+            require(a.validation.success && a.validation.wirelength==1 && a.validation.via_count==1 &&
+                    a.validation.weighted_cost==7,"tree VIA accounting");
+            auto b=routeAll(detour,*r,10);
+            require(b.validation.success && b.validation.invalid_nets==0,"tree obstacle detour");
+        }
+    });
+    test("partial trees and malformed extra terminals stay failures",[&] {
+        auto l=readLayoutFile("benchmarks/multiterminal/layouts/incomplete_terminal.txt");
+        for(auto r:routers) {
+            auto run=routeAll(l,*r,10);
+            require(!run.validation.success && run.validation.unconnected_terminals==1 &&
+                    run.validation.unrouted_nets==1 && run.validation.invalid_nets==0 &&
+                    run.termination_reason=="unreachable","partial tree was reported complete");
+        }
+        for(const std::string& text:{"1 3\nS1 P1 T2\n","1 3\nS1 S1 T1\n","1 4\nS1 T1 T1 .\n"}) {
+            bool rejected=false; try { (void)parse(text); } catch(const std::exception&) { rejected=true; }
+            require(rejected,"malformed terminal group accepted");
+        }
+    });
+    test("different nets cannot share tree cells",[&] {
+        auto l=parse("3 3\n. S1 .\nS2 . T2\n. T1 .\n");
+        RouteTree3D a{{{{0,0,1},{0,1,1}},{{0,1,1},{0,2,1}}}};
+        RouteTree3D b{{{{0,1,0},{0,1,1}},{{0,1,1},{0,1,2}}}};
+        auto checked=validateRouteTrees(l,{a,b});
+        require(!checked.success && checked.unresolved_conflicts==1 && checked.routed_nets==0 &&
+                checked.local_valid[0] && checked.local_valid[1],"cross-net ownership was not detected");
+        auto cycle=a; cycle.edges.push_back({{0,0,1},{0,1,1}});
+        checked=validateRouteTrees(l,{cycle,b});
+        require(checked.invalid_nets==1 && !checked.local_valid[0],"duplicate tree edge accepted");
+    });
     std::cout << passed << " C++ test groups passed\n";
 }
