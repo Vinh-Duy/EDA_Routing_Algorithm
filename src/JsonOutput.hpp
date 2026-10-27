@@ -23,11 +23,12 @@ inline void writeRun(const std::string& filename, const std::string& algorithm,
         << ",\n    \"success_rate\": " << static_cast<double>(v.routed_nets)/l.nets.size()
         << ",\n    \"unrouted_nets\": " << v.unrouted_nets << ",\n    \"invalid_nets\": " << v.invalid_nets
         << ",\n    \"unresolved_conflicts\": " << v.unresolved_conflicts
+        << ",\n    \"unconnected_terminals\": " << v.unconnected_terminals
         << ",\n    \"wirelength\": " << v.wirelength << ",\n    \"via_count\": " << v.via_count
+        << ",\n    \"branch_count\": " << v.branch_count
         << ",\n    \"graph_steps\": " << v.wirelength+v.via_count
         << ",\n    \"weighted_cost\": " << v.weighted_cost;
-    Cost searchCost=0; for (Cost cost: run.search_costs) searchCost+=cost;
-    out << ",\n    \"search_cost\": " << searchCost << ",\n    \"routing_passes\": " << run.passes
+    out << ",\n    \"search_cost\": " << run.search_cost_total << ",\n    \"routing_passes\": " << run.passes
         << ",\n    \"reroute_iterations\": " << run.passes-1
         << ",\n    \"runtime_ms\": " << run.runtime_ms << ",\n    \"nodes_expanded\": " << run.expanded << "\n  },\n"
         << "  \"obstacles\": [";
@@ -52,10 +53,28 @@ inline void writeRun(const std::string& filename, const std::string& algorithm,
         if (n) out << ",\n";
         out << "    {\"name\":\"" << l.nets[n].name << "\",\"source\":"; writePoint(out,l.nets[n].src);
         out << ",\"target\":"; writePoint(out,l.nets[n].dst);
-        out << ",\"valid\":" << v.valid[n] << ",\"local_valid\":" << v.local_valid[n]
+        const auto& net=l.nets[n];
+        const std::vector<Point3D> terminals=net.terminals.empty()
+            ? std::vector<Point3D>{net.src,net.dst} : net.terminals;
+        out << ",\"terminals\":[";
+        for (std::size_t t=0;t<terminals.size();++t) { if (t) out << ','; writePoint(out,terminals[t]); }
+        out << "],\"connected_terminals\":" << (terminals.size()-static_cast<std::size_t>(v.unconnected_by_net[n]))
+            << ",\"unconnected_terminals\":" << v.unconnected_by_net[n]
+            << ",\"branch_count\":" << v.branch_counts[n]
+            << ",\"valid\":" << v.valid[n] << ",\"local_valid\":" << v.local_valid[n]
             << ",\"search_cost\":" << run.search_costs[n] << ",\"path\":[";
         for (std::size_t i=0;i<run.paths[n].size();++i) { if (i) out << ','; writePoint(out,run.paths[n][i]); }
-        out << "]}";
+        out << ']';
+        if (terminals.size()>2) {
+            out << ",\"tree_edges\":[";
+            for (std::size_t e=0;e<run.trees[n].edges.size();++e) {
+                if (e) out << ',';
+                out << '['; writePoint(out,run.trees[n].edges[e].a); out << ',';
+                writePoint(out,run.trees[n].edges[e].b); out << ']';
+            }
+            out << ']';
+        }
+        out << '}';
     }
     out << "\n  ]\n}\n"; out.close();
     if (!out) throw std::runtime_error("Failed writing output: "+filename);

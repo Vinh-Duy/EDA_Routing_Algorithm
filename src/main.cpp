@@ -50,7 +50,8 @@ int main(int argc, char** argv) {
         std::cout << (run.validation.success ? "SUCCESS" : "INCOMPLETE") << ": "
                   << run.validation.routed_nets << '/' << layout.nets.size() << " valid nets, "
                   << run.validation.unrouted_nets << " empty paths, " << run.validation.unresolved_conflicts
-                  << " conflicting cells; " << run.runtime_ms << " ms\n";
+                  << " conflicting cells, " << run.validation.unconnected_terminals
+                  << " unconnected terminals; " << run.runtime_ms << " ms\n";
         return run.validation.success ? 0 : 2;
     } catch (const std::exception& error) {
         std::cerr << "ERROR: " << error.what() << '\n';
