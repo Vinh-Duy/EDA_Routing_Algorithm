@@ -1,0 +1,55 @@
+{
+  "formula": "(router_physical_cost - exact_optimal_cost) / exact_optimal_cost",
+  "absolute_gap_formula": "router_physical_cost - exact_optimal_cost",
+  "zero_optimum_relative_gap": null,
+  "infeasible_or_router_failure_gap": null,
+  "oracle_feasible_cases": 60,
+  "oracle_infeasible_cases": 12,
+  "routes_by_classification": {
+    "optimal": 82,
+    "suboptimal": 38,
+    "proven_infeasible": 24
+  },
+  "relative_gap_by_selector": {
+    "repeated": {
+      "successful_feasible_routes": 60,
+      "mean": 0.02965155852897832,
+      "median": 0.0,
+      "max": 0.21739130434782608,
+      "zero_gap_count": 41
+    },
+    "multisource": {
+      "successful_feasible_routes": 60,
+      "mean": 0.02965155852897832,
+      "median": 0.0,
+      "max": 0.21739130434782608,
+      "zero_gap_count": 41
+    }
+  },
+  "runtime_slowers": [
+    {
+      "case": "feasible_017_k4_l1_medium_compact_seed202611047000",
+      "delta_ms": 0.012374999999999997,
+      "repeated_median_ms": 0.077045,
+      "multisource_median_ms": 0.08942,
+      "repeated_mad_ms": 0.002487000000000003,
+      "multisource_mad_ms": 0.023457000000000006
+    },
+    {
+      "case": "infeasible_000_k3_l1_seed202612000000",
+      "delta_ms": 0.009293999999999997,
+      "repeated_median_ms": 0.108002,
+      "multisource_median_ms": 0.117296,
+      "repeated_mad_ms": 0.009122000000000005,
+      "multisource_mad_ms": 0.011921000000000001
+    },
+    {
+      "case": "infeasible_004_k3_l2_seed202612000004",
+      "delta_ms": 0.008307000000000009,
+      "repeated_median_ms": 0.211752,
+      "multisource_median_ms": 0.220059,
+      "repeated_mad_ms": 0.00895499999999999,
+      "multisource_mad_ms": 0.017206
+    }
+  ]
+}

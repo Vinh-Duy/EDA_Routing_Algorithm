@@ -1,0 +1,287 @@
+{
+  "heldout_instances": 72,
+  "oracle_feasible_instances": 60,
+  "oracle_infeasible_instances": 12,
+  "equivalent_route_count": 72,
+  "method_metrics": {
+    "repeated": {
+      "selection_dijkstra_runs": {
+        "total": 595,
+        "mean_per_layout": 8.26388888888889,
+        "median_per_layout": 6.5
+      },
+      "selection_settled_vertices": {
+        "total": 74338,
+        "mean_per_layout": 1032.4722222222222,
+        "median_per_layout": 724.5
+      },
+      "selection_edges_examined": {
+        "total": 321369,
+        "mean_per_layout": 4463.458333333333,
+        "median_per_layout": 2890.0
+      },
+      "selection_heap_pushes": {
+        "total": 95783,
+        "mean_per_layout": 1330.3194444444443,
+        "median_per_layout": 1013.0
+      },
+      "selection_heap_pops": {
+        "total": 77812,
+        "mean_per_layout": 1080.7222222222222,
+        "median_per_layout": 724.5
+      },
+      "route_searches": {
+        "total": 227,
+        "mean_per_layout": 3.1527777777777777,
+        "median_per_layout": 3.0
+      },
+      "route_nodes_expanded": {
+        "total": 4186,
+        "mean_per_layout": 58.138888888888886,
+        "median_per_layout": 55.5
+      },
+      "runtime_median_ms": 0.3561885,
+      "runtime_mad_median_ms": 0.06263750000000001,
+      "selection_runtime_median_ms": 0.25090450000000003,
+      "selection_runtime_mad_median_ms": 0.04374749999999997,
+      "route_runtime_median_ms": 0.04539,
+      "route_runtime_mad_median_ms": 0.005135000000000001,
+      "wall_median_ms": 13.257741502457066,
+      "wall_mad_median_ms": 2.251367495773593
+    },
+    "multisource": {
+      "selection_dijkstra_runs": {
+        "total": 239,
+        "mean_per_layout": 3.3194444444444446,
+        "median_per_layout": 3.0
+      },
+      "selection_settled_vertices": {
+        "total": 26862,
+        "mean_per_layout": 373.0833333333333,
+        "median_per_layout": 290.5
+      },
+      "selection_edges_examined": {
+        "total": 110759,
+        "mean_per_layout": 1538.3194444444443,
+        "median_per_layout": 1110.5
+      },
+      "selection_heap_pushes": {
+        "total": 35220,
+        "mean_per_layout": 489.1666666666667,
+        "median_per_layout": 370.0
+      },
+      "selection_heap_pops": {
+        "total": 28251,
+        "mean_per_layout": 392.375,
+        "median_per_layout": 293.5
+      },
+      "route_searches": {
+        "total": 227,
+        "mean_per_layout": 3.1527777777777777,
+        "median_per_layout": 3.0
+      },
+      "route_nodes_expanded": {
+        "total": 4186,
+        "mean_per_layout": 58.138888888888886,
+        "median_per_layout": 55.5
+      },
+      "runtime_median_ms": 0.219619,
+      "runtime_mad_median_ms": 0.026677500000000007,
+      "selection_runtime_median_ms": 0.113666,
+      "selection_runtime_mad_median_ms": 0.008843499999999997,
+      "route_runtime_median_ms": 0.046823500000000004,
+      "route_runtime_mad_median_ms": 0.0035679999999999983,
+      "wall_median_ms": 13.023444997088518,
+      "wall_mad_median_ms": 2.364021998801036
+    }
+  },
+  "feasible_method_metrics": {
+    "repeated": {
+      "selection_dijkstra_runs": {
+        "total": 510,
+        "mean_per_layout": 8.5,
+        "median_per_layout": 8.0
+      },
+      "selection_settled_vertices": {
+        "total": 65756,
+        "mean_per_layout": 1095.9333333333334,
+        "median_per_layout": 730.0
+      },
+      "selection_edges_examined": {
+        "total": 284465,
+        "mean_per_layout": 4741.083333333333,
+        "median_per_layout": 3029.0
+      },
+      "selection_heap_pushes": {
+        "total": 86187,
+        "mean_per_layout": 1436.45,
+        "median_per_layout": 1064.5
+      },
+      "selection_heap_pops": {
+        "total": 68680,
+        "mean_per_layout": 1144.6666666666667,
+        "median_per_layout": 751.0
+      },
+      "route_searches": {
+        "total": 210,
+        "mean_per_layout": 3.5,
+        "median_per_layout": 3.5
+      },
+      "route_nodes_expanded": {
+        "total": 3922,
+        "mean_per_layout": 65.36666666666666,
+        "median_per_layout": 60.5
+      },
+      "runtime_median_ms": 0.3594385,
+      "runtime_mad_median_ms": 0.0704635,
+      "selection_runtime_median_ms": 0.2586435,
+      "selection_runtime_mad_median_ms": 0.04992250000000001,
+      "route_runtime_median_ms": 0.04768,
+      "route_runtime_mad_median_ms": 0.006701500000000001,
+      "wall_median_ms": 13.515016002202174,
+      "wall_mad_median_ms": 2.3338585015153512
+    },
+    "multisource": {
+      "selection_dijkstra_runs": {
+        "total": 210,
+        "mean_per_layout": 3.5,
+        "median_per_layout": 3.5
+      },
+      "selection_settled_vertices": {
+        "total": 24384,
+        "mean_per_layout": 406.4,
+        "median_per_layout": 307.0
+      },
+      "selection_edges_examined": {
+        "total": 100274,
+        "mean_per_layout": 1671.2333333333333,
+        "median_per_layout": 1185.0
+      },
+      "selection_heap_pushes": {
+        "total": 32276,
+        "mean_per_layout": 537.9333333333333,
+        "median_per_layout": 395.5
+      },
+      "selection_heap_pops": {
+        "total": 25628,
+        "mean_per_layout": 427.1333333333333,
+        "median_per_layout": 320.5
+      },
+      "route_searches": {
+        "total": 210,
+        "mean_per_layout": 3.5,
+        "median_per_layout": 3.5
+      },
+      "route_nodes_expanded": {
+        "total": 3922,
+        "mean_per_layout": 65.36666666666666,
+        "median_per_layout": 60.5
+      },
+      "runtime_median_ms": 0.238822,
+      "runtime_mad_median_ms": 0.033602000000000014,
+      "selection_runtime_median_ms": 0.11784649999999999,
+      "selection_runtime_mad_median_ms": 0.009315000000000004,
+      "route_runtime_median_ms": 0.049281500000000006,
+      "route_runtime_mad_median_ms": 0.004296999999999999,
+      "wall_median_ms": 13.044004001130816,
+      "wall_mad_median_ms": 2.3774695000611246
+    }
+  },
+  "selection_dijkstra_run_reduction": {
+    "old_total": 595,
+    "new_total": 239,
+    "absolute": 356,
+    "fraction": 0.5983193277310924
+  },
+  "selection_settled_vertex_reduction": {
+    "old_total": 74338,
+    "new_total": 26862,
+    "absolute": 47476,
+    "fraction": 0.6386504883101509
+  },
+  "paired_router_runtime_delta_ms_multisource_minus_repeated": {
+    "mean_per_layout_median": -0.25237777777777776,
+    "median_per_layout_median": -0.12596600000000002,
+    "multisource_faster_layouts": 69,
+    "ties": 0,
+    "multisource_slower_layouts": 3,
+    "all_layout_deltas_ms": [
+      -0.0026300000000000073,
+      -0.04246700000000003,
+      -0.055532,
+      -0.04119499999999998,
+      -0.013770000000000004,
+      -0.09344799999999998,
+      -0.105539,
+      -0.13112100000000004,
+      -0.030645000000000006,
+      -0.023438,
+      -0.07274000000000003,
+      -0.04530400000000001,
+      -0.03765599999999997,
+      -0.029359999999999997,
+      -0.040413000000000004,
+      -0.191612,
+      -0.0018569999999999975,
+      0.012374999999999997,
+      -0.09546300000000002,
+      -0.0016140000000000043,
+      -0.356607,
+      -0.07474800000000001,
+      -0.399394,
+      -0.05257099999999998,
+      -0.08635299999999996,
+      -0.09212600000000001,
+      -0.116589,
+      -0.08402000000000001,
+      -0.153127,
+      -0.05801700000000004,
+      -0.088943,
+      -0.147847,
+      -0.42323799999999995,
+      -0.022161000000000014,
+      -0.036101999999999995,
+      -0.400844,
+      -0.24218700000000004,
+      -0.22416000000000003,
+      -0.8741240000000001,
+      -1.1764620000000001,
+      -0.9092650000000001,
+      -0.286596,
+      -0.154803,
+      -0.34024699999999997,
+      -0.20752299999999999,
+      -0.261571,
+      -0.07502299999999998,
+      -0.443202,
+      -0.16912000000000002,
+      -0.38762699999999994,
+      -0.12083000000000002,
+      -0.37294800000000006,
+      -0.40781799999999996,
+      -0.27706699999999995,
+      -0.803214,
+      -0.6241519999999999,
+      -0.86552,
+      -2.27821,
+      -1.0576649999999999,
+      -0.08110200000000001,
+      0.009293999999999997,
+      -0.020467,
+      -0.131102,
+      -0.289374,
+      0.008307000000000009,
+      -0.06605699999999999,
+      -0.29527799999999993,
+      -0.39975200000000005,
+      -0.03255900000000002,
+      -0.284473,
+      -0.16798700000000003,
+      -0.2252
+    ]
+  },
+  "timing_observations": 1584,
+  "execution_errors": 0,
+  "raw_runs_include_warmups": true,
+  "statistical_unit": "layout; repetitions summarized within layout"
+}

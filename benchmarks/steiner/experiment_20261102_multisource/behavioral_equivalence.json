@@ -1,0 +1,2577 @@
+{
+  "fixed_fixture_results": [
+    {
+      "case": "branch_sharing_saves_cost",
+      "relative_path": "inputs/fixed/branch_sharing_saves_cost.txt",
+      "input_sha256": "51eb7f9c85756a6281a93dfc19e934c637546d9c35c5b89ceda862133ef096c7",
+      "equivalent": true,
+      "success": true,
+      "termination_reason": "success",
+      "physical_cost": 4,
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 0,
+            "y": 2
+          },
+          {
+            "z": 0,
+            "x": 2,
+            "y": 1
+          }
+        ]
+      ],
+      "tree_edges": [
+        [
+          [
+            {
+              "z": 0,
+              "x": 0,
+              "y": 0
+            },
+            {
+              "z": 0,
+              "x": 0,
+              "y": 1
+            }
+          ],
+          [
+            {
+              "z": 0,
+              "x": 0,
+              "y": 1
+            },
+            {
+              "z": 0,
+              "x": 0,
+              "y": 2
+            }
+          ],
+          [
+            {
+              "z": 0,
+              "x": 0,
+              "y": 1
+            },
+            {
+              "z": 0,
+              "x": 1,
+              "y": 1
+            }
+          ],
+          [
+            {
+              "z": 0,
+              "x": 1,
+              "y": 1
+            },
+            {
+              "z": 0,
+              "x": 2,
+              "y": 1
+            }
+          ]
+        ]
+      ],
+      "semantic_sha256": "485db728cb605c5481a37fda03b702c05b926f63d2b7cfea18fd86df18970d23",
+      "repeated_output_sha256": "788dacd5f41cad76d7efe4155448f9d14fa467e5c0149badb0d27a73c657adf6",
+      "multisource_output_sha256": "e544c4c912beabb63598850f0f022c74e9b8ab3baed18b484f8d4587cafbe68c"
+    },
+    {
+      "case": "disconnected",
+      "relative_path": "inputs/fixed/disconnected.txt",
+      "input_sha256": "706ea84f76b9ff0f521776e197f2030c36ae1c613ec9b720ce6525872edecee1",
+      "equivalent": true,
+      "success": false,
+      "termination_reason": "unreachable",
+      "physical_cost": 0,
+      "attached_terminals": [
+        []
+      ],
+      "tree_edges": [
+        []
+      ],
+      "semantic_sha256": "4f58d72db815f8f0fd7762961117783e2653342ef0a689022034a09bc3247520",
+      "repeated_output_sha256": "faaf4ae7cc3fcdf2c12d53f1aa572ccf4c63f79642bfc8b7e8e951adeda5d28f",
+      "multisource_output_sha256": "0711385d93a213f0d74fe93c528a505eb58167336f43f7b5be1f4d6304d1c6dd"
+    },
+    {
+      "case": "obstacle_branch",
+      "relative_path": "inputs/fixed/obstacle_branch.txt",
+      "input_sha256": "8d6c52b7f7f9234001d815e0ab36cc7aabb102b8de9b6b132d02e78dbe227514",
+      "equivalent": true,
+      "success": true,
+      "termination_reason": "success",
+      "physical_cost": 7,
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 0,
+            "y": 3
+          },
+          {
+            "z": 0,
+            "x": 2,
+            "y": 0
+          }
+        ]
+      ],
+      "tree_edges": [
+        [
+          [
+            {
+              "z": 0,
+              "x": 0,
+              "y": 0
+            },
+            {
+              "z": 0,
+              "x": 0,
+              "y": 1
+            }
+          ],
+          [
+            {
+              "z": 0,
+              "x": 0,
+              "y": 1
+            },
+            {
+              "z": 0,
+              "x": 0,
+              "y": 2
+            }
+          ],
+          [
+            {
+              "z": 0,
+              "x": 0,
+              "y": 2
+            },
+            {
+              "z": 0,
+              "x": 0,
+              "y": 3
+            }
+          ],
+          [
+            {
+              "z": 0,
+              "x": 0,
+              "y": 2
+            },
+            {
+              "z": 0,
+              "x": 1,
+              "y": 2
+            }
+          ],
+          [
+            {
+              "z": 0,
+              "x": 1,
+              "y": 2
+            },
+            {
+              "z": 0,
+              "x": 2,
+              "y": 2
+            }
+          ],
+          [
+            {
+              "z": 0,
+              "x": 2,
+              "y": 0
+            },
+            {
+              "z": 0,
+              "x": 2,
+              "y": 1
+            }
+          ],
+          [
+            {
+              "z": 0,
+              "x": 2,
+              "y": 1
+            },
+            {
+              "z": 0,
+              "x": 2,
+              "y": 2
+            }
+          ]
+        ]
+      ],
+      "semantic_sha256": "b6bbb49348b2aa6a22c0722f1c50d6e67b95cd4e94ab22f2e0b514ea3485bec8",
+      "repeated_output_sha256": "64ba5d156f2863135d8a023a7d4ee8f41fe2ac4b1269cebf887fbb41d0136f85",
+      "multisource_output_sha256": "a5d5c91c1f847ab412ca916dd43e7cbe9076739b90a28c89d968de99723a4633"
+    },
+    {
+      "case": "planar_branching",
+      "relative_path": "inputs/fixed/planar_branching.txt",
+      "input_sha256": "2c66f3f141723785dc23ed7a56a1acbd96ee697b26260ff20fb94c0586bea3df",
+      "equivalent": true,
+      "success": true,
+      "termination_reason": "success",
+      "physical_cost": 4,
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 0,
+            "y": 1
+          },
+          {
+            "z": 0,
+            "x": 1,
+            "y": 0
+          },
+          {
+            "z": 0,
+            "x": 1,
+            "y": 2
+          },
+          {
+            "z": 0,
+            "x": 2,
+            "y": 1
+          }
+        ]
+      ],
+      "tree_edges": [
+        [
+          [
+            {
+              "z": 0,
+              "x": 0,
+              "y": 1
+            },
+            {
+              "z": 0,
+              "x": 1,
+              "y": 1
+            }
+          ],
+          [
+            {
+              "z": 0,
+              "x": 1,
+              "y": 0
+            },
+            {
+              "z": 0,
+              "x": 1,
+              "y": 1
+            }
+          ],
+          [
+            {
+              "z": 0,
+              "x": 1,
+              "y": 1
+            },
+            {
+              "z": 0,
+              "x": 1,
+              "y": 2
+            }
+          ],
+          [
+            {
+              "z": 0,
+              "x": 1,
+              "y": 1
+            },
+            {
+              "z": 0,
+              "x": 2,
+              "y": 1
+            }
+          ]
+        ]
+      ],
+      "semantic_sha256": "8b5177d5cc478dca63f9c1e6215fefa44270c3609f8658c83f87fe003d74c226",
+      "repeated_output_sha256": "b79bd5bee18e81de0f4f8edc460716fa8b5fb7882df61a71d91229c4f99ad5bd",
+      "multisource_output_sha256": "67b612dda5f71e6f931133f24c8ba1dfd147a0926bac92c00df975249e4b3327"
+    },
+    {
+      "case": "required_via",
+      "relative_path": "inputs/fixed/required_via.txt",
+      "input_sha256": "f40da44b1542b1e51cb928a2241d6a077633d327b459f8c167fde3be2e880cb5",
+      "equivalent": true,
+      "success": true,
+      "termination_reason": "success",
+      "physical_cost": 6,
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 0,
+            "y": 0
+          }
+        ]
+      ],
+      "tree_edges": [
+        []
+      ],
+      "semantic_sha256": "56cfd407e06aa6832a7230302f7fc3aee58e37cde7f0d82176d657ac17650755",
+      "repeated_output_sha256": "7a6b0727703f9f026ef0f9f6d907569d6119ab3234054fe8bc3ea5eecf9da930",
+      "multisource_output_sha256": "98742a4b32af0c13ca280134543e0cfbefe35acc9cfdff357eee8c13e49f9533"
+    },
+    {
+      "case": "via_beats_planar_detour",
+      "relative_path": "inputs/fixed/via_beats_planar_detour.txt",
+      "input_sha256": "c004186b00c22fa6050db9513906d6de22e6641c1f9cb38b969c4f6fdbb40227",
+      "equivalent": true,
+      "success": true,
+      "termination_reason": "success",
+      "physical_cost": 18,
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 6,
+            "y": 0
+          }
+        ]
+      ],
+      "tree_edges": [
+        []
+      ],
+      "semantic_sha256": "9773cd69e3930ea1c4a2c159e00a14144f05a902ccc48255e371fa9595cb5755",
+      "repeated_output_sha256": "9e458c187324285e407f759bec95801927d29861fb66d6ced9604d65ce16e3fd",
+      "multisource_output_sha256": "d04f49b2a088b7f46b1df070a45a3ea978bf5b3b33ebc419abc0821142a0b1fb"
+    }
+  ],
+  "heldout_results": [
+    {
+      "case": "feasible_000_k3_l1_none_compact_seed202611030000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 2,
+      "wirelength": 2,
+      "via_count": 0,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 5,
+            "y": 8
+          },
+          {
+            "z": 0,
+            "x": 6,
+            "y": 7
+          }
+        ]
+      ],
+      "semantic_sha256": "74b07b34ce7ba36e063e941151f3444d81a81ee9577c96a32f7500c5eaf1bf91"
+    },
+    {
+      "case": "feasible_001_k3_l1_sparse_widely_separated_seed202611031000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 28,
+      "wirelength": 28,
+      "via_count": 0,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 0,
+            "y": 3
+          },
+          {
+            "z": 0,
+            "x": 11,
+            "y": 0
+          }
+        ]
+      ],
+      "semantic_sha256": "c41fc439be9863e4e53bc52a16160aa30f9d208ff45eb9dbfaadc58d39736280"
+    },
+    {
+      "case": "feasible_002_k3_l1_medium_asymmetric_seed202611032000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 27,
+      "wirelength": 27,
+      "via_count": 0,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 15,
+            "y": 15
+          },
+          {
+            "z": 0,
+            "x": 3,
+            "y": 1
+          }
+        ]
+      ],
+      "semantic_sha256": "6f6db05ac42c08d30f293be141a6ac739c73eec4cd25f1521e3584cfdb4c8bed"
+    },
+    {
+      "case": "feasible_003_k3_l1_corridor_branch_heavy_seed202611033000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 25,
+      "wirelength": 25,
+      "via_count": 0,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 6,
+            "y": 0
+          },
+          {
+            "z": 0,
+            "x": 11,
+            "y": 7
+          }
+        ]
+      ],
+      "semantic_sha256": "8d763e330f23e45e33abe0164d3adbfe78ef7ac95cd0f87d6ab8d3c2e9a4fa45"
+    },
+    {
+      "case": "feasible_004_k3_l1_chokepoint_barrier_sides_seed202611034000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 19,
+      "wirelength": 19,
+      "via_count": 0,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 2,
+            "y": 6
+          },
+          {
+            "z": 0,
+            "x": 8,
+            "y": 10
+          }
+        ]
+      ],
+      "semantic_sha256": "53f13fea392b92b84bd15e82c5ce3ed3ffebee6f77e88c19c172c439334b6101"
+    },
+    {
+      "case": "feasible_005_k3_l2_none_widely_separated_seed202611035000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 30,
+      "wirelength": 24,
+      "via_count": 1,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 10,
+            "y": 17
+          },
+          {
+            "z": 0,
+            "x": 1,
+            "y": 3
+          }
+        ]
+      ],
+      "semantic_sha256": "3c736b9e6678055a5476e2135dc99cecfdf77231e2f73e61c70cafd98df3215b"
+    },
+    {
+      "case": "feasible_006_k3_l2_sparse_asymmetric_seed202611036000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 25,
+      "wirelength": 19,
+      "via_count": 1,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 9,
+            "y": 11
+          },
+          {
+            "z": 0,
+            "x": 0,
+            "y": 1
+          }
+        ]
+      ],
+      "semantic_sha256": "2311f0eb58bfd858d0c69d7e19c9f50f140fb1d770bd4889c1918b16d5fc80c8"
+    },
+    {
+      "case": "feasible_007_k3_l2_medium_branch_heavy_seed202611037000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 33,
+      "wirelength": 27,
+      "via_count": 1,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 8,
+            "y": 0
+          },
+          {
+            "z": 1,
+            "x": 0,
+            "y": 8
+          }
+        ]
+      ],
+      "semantic_sha256": "3491dd5c982ba949c45b728c74912cbb6d8e1ba4452c62f5cb6a8221235c04c9"
+    },
+    {
+      "case": "feasible_008_k3_l2_corridor_barrier_sides_seed202611038000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 23,
+      "wirelength": 17,
+      "via_count": 1,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 1,
+            "y": 8
+          },
+          {
+            "z": 0,
+            "x": 0,
+            "y": 1
+          }
+        ]
+      ],
+      "semantic_sha256": "1bf196ddfca1938b0496847aff397aa2705346555e13dbf09d7137a9381d2f00"
+    },
+    {
+      "case": "feasible_009_k3_l2_chokepoint_compact_seed202611039000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 7,
+      "wirelength": 1,
+      "via_count": 1,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 3,
+            "y": 4
+          },
+          {
+            "z": 0,
+            "x": 3,
+            "y": 4
+          }
+        ]
+      ],
+      "semantic_sha256": "941a3e1c2e329d94f4c5cbeee29c491f70c67ed9123f9ade8ec70649f401c842"
+    },
+    {
+      "case": "feasible_010_k3_l3_none_asymmetric_seed202611040000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 17,
+      "wirelength": 11,
+      "via_count": 1,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 2,
+            "x": 5,
+            "y": 6
+          },
+          {
+            "z": 2,
+            "x": 5,
+            "y": 7
+          }
+        ]
+      ],
+      "semantic_sha256": "abde2d4f51103f9806001179ff54f7f222236fd5985939f07697ea8d81925348"
+    },
+    {
+      "case": "feasible_011_k3_l3_sparse_branch_heavy_seed202611041000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 17,
+      "wirelength": 17,
+      "via_count": 0,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 0,
+            "y": 5
+          },
+          {
+            "z": 1,
+            "x": 8,
+            "y": 5
+          }
+        ]
+      ],
+      "semantic_sha256": "6fd8cb28ce84af31846245af4bf555720382cc9218f17475482e218036840df5"
+    },
+    {
+      "case": "feasible_012_k3_l3_medium_barrier_sides_seed202611042000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 31,
+      "wirelength": 19,
+      "via_count": 2,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 2,
+            "x": 8,
+            "y": 9
+          },
+          {
+            "z": 2,
+            "x": 2,
+            "y": 6
+          }
+        ]
+      ],
+      "semantic_sha256": "eb0960dd06e1fe2526445aa268eac3e2d99dd9d0ad8ab7822af76c208ddfc676"
+    },
+    {
+      "case": "feasible_013_k3_l3_corridor_compact_seed202611043000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 14,
+      "wirelength": 8,
+      "via_count": 1,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 2,
+            "y": 4
+          },
+          {
+            "z": 1,
+            "x": 4,
+            "y": 4
+          }
+        ]
+      ],
+      "semantic_sha256": "816c8eb571c8852724f88fbb870be30a8a4c849d4e87573aa63bc7efbf9824a3"
+    },
+    {
+      "case": "feasible_014_k3_l3_chokepoint_widely_separated_seed202611044000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 24,
+      "wirelength": 12,
+      "via_count": 2,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 2,
+            "x": 0,
+            "y": 4
+          },
+          {
+            "z": 0,
+            "x": 2,
+            "y": 0
+          }
+        ]
+      ],
+      "semantic_sha256": "6bb6afa63b9d0eead48d2c0403b52d771e0e013921227ffa5d9badbe651866c6"
+    },
+    {
+      "case": "feasible_015_k4_l1_none_branch_heavy_seed202611045000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 30,
+      "wirelength": 30,
+      "via_count": 0,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 8,
+            "y": 15
+          },
+          {
+            "z": 0,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "z": 0,
+            "x": 8,
+            "y": 0
+          }
+        ]
+      ],
+      "semantic_sha256": "9246ad6194b8dd6894ea39026900ea595e39a5030d9d03c309b4d34878c24c16"
+    },
+    {
+      "case": "feasible_016_k4_l1_sparse_barrier_sides_seed202611046000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 29,
+      "wirelength": 29,
+      "via_count": 0,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 8,
+            "y": 2
+          },
+          {
+            "z": 0,
+            "x": 11,
+            "y": 10
+          },
+          {
+            "z": 0,
+            "x": 4,
+            "y": 13
+          }
+        ]
+      ],
+      "semantic_sha256": "087679a864baad21ef245596240ad2e6a8dad156ebf165462d7820fb6865fb85"
+    },
+    {
+      "case": "feasible_017_k4_l1_medium_compact_seed202611047000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 3,
+      "wirelength": 3,
+      "via_count": 0,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 5,
+            "y": 7
+          },
+          {
+            "z": 0,
+            "x": 6,
+            "y": 6
+          },
+          {
+            "z": 0,
+            "x": 6,
+            "y": 8
+          }
+        ]
+      ],
+      "semantic_sha256": "f3139a0fdb9a9255b2eed811544a29911ca0fe978308c7ad85d122d31877ebeb"
+    },
+    {
+      "case": "feasible_018_k4_l1_corridor_widely_separated_seed202611048000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 34,
+      "wirelength": 34,
+      "via_count": 0,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "z": 0,
+            "x": 11,
+            "y": 0
+          },
+          {
+            "z": 0,
+            "x": 10,
+            "y": 10
+          }
+        ]
+      ],
+      "semantic_sha256": "8b272ad3eb4fbfb5d6811b05e0435fe6523f8d2a52224081e0bd74252fb4619c"
+    },
+    {
+      "case": "feasible_019_k4_l1_chokepoint_asymmetric_seed202611049000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 16,
+      "wirelength": 16,
+      "via_count": 0,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 7,
+            "y": 10
+          },
+          {
+            "z": 0,
+            "x": 8,
+            "y": 9
+          },
+          {
+            "z": 0,
+            "x": 3,
+            "y": 0
+          }
+        ]
+      ],
+      "semantic_sha256": "ebee98302fbc56470d86b0af6c5276ff34e62bfe621cce88b87cfe939b67f6d2"
+    },
+    {
+      "case": "feasible_020_k4_l2_none_barrier_sides_seed202611050000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 28,
+      "wirelength": 22,
+      "via_count": 1,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 9,
+            "y": 2
+          },
+          {
+            "z": 1,
+            "x": 8,
+            "y": 9
+          },
+          {
+            "z": 1,
+            "x": 1,
+            "y": 9
+          }
+        ]
+      ],
+      "semantic_sha256": "add7091bbcd1a62becaff9a6e72f8e256ea2a4a130cac459bfab3eba7f0fdb35"
+    },
+    {
+      "case": "feasible_021_k4_l2_sparse_compact_seed202611051000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 8,
+      "wirelength": 2,
+      "via_count": 1,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 5,
+            "y": 6
+          },
+          {
+            "z": 1,
+            "x": 4,
+            "y": 6
+          },
+          {
+            "z": 0,
+            "x": 5,
+            "y": 6
+          }
+        ]
+      ],
+      "semantic_sha256": "40c3c0ee4cdd5d20562aa531f33e7df2e497e592d45a70ed880bdf8f5dab4041"
+    },
+    {
+      "case": "feasible_022_k4_l2_medium_widely_separated_seed202611052000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 46,
+      "wirelength": 40,
+      "via_count": 1,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 15,
+            "y": 15
+          },
+          {
+            "z": 0,
+            "x": 6,
+            "y": 6
+          },
+          {
+            "z": 0,
+            "x": 15,
+            "y": 0
+          }
+        ]
+      ],
+      "semantic_sha256": "09e6a9dd242876194220a4c8ea5c221532427f4a6f2a8b99988688a7fb4faf26"
+    },
+    {
+      "case": "feasible_023_k4_l2_corridor_asymmetric_seed202611053000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 21,
+      "wirelength": 15,
+      "via_count": 1,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 8,
+            "y": 11
+          },
+          {
+            "z": 0,
+            "x": 9,
+            "y": 11
+          },
+          {
+            "z": 0,
+            "x": 3,
+            "y": 3
+          }
+        ]
+      ],
+      "semantic_sha256": "0760bcc1388013f143c703fcd9c8ee1cd48d10f53a89eb6cf928376fcf46cb3e"
+    },
+    {
+      "case": "feasible_024_k4_l2_chokepoint_branch_heavy_seed202611054000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 20,
+      "wirelength": 20,
+      "via_count": 0,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 4,
+            "y": 11
+          },
+          {
+            "z": 1,
+            "x": 9,
+            "y": 6
+          },
+          {
+            "z": 1,
+            "x": 4,
+            "y": 0
+          }
+        ]
+      ],
+      "semantic_sha256": "c3df2d52a38e5a2ee844c83e387fd7aaa56e3e76d030feb2de8aabe3bcee5e19"
+    },
+    {
+      "case": "feasible_025_k4_l3_none_compact_seed202611055000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 8,
+      "wirelength": 2,
+      "via_count": 1,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 3,
+            "y": 5
+          },
+          {
+            "z": 1,
+            "x": 4,
+            "y": 4
+          },
+          {
+            "z": 0,
+            "x": 4,
+            "y": 5
+          }
+        ]
+      ],
+      "semantic_sha256": "19f82214ef872c6db33f4f75a23e17ebc22b07dd055f1fcddc9a9eded1c4183d"
+    },
+    {
+      "case": "feasible_026_k4_l3_sparse_widely_separated_seed202611056000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 42,
+      "wirelength": 24,
+      "via_count": 3,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 2,
+            "x": 0,
+            "y": 9
+          },
+          {
+            "z": 1,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "z": 0,
+            "x": 8,
+            "y": 9
+          }
+        ]
+      ],
+      "semantic_sha256": "d1f8630ae42c8ac4dcc82c96cf6e65d08bce12a0002b75958501ffb6849125d1"
+    },
+    {
+      "case": "feasible_027_k4_l3_medium_asymmetric_seed202611057000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 18,
+      "wirelength": 12,
+      "via_count": 1,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 2,
+            "x": 4,
+            "y": 7
+          },
+          {
+            "z": 1,
+            "x": 5,
+            "y": 7
+          },
+          {
+            "z": 1,
+            "x": 0,
+            "y": 1
+          }
+        ]
+      ],
+      "semantic_sha256": "eb42f238bed7bdd36d7094b3fe96d569d203b093649e7774b141632792a5a926"
+    },
+    {
+      "case": "feasible_028_k4_l3_corridor_branch_heavy_seed202611058000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 22,
+      "wirelength": 22,
+      "via_count": 0,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 4,
+            "y": 9
+          },
+          {
+            "z": 1,
+            "x": 4,
+            "y": 0
+          },
+          {
+            "z": 1,
+            "x": 8,
+            "y": 5
+          }
+        ]
+      ],
+      "semantic_sha256": "17c2327bced0fdf032210491a9696aef437c071950cd98f08208cc140ce4469e"
+    },
+    {
+      "case": "feasible_029_k4_l3_chokepoint_barrier_sides_seed202611059000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 40,
+      "wirelength": 22,
+      "via_count": 3,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 8,
+            "y": 1
+          },
+          {
+            "z": 1,
+            "x": 5,
+            "y": 9
+          },
+          {
+            "z": 2,
+            "x": 1,
+            "y": 1
+          }
+        ]
+      ],
+      "semantic_sha256": "787c97da9a94aff4970164f3927e654f9749d4f1a54400b8be81d9d67d89c149"
+    },
+    {
+      "case": "feasible_030_k5_l1_none_widely_separated_seed202611060000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 27,
+      "wirelength": 27,
+      "via_count": 0,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 4,
+            "y": 3
+          },
+          {
+            "z": 0,
+            "x": 7,
+            "y": 6
+          },
+          {
+            "z": 0,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "z": 0,
+            "x": 8,
+            "y": 0
+          }
+        ]
+      ],
+      "semantic_sha256": "34babeb558f291cb96a1576a02f29b421d2eab7176b77852730d57f6d6be54c1"
+    },
+    {
+      "case": "feasible_031_k5_l1_sparse_asymmetric_seed202611061000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 18,
+      "wirelength": 18,
+      "via_count": 0,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 10,
+            "y": 12
+          },
+          {
+            "z": 0,
+            "x": 11,
+            "y": 12
+          },
+          {
+            "z": 0,
+            "x": 11,
+            "y": 13
+          },
+          {
+            "z": 0,
+            "x": 3,
+            "y": 4
+          }
+        ]
+      ],
+      "semantic_sha256": "82f00f435817b6ffcbeca247f24d79e0dbf106b40c25b9681f3a1ca4ad9ebbc7"
+    },
+    {
+      "case": "feasible_032_k5_l1_medium_branch_heavy_seed202611062000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 34,
+      "wirelength": 34,
+      "via_count": 0,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 8,
+            "y": 8
+          },
+          {
+            "z": 0,
+            "x": 8,
+            "y": 0
+          },
+          {
+            "z": 0,
+            "x": 8,
+            "y": 15
+          },
+          {
+            "z": 0,
+            "x": 0,
+            "y": 8
+          }
+        ]
+      ],
+      "semantic_sha256": "642ab7859552a81a8a66932d83d9bb288718e9fdf5fed381ae5f171ffc38f51e"
+    },
+    {
+      "case": "feasible_033_k5_l1_corridor_barrier_sides_seed202611063000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 26,
+      "wirelength": 26,
+      "via_count": 0,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "z": 0,
+            "x": 6,
+            "y": 10
+          },
+          {
+            "z": 0,
+            "x": 8,
+            "y": 7
+          },
+          {
+            "z": 0,
+            "x": 7,
+            "y": 3
+          }
+        ]
+      ],
+      "semantic_sha256": "4126a4b9f1646d15f2a0a9cbbc8dc73c54df946ef475f84bc81b2dcbfdbbcb3b"
+    },
+    {
+      "case": "feasible_034_k5_l1_chokepoint_compact_seed202611064000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 4,
+      "wirelength": 4,
+      "via_count": 0,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 2,
+            "y": 5
+          },
+          {
+            "z": 0,
+            "x": 3,
+            "y": 4
+          },
+          {
+            "z": 0,
+            "x": 4,
+            "y": 5
+          },
+          {
+            "z": 0,
+            "x": 5,
+            "y": 5
+          }
+        ]
+      ],
+      "semantic_sha256": "a0ca217e79b1222ccf86cfd3d8a5952e5d67872e99fbfbb365c516296ee92d65"
+    },
+    {
+      "case": "feasible_035_k5_l2_none_asymmetric_seed202611065000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 30,
+      "wirelength": 24,
+      "via_count": 1,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 15,
+            "y": 15
+          },
+          {
+            "z": 1,
+            "x": 14,
+            "y": 15
+          },
+          {
+            "z": 0,
+            "x": 15,
+            "y": 15
+          },
+          {
+            "z": 0,
+            "x": 3,
+            "y": 5
+          }
+        ]
+      ],
+      "semantic_sha256": "84f03adb893e634f2d744af486df0c6aecd66f1748237ab52f52773a147e59cf"
+    },
+    {
+      "case": "feasible_036_k5_l2_sparse_branch_heavy_seed202611066000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 26,
+      "wirelength": 20,
+      "via_count": 1,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 9,
+            "y": 6
+          },
+          {
+            "z": 1,
+            "x": 5,
+            "y": 11
+          },
+          {
+            "z": 0,
+            "x": 5,
+            "y": 6
+          },
+          {
+            "z": 1,
+            "x": 5,
+            "y": 0
+          }
+        ]
+      ],
+      "semantic_sha256": "02f0d31973175c8d530caddc7c9b8eb8cb62a9099da0d1cfe2ef04ecf378675c"
+    },
+    {
+      "case": "feasible_037_k5_l2_medium_barrier_sides_seed202611067000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 24,
+      "wirelength": 18,
+      "via_count": 1,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 6,
+            "y": 6
+          },
+          {
+            "z": 0,
+            "x": 4,
+            "y": 4
+          },
+          {
+            "z": 0,
+            "x": 0,
+            "y": 2
+          },
+          {
+            "z": 0,
+            "x": 3,
+            "y": 8
+          }
+        ]
+      ],
+      "semantic_sha256": "128e7ba05d9aeaa4f40dd6a395207920d461fed047219ff4c9912692aca69c97"
+    },
+    {
+      "case": "feasible_038_k5_l2_corridor_compact_seed202611068000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 29,
+      "wirelength": 17,
+      "via_count": 2,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 7,
+            "y": 8
+          },
+          {
+            "z": 1,
+            "x": 6,
+            "y": 8
+          },
+          {
+            "z": 0,
+            "x": 9,
+            "y": 8
+          },
+          {
+            "z": 1,
+            "x": 9,
+            "y": 8
+          }
+        ]
+      ],
+      "semantic_sha256": "16e65a371102a90ca626295bb526788a7cd71e1a7d84aceda63efddaa1047e69"
+    },
+    {
+      "case": "feasible_039_k5_l2_chokepoint_widely_separated_seed202611069000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 58,
+      "wirelength": 46,
+      "via_count": 2,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 2,
+            "y": 15
+          },
+          {
+            "z": 1,
+            "x": 9,
+            "y": 5
+          },
+          {
+            "z": 0,
+            "x": 15,
+            "y": 0
+          },
+          {
+            "z": 1,
+            "x": 15,
+            "y": 13
+          }
+        ]
+      ],
+      "semantic_sha256": "34f668b1e820d96231e7dc4d5999c31f0f65b5ffc3a82521037d0732b9253ae3"
+    },
+    {
+      "case": "feasible_040_k5_l3_none_branch_heavy_seed202611070000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 35,
+      "wirelength": 29,
+      "via_count": 1,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 11,
+            "y": 7
+          },
+          {
+            "z": 1,
+            "x": 0,
+            "y": 7
+          },
+          {
+            "z": 1,
+            "x": 6,
+            "y": 13
+          },
+          {
+            "z": 1,
+            "x": 6,
+            "y": 0
+          }
+        ]
+      ],
+      "semantic_sha256": "62391b5e0f9b5e2c5a2a0cc522889331fa1561183dd58e675f0457612a39eb0f"
+    },
+    {
+      "case": "feasible_041_k5_l3_sparse_barrier_sides_seed202611071000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 35,
+      "wirelength": 23,
+      "via_count": 2,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 0,
+            "y": 1
+          },
+          {
+            "z": 1,
+            "x": 5,
+            "y": 0
+          },
+          {
+            "z": 2,
+            "x": 2,
+            "y": 4
+          },
+          {
+            "z": 2,
+            "x": 0,
+            "y": 7
+          }
+        ]
+      ],
+      "semantic_sha256": "a6534e05ca7807216bcaf83e0be5d6ca05e5ee1b0e182d4046ad10469b160b02"
+    },
+    {
+      "case": "feasible_042_k5_l3_medium_compact_seed202611072000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 13,
+      "wirelength": 7,
+      "via_count": 1,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 4,
+            "y": 4
+          },
+          {
+            "z": 1,
+            "x": 3,
+            "y": 5
+          },
+          {
+            "z": 1,
+            "x": 4,
+            "y": 6
+          },
+          {
+            "z": 1,
+            "x": 5,
+            "y": 5
+          }
+        ]
+      ],
+      "semantic_sha256": "383a3e2a5b32663012505882dac00fde4690880f5587bc408c71232911791691"
+    },
+    {
+      "case": "feasible_043_k5_l3_corridor_widely_separated_seed202611073000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 35,
+      "wirelength": 23,
+      "via_count": 2,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 2,
+            "x": 2,
+            "y": 0
+          },
+          {
+            "z": 0,
+            "x": 0,
+            "y": 4
+          },
+          {
+            "z": 0,
+            "x": 5,
+            "y": 7
+          },
+          {
+            "z": 0,
+            "x": 4,
+            "y": 2
+          }
+        ]
+      ],
+      "semantic_sha256": "d1f96bc4f62411ac79f7a4deece04e5467476942367c9c3008b8fa3cefe350c3"
+    },
+    {
+      "case": "feasible_044_k5_l3_chokepoint_asymmetric_seed202611074000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 24,
+      "wirelength": 12,
+      "via_count": 2,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 5,
+            "y": 7
+          },
+          {
+            "z": 2,
+            "x": 5,
+            "y": 7
+          },
+          {
+            "z": 2,
+            "x": 4,
+            "y": 7
+          },
+          {
+            "z": 2,
+            "x": 5,
+            "y": 6
+          }
+        ]
+      ],
+      "semantic_sha256": "aed7da2599653ccf07cc3fa95eea882f669a43fb93b8d98cb05d6ea04a864bb3"
+    },
+    {
+      "case": "feasible_045_k6_l1_none_barrier_sides_seed202611075000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 27,
+      "wirelength": 27,
+      "via_count": 0,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 2,
+            "y": 7
+          },
+          {
+            "z": 0,
+            "x": 0,
+            "y": 2
+          },
+          {
+            "z": 0,
+            "x": 0,
+            "y": 10
+          },
+          {
+            "z": 0,
+            "x": 7,
+            "y": 0
+          },
+          {
+            "z": 0,
+            "x": 8,
+            "y": 9
+          }
+        ]
+      ],
+      "semantic_sha256": "0d4906b9f46a403e5f557cd52df947aa845ef2625a67ffb9716e086d880a0d8a"
+    },
+    {
+      "case": "feasible_046_k6_l1_sparse_compact_seed202611076000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 5,
+      "wirelength": 5,
+      "via_count": 0,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 8,
+            "y": 8
+          },
+          {
+            "z": 0,
+            "x": 7,
+            "y": 8
+          },
+          {
+            "z": 0,
+            "x": 6,
+            "y": 8
+          },
+          {
+            "z": 0,
+            "x": 8,
+            "y": 9
+          },
+          {
+            "z": 0,
+            "x": 9,
+            "y": 8
+          }
+        ]
+      ],
+      "semantic_sha256": "1e2df4285203acdf92561bf9c2a8e11083a9a4abc0d5f078277d27d31f33affc"
+    },
+    {
+      "case": "feasible_047_k6_l1_medium_widely_separated_seed202611077000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 40,
+      "wirelength": 40,
+      "via_count": 0,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 5,
+            "y": 4
+          },
+          {
+            "z": 0,
+            "x": 0,
+            "y": 0
+          },
+          {
+            "z": 0,
+            "x": 6,
+            "y": 10
+          },
+          {
+            "z": 0,
+            "x": 0,
+            "y": 12
+          },
+          {
+            "z": 0,
+            "x": 11,
+            "y": 13
+          }
+        ]
+      ],
+      "semantic_sha256": "3f83a2a1b2851e5fc24fe8c19f24d62bcbdfd2c8d24233840befc4ace02abf85"
+    },
+    {
+      "case": "feasible_048_k6_l1_corridor_asymmetric_seed202611078000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 21,
+      "wirelength": 21,
+      "via_count": 0,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 10,
+            "y": 13
+          },
+          {
+            "z": 0,
+            "x": 10,
+            "y": 12
+          },
+          {
+            "z": 0,
+            "x": 11,
+            "y": 12
+          },
+          {
+            "z": 0,
+            "x": 11,
+            "y": 11
+          },
+          {
+            "z": 0,
+            "x": 3,
+            "y": 3
+          }
+        ]
+      ],
+      "semantic_sha256": "e713e1530824f644bbd35cb050bfd2dd08aae7c927a31b8ccb8960e399ea4958"
+    },
+    {
+      "case": "feasible_049_k6_l1_chokepoint_branch_heavy_seed202611079000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 28,
+      "wirelength": 28,
+      "via_count": 0,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 6,
+            "y": 8
+          },
+          {
+            "z": 0,
+            "x": 5,
+            "y": 8
+          },
+          {
+            "z": 0,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "z": 0,
+            "x": 5,
+            "y": 0
+          },
+          {
+            "z": 0,
+            "x": 5,
+            "y": 16
+          }
+        ]
+      ],
+      "semantic_sha256": "caa8e5860a2440a911e2de9f38bae3e38e0d96e7f456a1bee1f459056503d7c6"
+    },
+    {
+      "case": "feasible_050_k6_l2_none_compact_seed202611080000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 10,
+      "wirelength": 4,
+      "via_count": 1,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 5,
+            "y": 9
+          },
+          {
+            "z": 1,
+            "x": 5,
+            "y": 8
+          },
+          {
+            "z": 1,
+            "x": 5,
+            "y": 10
+          },
+          {
+            "z": 1,
+            "x": 6,
+            "y": 9
+          },
+          {
+            "z": 0,
+            "x": 5,
+            "y": 9
+          }
+        ]
+      ],
+      "semantic_sha256": "fc7dcca3d86a2c2f1edc5505532ddc98ffd363b984546ac0724bc6298aa1a0fa"
+    },
+    {
+      "case": "feasible_051_k6_l2_sparse_widely_separated_seed202611081000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 33,
+      "wirelength": 27,
+      "via_count": 1,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 4,
+            "y": 2
+          },
+          {
+            "z": 0,
+            "x": 0,
+            "y": 8
+          },
+          {
+            "z": 1,
+            "x": 1,
+            "y": 4
+          },
+          {
+            "z": 1,
+            "x": 5,
+            "y": 6
+          },
+          {
+            "z": 1,
+            "x": 6,
+            "y": 0
+          }
+        ]
+      ],
+      "semantic_sha256": "b9ef643e28ec448b015ee0c020c812a1061de6a144b992807ef929b0ee9f9db8"
+    },
+    {
+      "case": "feasible_052_k6_l2_medium_asymmetric_seed202611082000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 31,
+      "wirelength": 25,
+      "via_count": 1,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 9,
+            "y": 17
+          },
+          {
+            "z": 1,
+            "x": 10,
+            "y": 17
+          },
+          {
+            "z": 0,
+            "x": 10,
+            "y": 17
+          },
+          {
+            "z": 0,
+            "x": 10,
+            "y": 16
+          },
+          {
+            "z": 1,
+            "x": 2,
+            "y": 3
+          }
+        ]
+      ],
+      "semantic_sha256": "76db3aa937a1e7633a50f679cc81e1f7fffbd26df8e6ed85edcb4885e372658a"
+    },
+    {
+      "case": "feasible_053_k6_l2_corridor_branch_heavy_seed202611083000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 25,
+      "wirelength": 19,
+      "via_count": 1,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 0,
+            "y": 4
+          },
+          {
+            "z": 1,
+            "x": 3,
+            "y": 0
+          },
+          {
+            "z": 1,
+            "x": 3,
+            "y": 8
+          },
+          {
+            "z": 0,
+            "x": 2,
+            "y": 4
+          },
+          {
+            "z": 1,
+            "x": 6,
+            "y": 4
+          }
+        ]
+      ],
+      "semantic_sha256": "f1f9a0c5013c7f50b38a2067dae8d0fea75e5ad249e35f252630eb8ed7431708"
+    },
+    {
+      "case": "feasible_054_k6_l2_chokepoint_barrier_sides_seed202611084000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 43,
+      "wirelength": 31,
+      "via_count": 2,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 2,
+            "y": 7
+          },
+          {
+            "z": 1,
+            "x": 7,
+            "y": 6
+          },
+          {
+            "z": 0,
+            "x": 9,
+            "y": 11
+          },
+          {
+            "z": 0,
+            "x": 9,
+            "y": 0
+          },
+          {
+            "z": 1,
+            "x": 0,
+            "y": 11
+          }
+        ]
+      ],
+      "semantic_sha256": "130c7276533cf2e25d947b55e0cca4d95b636f90b6991e2862f458b4da08b0bf"
+    },
+    {
+      "case": "feasible_055_k6_l3_none_widely_separated_seed202611085000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 42,
+      "wirelength": 30,
+      "via_count": 2,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 2,
+            "x": 0,
+            "y": 9
+          },
+          {
+            "z": 2,
+            "x": 5,
+            "y": 4
+          },
+          {
+            "z": 2,
+            "x": 8,
+            "y": 7
+          },
+          {
+            "z": 0,
+            "x": 3,
+            "y": 6
+          },
+          {
+            "z": 0,
+            "x": 6,
+            "y": 1
+          }
+        ]
+      ],
+      "semantic_sha256": "4ae1cacf73ef0ec21bde791b5afb6bbdf844a5f5f42051f7ff72959269ad2540"
+    },
+    {
+      "case": "feasible_056_k6_l3_sparse_asymmetric_seed202611086000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 35,
+      "wirelength": 23,
+      "via_count": 2,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 11,
+            "y": 13
+          },
+          {
+            "z": 2,
+            "x": 11,
+            "y": 12
+          },
+          {
+            "z": 2,
+            "x": 11,
+            "y": 13
+          },
+          {
+            "z": 2,
+            "x": 10,
+            "y": 13
+          },
+          {
+            "z": 0,
+            "x": 0,
+            "y": 3
+          }
+        ]
+      ],
+      "semantic_sha256": "fdd82551c5cef417af34f7cb3a687e8926f52ae9fac4437fe98b16c74ba9bdfe"
+    },
+    {
+      "case": "feasible_057_k6_l3_medium_branch_heavy_seed202611087000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 44,
+      "wirelength": 32,
+      "via_count": 2,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 11,
+            "y": 7
+          },
+          {
+            "z": 1,
+            "x": 6,
+            "y": 13
+          },
+          {
+            "z": 2,
+            "x": 6,
+            "y": 7
+          },
+          {
+            "z": 1,
+            "x": 0,
+            "y": 7
+          },
+          {
+            "z": 1,
+            "x": 6,
+            "y": 0
+          }
+        ]
+      ],
+      "semantic_sha256": "374e5d16418b0d2200aa94b636522265a217e74ff9572ac7c6580052ee75d53c"
+    },
+    {
+      "case": "feasible_058_k6_l3_corridor_barrier_sides_seed202611088000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 62,
+      "wirelength": 38,
+      "via_count": 4,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 4,
+            "y": 13
+          },
+          {
+            "z": 2,
+            "x": 11,
+            "y": 13
+          },
+          {
+            "z": 2,
+            "x": 11,
+            "y": 0
+          },
+          {
+            "z": 2,
+            "x": 3,
+            "y": 0
+          },
+          {
+            "z": 0,
+            "x": 9,
+            "y": 4
+          }
+        ]
+      ],
+      "semantic_sha256": "6f699e41dca97c7512a03f6e79f8b514fd8972be1aac79bea59c9a2e6fa9c984"
+    },
+    {
+      "case": "feasible_059_k6_l3_chokepoint_compact_seed202611089000",
+      "oracle_status": "optimal",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": 15,
+      "wirelength": 3,
+      "via_count": 2,
+      "termination_reason": "success",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 3,
+            "y": 4
+          },
+          {
+            "z": 1,
+            "x": 4,
+            "y": 4
+          },
+          {
+            "z": 0,
+            "x": 2,
+            "y": 4
+          },
+          {
+            "z": 0,
+            "x": 3,
+            "y": 4
+          },
+          {
+            "z": 2,
+            "x": 3,
+            "y": 4
+          }
+        ]
+      ],
+      "semantic_sha256": "6619bdda519a0eb8f315f7054009f8635ee7642ce3699288e3a8d73724495104"
+    },
+    {
+      "case": "infeasible_000_k3_l1_seed202612000000",
+      "oracle_status": "infeasible",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": null,
+      "wirelength": null,
+      "via_count": null,
+      "termination_reason": "unreachable",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 2,
+            "y": 4
+          }
+        ]
+      ],
+      "semantic_sha256": "d57f9ab42e67c4e643efa7e7bb0e9f9437505f532165d52fdec56e71687d8779"
+    },
+    {
+      "case": "infeasible_001_k4_l1_seed202612000001",
+      "oracle_status": "infeasible",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": null,
+      "wirelength": null,
+      "via_count": null,
+      "termination_reason": "unreachable",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 6,
+            "y": 10
+          }
+        ]
+      ],
+      "semantic_sha256": "1b9ed565abfcdac8b0d0cb3950c357961c9312e6de2029e58e3688657138154c"
+    },
+    {
+      "case": "infeasible_002_k5_l1_seed202612000002",
+      "oracle_status": "infeasible",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": null,
+      "wirelength": null,
+      "via_count": null,
+      "termination_reason": "unreachable",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 0,
+            "y": 5
+          },
+          {
+            "z": 0,
+            "x": 1,
+            "y": 9
+          }
+        ]
+      ],
+      "semantic_sha256": "d11d4b271dd4ca945dfe4fca49a676f556ffd3519f0225df4f3f409fc1359b75"
+    },
+    {
+      "case": "infeasible_003_k6_l1_seed202612000003",
+      "oracle_status": "infeasible",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": null,
+      "wirelength": null,
+      "via_count": null,
+      "termination_reason": "unreachable",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 10,
+            "y": 0
+          },
+          {
+            "z": 0,
+            "x": 11,
+            "y": 14
+          }
+        ]
+      ],
+      "semantic_sha256": "59114a221a0e330a507ef6045dc74a3ea57525308a23774c4adb17b68af8f00a"
+    },
+    {
+      "case": "infeasible_004_k3_l2_seed202612000004",
+      "oracle_status": "infeasible",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": null,
+      "wirelength": null,
+      "via_count": null,
+      "termination_reason": "unreachable",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 0,
+            "y": 15
+          }
+        ]
+      ],
+      "semantic_sha256": "6406441efb6d3f5decb6a3a2c8fb1e8e570812b65f3e73f0fa906927358c05d1"
+    },
+    {
+      "case": "infeasible_005_k4_l2_seed202612000005",
+      "oracle_status": "infeasible",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": null,
+      "wirelength": null,
+      "via_count": null,
+      "termination_reason": "unreachable",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 2,
+            "y": 5
+          }
+        ]
+      ],
+      "semantic_sha256": "ea409c692643b456ee9573d0d801940841b4c91b81a4495ef5dd962309dc68cf"
+    },
+    {
+      "case": "infeasible_006_k5_l2_seed202612000006",
+      "oracle_status": "infeasible",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": null,
+      "wirelength": null,
+      "via_count": null,
+      "termination_reason": "unreachable",
+      "attached_terminals": [
+        [
+          {
+            "z": 0,
+            "x": 9,
+            "y": 4
+          }
+        ]
+      ],
+      "semantic_sha256": "4f9b0536033f8042cdd86223759c26e03e6eefbc53623e408d03bbb1bda02f12"
+    },
+    {
+      "case": "infeasible_007_k6_l2_seed202612000007",
+      "oracle_status": "infeasible",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": null,
+      "wirelength": null,
+      "via_count": null,
+      "termination_reason": "unreachable",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 10,
+            "y": 11
+          },
+          {
+            "z": 0,
+            "x": 7,
+            "y": 0
+          }
+        ]
+      ],
+      "semantic_sha256": "db476f62ae89ac2911e1eafb95f3ae89945143eeef76c6ac90097cafefb6af93"
+    },
+    {
+      "case": "infeasible_008_k3_l3_seed202612000008",
+      "oracle_status": "infeasible",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": null,
+      "wirelength": null,
+      "via_count": null,
+      "termination_reason": "unreachable",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 2,
+            "y": 5
+          }
+        ]
+      ],
+      "semantic_sha256": "44d2c677d9b652b5d6beac45605c6afade8cb7afd15aea5cbe586cabca42ae01"
+    },
+    {
+      "case": "infeasible_009_k4_l3_seed202612000009",
+      "oracle_status": "infeasible",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": null,
+      "wirelength": null,
+      "via_count": null,
+      "termination_reason": "unreachable",
+      "attached_terminals": [
+        [
+          {
+            "z": 2,
+            "x": 1,
+            "y": 0
+          }
+        ]
+      ],
+      "semantic_sha256": "9e62aa2227f64c6ab492523fee3f27b0e5f6d3c46dece3cec42cec6844773bb3"
+    },
+    {
+      "case": "infeasible_010_k5_l3_seed202612000010",
+      "oracle_status": "infeasible",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": null,
+      "wirelength": null,
+      "via_count": null,
+      "termination_reason": "unreachable",
+      "attached_terminals": [
+        [
+          {
+            "z": 1,
+            "x": 0,
+            "y": 1
+          },
+          {
+            "z": 1,
+            "x": 1,
+            "y": 1
+          }
+        ]
+      ],
+      "semantic_sha256": "237984039a802926177dc2758858417cbe34ac728aac2228a3b862c15ef27fa7"
+    },
+    {
+      "case": "infeasible_011_k6_l3_seed202612000011",
+      "oracle_status": "infeasible",
+      "equivalent": true,
+      "archived_route_equivalent": true,
+      "physical_cost": null,
+      "wirelength": null,
+      "via_count": null,
+      "termination_reason": "unreachable",
+      "attached_terminals": [
+        [
+          {
+            "z": 2,
+            "x": 1,
+            "y": 7
+          },
+          {
+            "z": 1,
+            "x": 0,
+            "y": 6
+          }
+        ]
+      ],
+      "semantic_sha256": "d3e95b59e1c4e08e010467519056a2849701e88ddfd250d62e0fa9cbe555ef38"
+    }
+  ],
+  "candidate_selector_unit_test_scenarios": [
+    "unique_nearest",
+    "equal_distance_tie",
+    "weighted_via_planar",
+    "obstacles",
+    "multiple_disconnected_candidates",
+    "all_unreachable",
+    "already_connected_terminal",
+    "multi_branch_tree"
+  ]
+}
