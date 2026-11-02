@@ -1,0 +1,650 @@
+{
+  "schema_version": 1,
+  "experiment": "paired_single_net_terminal_ordering",
+  "created_at_utc": "2026-11-01T15:51:27.639094+00:00",
+  "git_commit": "a319f25b29dd00b9bb51f00696b23a9c4fea6bfa",
+  "working_tree_dirty": true,
+  "platform": "macOS-13.7.8-x86_64-i386-64bit",
+  "machine": "x86_64",
+  "processor": "i386",
+  "python": "3.10.11 (v3.10.11:7d4cc5aa85, Apr  4 2023, 19:05:19) [Clang 13.0.0 (clang-1300.0.29.30)]",
+  "compiler_build": {
+    "command": [
+      "c++",
+      "-std=c++17",
+      "-O2",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "src/main.cpp",
+      "-o",
+      "router"
+    ],
+    "compiler_version": "Apple clang version 14.0.3 (clang-1403.0.22.14.1)\nTarget: x86_64-apple-darwin22.6.0\nThread model: posix\nInstalledDir: /Library/Developer/CommandLineTools/usr/bin",
+    "flags": "-std=c++17 -O2 -Wall -Wextra -Wpedantic",
+    "executable_sha256": "48d7a16bf929288077125d72d1f68db51d085bda324c07e36580e325897e5160",
+    "source_sha256": {
+      "src/AStar2D.hpp": "c335150700a63869429c2440807256fccf012d90548cdf65c87acd5ddba562d8",
+      "src/AStar3D.hpp": "ac2b37346e16bc0c31080be60d2bb4c8bd115e1f6f381a49de79ce8b3d5127ba",
+      "src/BFS2D.hpp": "75a689ecfc7d4ae161645e9d12e5e986cbe6d2e57dc0bb7e499a337f46980699",
+      "src/BFS3D.hpp": "1a72f9a86955bd3edaf1812e2b66dec51d1a4d22105fd500f54f17b69031d0d2",
+      "src/Dijkstra3D.hpp": "cc964e4f4de08d5ecde479eba8e81a5c93de69d21ac9c307cef44f4fe74903c0",
+      "src/IRouter2D.hpp": "369cdda14bca7ad398a03f361ee635519c34dcea1b96ef99d9fa964cb3ecec6e",
+      "src/IRouter3D.hpp": "857b9547b8a264eb3c4c0f5e4d932760b12b0ed84cf8db66efe5aaf71adae485",
+      "src/JsonOutput.hpp": "6bf425c023d0d4dfebb7606b9f6d02f8511b65cd2dbb8486a0d1f619ef0a2e70",
+      "src/LayoutIO.hpp": "0e981b51a821da7883fd08446669f25c17e7f042ba16f5f92e039273a1389241",
+      "src/RouteValidation.hpp": "f507f5dea6a1351f2ba1523545d95fc32a9e2ff3199301dd6425380893f3c5c0",
+      "src/RoutingEngine.hpp": "05f91af61fe95315e9b7d5f6c249b03815f2cef810a11c0fc1dcfd7161d20d53",
+      "src/Search3D.hpp": "7155ac008d3c00eb98b62234ac65db4203bb58b7802b58b1c11de43a21718370",
+      "src/main.cpp": "f62f7e9d2e40aefb1b04de1e269c034aeff7754b83a9342de1b7c0c30e01f56b"
+    }
+  },
+  "executable_sha256": "48d7a16bf929288077125d72d1f68db51d085bda324c07e36580e325897e5160",
+  "source_sha256": {
+    "src/AStar2D.hpp": "c335150700a63869429c2440807256fccf012d90548cdf65c87acd5ddba562d8",
+    "src/AStar3D.hpp": "ac2b37346e16bc0c31080be60d2bb4c8bd115e1f6f381a49de79ce8b3d5127ba",
+    "src/BFS2D.hpp": "75a689ecfc7d4ae161645e9d12e5e986cbe6d2e57dc0bb7e499a337f46980699",
+    "src/BFS3D.hpp": "1a72f9a86955bd3edaf1812e2b66dec51d1a4d22105fd500f54f17b69031d0d2",
+    "src/Dijkstra3D.hpp": "cc964e4f4de08d5ecde479eba8e81a5c93de69d21ac9c307cef44f4fe74903c0",
+    "src/IRouter2D.hpp": "369cdda14bca7ad398a03f361ee635519c34dcea1b96ef99d9fa964cb3ecec6e",
+    "src/IRouter3D.hpp": "857b9547b8a264eb3c4c0f5e4d932760b12b0ed84cf8db66efe5aaf71adae485",
+    "src/JsonOutput.hpp": "6bf425c023d0d4dfebb7606b9f6d02f8511b65cd2dbb8486a0d1f619ef0a2e70",
+    "src/LayoutIO.hpp": "0e981b51a821da7883fd08446669f25c17e7f042ba16f5f92e039273a1389241",
+    "src/RouteValidation.hpp": "f507f5dea6a1351f2ba1523545d95fc32a9e2ff3199301dd6425380893f3c5c0",
+    "src/RoutingEngine.hpp": "05f91af61fe95315e9b7d5f6c249b03815f2cef810a11c0fc1dcfd7161d20d53",
+    "src/Search3D.hpp": "7155ac008d3c00eb98b62234ac65db4203bb58b7802b58b1c11de43a21718370",
+    "src/main.cpp": "f62f7e9d2e40aefb1b04de1e269c034aeff7754b83a9342de1b7c0c30e01f56b",
+    "Makefile": "d2629776955ba7583c16a29ab8f26d41d92a4c344d6afa18a08720e9e20061a3",
+    "benchmarks/record_build.py": "c579a59967fabb39ab42aecfda9906fc7d5e6af6dbfd7e6ebaf787965daf234e",
+    "benchmarks/steiner_oracle.py": "69aad43c83faad72e283d17c2190f2e61a532afb2ac53bd783c6707bb1dea217",
+    "benchmarks/run_steiner_ordering.py": "4ef51ab533f4aaecb62712a25540b4d5b931bf7e5f03ac6afcd7cf42e0372297",
+    "benchmarks/validate_output.py": "5f0896bfb15b22fdd466138605ef5ebbd58306a116c3e7aedf26fb7bb2fcb4af",
+    "tests/test_router.cpp": "e454edd128a0325ef455ccf3cb9b90f498838a14adb3c43aa5cb072a2f85a7c7",
+    "tests/test_steiner_oracle.py": "56d587c3bf66e163e600f5c48cddf8669dd3c222ce06018eab711e4a7fd13c6c"
+  },
+  "input_sha256": {
+    "benchmarks/steiner/layouts/branch_sharing_saves_cost.txt": "51eb7f9c85756a6281a93dfc19e934c637546d9c35c5b89ceda862133ef096c7",
+    "benchmarks/steiner/layouts/disconnected.txt": "706ea84f76b9ff0f521776e197f2030c36ae1c613ec9b720ce6525872edecee1",
+    "benchmarks/steiner/layouts/obstacle_branch.txt": "8d6c52b7f7f9234001d815e0ab36cc7aabb102b8de9b6b132d02e78dbe227514",
+    "benchmarks/steiner/layouts/planar_branching.txt": "2c66f3f141723785dc23ed7a56a1acbd96ee697b26260ff20fb94c0586bea3df",
+    "benchmarks/steiner/layouts/required_via.txt": "f40da44b1542b1e51cb928a2241d6a077633d327b459f8c167fde3be2e880cb5",
+    "benchmarks/steiner/layouts/via_beats_planar_detour.txt": "c004186b00c22fa6050db9513906d6de22e6641c1f9cb38b969c4f6fdbb40227"
+  },
+  "algorithm": "astar",
+  "net_order": "numeric",
+  "terminal_strategies": [
+    "input",
+    "nearest"
+  ],
+  "max_iterations": 1,
+  "physical_cost_model": {
+    "planar": 1,
+    "via": 6
+  },
+  "repetitions": 3,
+  "warmups": 1,
+  "timing_scope": "router-reported runtime_ms; process wall time retained separately",
+  "execution_order": "alternating strategy order by repetition; warmup input then nearest",
+  "seed": null,
+  "corpus": "fixed deterministic fixtures; no stochastic generation",
+  "cases": [
+    {
+      "input": "benchmarks/steiner/layouts/branch_sharing_saves_cost.txt",
+      "input_sha256": "51eb7f9c85756a6281a93dfc19e934c637546d9c35c5b89ceda862133ef096c7",
+      "oracle": {
+        "status": "optimal",
+        "reason": "dreyfus_wagner",
+        "optimal_cost": 4,
+        "edges": [
+          [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          [
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              2
+            ]
+          ],
+          [
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              1,
+              1
+            ]
+          ],
+          [
+            [
+              0,
+              1,
+              1
+            ],
+            [
+              0,
+              2,
+              1
+            ]
+          ]
+        ],
+        "terminals": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            2
+          ],
+          [
+            0,
+            2,
+            1
+          ]
+        ],
+        "graph_vertices": 9,
+        "dp_states": 72,
+        "input_dimensions": [
+          1,
+          3,
+          3
+        ],
+        "net": "Net1"
+      },
+      "raw_outputs": {
+        "input_warmup": "raw/branch_sharing_saves_cost_input_warmup.json",
+        "nearest_warmup": "raw/branch_sharing_saves_cost_nearest_warmup.json",
+        "nearest_r00": "raw/branch_sharing_saves_cost_nearest_r00.json",
+        "input_r00": "raw/branch_sharing_saves_cost_input_r00.json",
+        "input_r01": "raw/branch_sharing_saves_cost_input_r01.json",
+        "nearest_r01": "raw/branch_sharing_saves_cost_nearest_r01.json",
+        "nearest_r02": "raw/branch_sharing_saves_cost_nearest_r02.json",
+        "input_r02": "raw/branch_sharing_saves_cost_input_r02.json"
+      }
+    },
+    {
+      "input": "benchmarks/steiner/layouts/disconnected.txt",
+      "input_sha256": "706ea84f76b9ff0f521776e197f2030c36ae1c613ec9b720ce6525872edecee1",
+      "oracle": {
+        "status": "infeasible",
+        "reason": "disconnected_terminals",
+        "optimal_cost": null,
+        "edges": [],
+        "terminals": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            4
+          ]
+        ],
+        "graph_vertices": 3,
+        "dp_states": 0,
+        "input_dimensions": [
+          1,
+          1,
+          5
+        ],
+        "net": "Net1"
+      },
+      "raw_outputs": {
+        "input_warmup": "raw/disconnected_input_warmup.json",
+        "nearest_warmup": "raw/disconnected_nearest_warmup.json",
+        "nearest_r00": "raw/disconnected_nearest_r00.json",
+        "input_r00": "raw/disconnected_input_r00.json",
+        "input_r01": "raw/disconnected_input_r01.json",
+        "nearest_r01": "raw/disconnected_nearest_r01.json",
+        "nearest_r02": "raw/disconnected_nearest_r02.json",
+        "input_r02": "raw/disconnected_input_r02.json"
+      }
+    },
+    {
+      "input": "benchmarks/steiner/layouts/obstacle_branch.txt",
+      "input_sha256": "8d6c52b7f7f9234001d815e0ab36cc7aabb102b8de9b6b132d02e78dbe227514",
+      "oracle": {
+        "status": "optimal",
+        "reason": "dreyfus_wagner",
+        "optimal_cost": 7,
+        "edges": [
+          [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              1
+            ]
+          ],
+          [
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              2
+            ]
+          ],
+          [
+            [
+              0,
+              0,
+              2
+            ],
+            [
+              0,
+              0,
+              3
+            ]
+          ],
+          [
+            [
+              0,
+              0,
+              2
+            ],
+            [
+              0,
+              1,
+              2
+            ]
+          ],
+          [
+            [
+              0,
+              1,
+              2
+            ],
+            [
+              0,
+              2,
+              2
+            ]
+          ],
+          [
+            [
+              0,
+              2,
+              0
+            ],
+            [
+              0,
+              2,
+              1
+            ]
+          ],
+          [
+            [
+              0,
+              2,
+              1
+            ],
+            [
+              0,
+              2,
+              2
+            ]
+          ]
+        ],
+        "terminals": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            3
+          ],
+          [
+            0,
+            2,
+            0
+          ]
+        ],
+        "graph_vertices": 9,
+        "dp_states": 72,
+        "input_dimensions": [
+          1,
+          3,
+          4
+        ],
+        "net": "Net1"
+      },
+      "raw_outputs": {
+        "input_warmup": "raw/obstacle_branch_input_warmup.json",
+        "nearest_warmup": "raw/obstacle_branch_nearest_warmup.json",
+        "nearest_r00": "raw/obstacle_branch_nearest_r00.json",
+        "input_r00": "raw/obstacle_branch_input_r00.json",
+        "input_r01": "raw/obstacle_branch_input_r01.json",
+        "nearest_r01": "raw/obstacle_branch_nearest_r01.json",
+        "nearest_r02": "raw/obstacle_branch_nearest_r02.json",
+        "input_r02": "raw/obstacle_branch_input_r02.json"
+      }
+    },
+    {
+      "input": "benchmarks/steiner/layouts/planar_branching.txt",
+      "input_sha256": "2c66f3f141723785dc23ed7a56a1acbd96ee697b26260ff20fb94c0586bea3df",
+      "oracle": {
+        "status": "optimal",
+        "reason": "dreyfus_wagner",
+        "optimal_cost": 4,
+        "edges": [
+          [
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              1,
+              1
+            ]
+          ],
+          [
+            [
+              0,
+              1,
+              0
+            ],
+            [
+              0,
+              1,
+              1
+            ]
+          ],
+          [
+            [
+              0,
+              1,
+              1
+            ],
+            [
+              0,
+              1,
+              2
+            ]
+          ],
+          [
+            [
+              0,
+              1,
+              1
+            ],
+            [
+              0,
+              2,
+              1
+            ]
+          ]
+        ],
+        "terminals": [
+          [
+            0,
+            1,
+            1
+          ],
+          [
+            0,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            2,
+            1
+          ]
+        ],
+        "graph_vertices": 9,
+        "dp_states": 288,
+        "input_dimensions": [
+          1,
+          3,
+          3
+        ],
+        "net": "Net1"
+      },
+      "raw_outputs": {
+        "input_warmup": "raw/planar_branching_input_warmup.json",
+        "nearest_warmup": "raw/planar_branching_nearest_warmup.json",
+        "nearest_r00": "raw/planar_branching_nearest_r00.json",
+        "input_r00": "raw/planar_branching_input_r00.json",
+        "input_r01": "raw/planar_branching_input_r01.json",
+        "nearest_r01": "raw/planar_branching_nearest_r01.json",
+        "nearest_r02": "raw/planar_branching_nearest_r02.json",
+        "input_r02": "raw/planar_branching_input_r02.json"
+      }
+    },
+    {
+      "input": "benchmarks/steiner/layouts/required_via.txt",
+      "input_sha256": "f40da44b1542b1e51cb928a2241d6a077633d327b459f8c167fde3be2e880cb5",
+      "oracle": {
+        "status": "optimal",
+        "reason": "dreyfus_wagner",
+        "optimal_cost": 6,
+        "edges": [
+          [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ]
+          ]
+        ],
+        "terminals": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            0
+          ]
+        ],
+        "graph_vertices": 2,
+        "dp_states": 8,
+        "input_dimensions": [
+          2,
+          1,
+          1
+        ],
+        "net": "Net1"
+      },
+      "raw_outputs": {
+        "input_warmup": "raw/required_via_input_warmup.json",
+        "nearest_warmup": "raw/required_via_nearest_warmup.json",
+        "nearest_r00": "raw/required_via_nearest_r00.json",
+        "input_r00": "raw/required_via_input_r00.json",
+        "input_r01": "raw/required_via_input_r01.json",
+        "nearest_r01": "raw/required_via_nearest_r01.json",
+        "nearest_r02": "raw/required_via_nearest_r02.json",
+        "input_r02": "raw/required_via_input_r02.json"
+      }
+    },
+    {
+      "input": "benchmarks/steiner/layouts/via_beats_planar_detour.txt",
+      "input_sha256": "c004186b00c22fa6050db9513906d6de22e6641c1f9cb38b969c4f6fdbb40227",
+      "oracle": {
+        "status": "optimal",
+        "reason": "dreyfus_wagner",
+        "optimal_cost": 18,
+        "edges": [
+          [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              1,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              0,
+              6,
+              0
+            ],
+            [
+              1,
+              6,
+              0
+            ]
+          ],
+          [
+            [
+              1,
+              0,
+              0
+            ],
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          [
+            [
+              1,
+              1,
+              0
+            ],
+            [
+              1,
+              2,
+              0
+            ]
+          ],
+          [
+            [
+              1,
+              2,
+              0
+            ],
+            [
+              1,
+              3,
+              0
+            ]
+          ],
+          [
+            [
+              1,
+              3,
+              0
+            ],
+            [
+              1,
+              4,
+              0
+            ]
+          ],
+          [
+            [
+              1,
+              4,
+              0
+            ],
+            [
+              1,
+              5,
+              0
+            ]
+          ],
+          [
+            [
+              1,
+              5,
+              0
+            ],
+            [
+              1,
+              6,
+              0
+            ]
+          ]
+        ],
+        "terminals": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            6,
+            0
+          ]
+        ],
+        "graph_vertices": 80,
+        "dp_states": 320,
+        "input_dimensions": [
+          2,
+          7,
+          7
+        ],
+        "net": "Net1"
+      },
+      "raw_outputs": {
+        "input_warmup": "raw/via_beats_planar_detour_input_warmup.json",
+        "nearest_warmup": "raw/via_beats_planar_detour_nearest_warmup.json",
+        "nearest_r00": "raw/via_beats_planar_detour_nearest_r00.json",
+        "input_r00": "raw/via_beats_planar_detour_input_r00.json",
+        "input_r01": "raw/via_beats_planar_detour_input_r01.json",
+        "nearest_r01": "raw/via_beats_planar_detour_nearest_r01.json",
+        "nearest_r02": "raw/via_beats_planar_detour_nearest_r02.json",
+        "input_r02": "raw/via_beats_planar_detour_input_r02.json"
+      }
+    }
+  ]
+}

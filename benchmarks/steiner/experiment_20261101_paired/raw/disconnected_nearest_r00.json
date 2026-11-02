@@ -1,0 +1,35 @@
+{
+  "schema_version": 2,
+  "algorithm": "astar",
+  "success": false,
+  "termination_reason": "unreachable",
+  "net_order": "numeric",
+  "terminal_order": "nearest",
+  "dimensions": [1,1,5],
+  "cost_model": {"planar":1,"via":6,"occupied_cell":100,"history_increment":50},
+  "metrics": {
+    "total_nets": 1,
+    "routed_nets": 0,
+    "success_rate": 0,
+    "unrouted_nets": 1,
+    "invalid_nets": 0,
+    "unresolved_conflicts": 0,
+    "unconnected_terminals": 1,
+    "wirelength": 0,
+    "via_count": 0,
+    "branch_count": 0,
+    "graph_steps": 0,
+    "weighted_cost": 0,
+    "search_cost": 0,
+    "search_count": 1,
+    "routing_passes": 1,
+    "reroute_iterations": 0,
+    "runtime_ms": 0.019669,
+    "nodes_expanded": 1
+  },
+  "obstacles": [{"z":0,"x":0,"y":1},{"z":0,"x":0,"y":3}],
+  "conflicts": [],
+  "nets": [
+    {"name":"Net1","source":{"z":0,"x":0,"y":0},"target":{"z":0,"x":0,"y":4},"terminals":[{"z":0,"x":0,"y":0},{"z":0,"x":0,"y":4}],"connected_terminals":1,"unconnected_terminals":1,"branch_count":0,"search_count":1,"attached_terminals":[],"valid":false,"local_valid":false,"search_cost":0,"path":[]}
+  ]
+}
