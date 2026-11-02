@@ -1,0 +1,35 @@
+{
+  "schema_version": 2,
+  "algorithm": "astar",
+  "success": true,
+  "termination_reason": "success",
+  "net_order": "numeric",
+  "terminal_order": "nearest",
+  "dimensions": [3,9,10],
+  "cost_model": {"planar":1,"via":6,"occupied_cell":100,"history_increment":50},
+  "metrics": {
+    "total_nets": 1,
+    "routed_nets": 1,
+    "success_rate": 1,
+    "unrouted_nets": 0,
+    "invalid_nets": 0,
+    "unresolved_conflicts": 0,
+    "unconnected_terminals": 0,
+    "wirelength": 24,
+    "via_count": 3,
+    "branch_count": 2,
+    "graph_steps": 27,
+    "weighted_cost": 42,
+    "search_cost": 42,
+    "search_count": 9,
+    "routing_passes": 1,
+    "reroute_iterations": 0,
+    "runtime_ms": 0.284474,
+    "nodes_expanded": 1314
+  },
+  "obstacles": [{"z":0,"x":0,"y":9},{"z":0,"x":1,"y":7},{"z":0,"x":2,"y":3},{"z":0,"x":2,"y":5},{"z":0,"x":5,"y":0},{"z":0,"x":7,"y":2},{"z":0,"x":7,"y":9},{"z":0,"x":8,"y":3},{"z":1,"x":0,"y":1},{"z":1,"x":2,"y":5},{"z":1,"x":2,"y":6},{"z":1,"x":3,"y":1},{"z":1,"x":4,"y":8},{"z":1,"x":4,"y":9},{"z":1,"x":5,"y":9},{"z":2,"x":0,"y":8},{"z":2,"x":1,"y":5},{"z":2,"x":4,"y":0},{"z":2,"x":4,"y":2},{"z":2,"x":7,"y":0}],
+  "conflicts": [],
+  "nets": [
+    {"name":"Net1","source":{"z":2,"x":6,"y":3},"target":{"z":2,"x":0,"y":9},"terminals":[{"z":2,"x":6,"y":3},{"z":2,"x":0,"y":9},{"z":0,"x":8,"y":9},{"z":1,"x":0,"y":0}],"connected_terminals":4,"unconnected_terminals":0,"branch_count":2,"search_count":9,"attached_terminals":[{"z":2,"x":0,"y":9},{"z":1,"x":0,"y":0},{"z":0,"x":8,"y":9}],"valid":true,"local_valid":true,"search_cost":42,"path":[],"tree_edges":[[{"z":0,"x":8,"y":9},{"z":1,"x":8,"y":9}],[{"z":1,"x":0,"y":0},{"z":2,"x":0,"y":0}],[{"z":1,"x":8,"y":9},{"z":2,"x":8,"y":9}],[{"z":2,"x":0,"y":0},{"z":2,"x":0,"y":1}],[{"z":2,"x":0,"y":1},{"z":2,"x":0,"y":2}],[{"z":2,"x":0,"y":2},{"z":2,"x":0,"y":3}],[{"z":2,"x":0,"y":3},{"z":2,"x":1,"y":3}],[{"z":2,"x":0,"y":9},{"z":2,"x":1,"y":9}],[{"z":2,"x":1,"y":3},{"z":2,"x":2,"y":3}],[{"z":2,"x":1,"y":6},{"z":2,"x":1,"y":7}],[{"z":2,"x":1,"y":6},{"z":2,"x":2,"y":6}],[{"z":2,"x":1,"y":7},{"z":2,"x":1,"y":8}],[{"z":2,"x":1,"y":8},{"z":2,"x":1,"y":9}],[{"z":2,"x":1,"y":9},{"z":2,"x":2,"y":9}],[{"z":2,"x":2,"y":3},{"z":2,"x":2,"y":4}],[{"z":2,"x":2,"y":3},{"z":2,"x":3,"y":3}],[{"z":2,"x":2,"y":4},{"z":2,"x":2,"y":5}],[{"z":2,"x":2,"y":5},{"z":2,"x":2,"y":6}],[{"z":2,"x":2,"y":9},{"z":2,"x":3,"y":9}],[{"z":2,"x":3,"y":3},{"z":2,"x":4,"y":3}],[{"z":2,"x":3,"y":9},{"z":2,"x":4,"y":9}],[{"z":2,"x":4,"y":3},{"z":2,"x":5,"y":3}],[{"z":2,"x":4,"y":9},{"z":2,"x":5,"y":9}],[{"z":2,"x":5,"y":3},{"z":2,"x":6,"y":3}],[{"z":2,"x":5,"y":9},{"z":2,"x":6,"y":9}],[{"z":2,"x":6,"y":9},{"z":2,"x":7,"y":9}],[{"z":2,"x":7,"y":9},{"z":2,"x":8,"y":9}]]}
+  ]
+}

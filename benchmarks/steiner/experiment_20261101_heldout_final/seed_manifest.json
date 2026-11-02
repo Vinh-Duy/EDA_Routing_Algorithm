@@ -1,0 +1,1111 @@
+{
+  "heldout_feasible_strata": [
+    {
+      "slot": 0,
+      "terminal_count": 3,
+      "layers": 1,
+      "obstacle_mode": "none"
+    },
+    {
+      "slot": 1,
+      "terminal_count": 3,
+      "layers": 1,
+      "obstacle_mode": "sparse"
+    },
+    {
+      "slot": 2,
+      "terminal_count": 3,
+      "layers": 1,
+      "obstacle_mode": "medium"
+    },
+    {
+      "slot": 3,
+      "terminal_count": 3,
+      "layers": 1,
+      "obstacle_mode": "corridor"
+    },
+    {
+      "slot": 4,
+      "terminal_count": 3,
+      "layers": 1,
+      "obstacle_mode": "chokepoint"
+    },
+    {
+      "slot": 5,
+      "terminal_count": 3,
+      "layers": 2,
+      "obstacle_mode": "none"
+    },
+    {
+      "slot": 6,
+      "terminal_count": 3,
+      "layers": 2,
+      "obstacle_mode": "sparse"
+    },
+    {
+      "slot": 7,
+      "terminal_count": 3,
+      "layers": 2,
+      "obstacle_mode": "medium"
+    },
+    {
+      "slot": 8,
+      "terminal_count": 3,
+      "layers": 2,
+      "obstacle_mode": "corridor"
+    },
+    {
+      "slot": 9,
+      "terminal_count": 3,
+      "layers": 2,
+      "obstacle_mode": "chokepoint"
+    },
+    {
+      "slot": 10,
+      "terminal_count": 3,
+      "layers": 3,
+      "obstacle_mode": "none"
+    },
+    {
+      "slot": 11,
+      "terminal_count": 3,
+      "layers": 3,
+      "obstacle_mode": "sparse"
+    },
+    {
+      "slot": 12,
+      "terminal_count": 3,
+      "layers": 3,
+      "obstacle_mode": "medium"
+    },
+    {
+      "slot": 13,
+      "terminal_count": 3,
+      "layers": 3,
+      "obstacle_mode": "corridor"
+    },
+    {
+      "slot": 14,
+      "terminal_count": 3,
+      "layers": 3,
+      "obstacle_mode": "chokepoint"
+    },
+    {
+      "slot": 15,
+      "terminal_count": 4,
+      "layers": 1,
+      "obstacle_mode": "none"
+    },
+    {
+      "slot": 16,
+      "terminal_count": 4,
+      "layers": 1,
+      "obstacle_mode": "sparse"
+    },
+    {
+      "slot": 17,
+      "terminal_count": 4,
+      "layers": 1,
+      "obstacle_mode": "medium"
+    },
+    {
+      "slot": 18,
+      "terminal_count": 4,
+      "layers": 1,
+      "obstacle_mode": "corridor"
+    },
+    {
+      "slot": 19,
+      "terminal_count": 4,
+      "layers": 1,
+      "obstacle_mode": "chokepoint"
+    },
+    {
+      "slot": 20,
+      "terminal_count": 4,
+      "layers": 2,
+      "obstacle_mode": "none"
+    },
+    {
+      "slot": 21,
+      "terminal_count": 4,
+      "layers": 2,
+      "obstacle_mode": "sparse"
+    },
+    {
+      "slot": 22,
+      "terminal_count": 4,
+      "layers": 2,
+      "obstacle_mode": "medium"
+    },
+    {
+      "slot": 23,
+      "terminal_count": 4,
+      "layers": 2,
+      "obstacle_mode": "corridor"
+    },
+    {
+      "slot": 24,
+      "terminal_count": 4,
+      "layers": 2,
+      "obstacle_mode": "chokepoint"
+    },
+    {
+      "slot": 25,
+      "terminal_count": 4,
+      "layers": 3,
+      "obstacle_mode": "none"
+    },
+    {
+      "slot": 26,
+      "terminal_count": 4,
+      "layers": 3,
+      "obstacle_mode": "sparse"
+    },
+    {
+      "slot": 27,
+      "terminal_count": 4,
+      "layers": 3,
+      "obstacle_mode": "medium"
+    },
+    {
+      "slot": 28,
+      "terminal_count": 4,
+      "layers": 3,
+      "obstacle_mode": "corridor"
+    },
+    {
+      "slot": 29,
+      "terminal_count": 4,
+      "layers": 3,
+      "obstacle_mode": "chokepoint"
+    },
+    {
+      "slot": 30,
+      "terminal_count": 5,
+      "layers": 1,
+      "obstacle_mode": "none"
+    },
+    {
+      "slot": 31,
+      "terminal_count": 5,
+      "layers": 1,
+      "obstacle_mode": "sparse"
+    },
+    {
+      "slot": 32,
+      "terminal_count": 5,
+      "layers": 1,
+      "obstacle_mode": "medium"
+    },
+    {
+      "slot": 33,
+      "terminal_count": 5,
+      "layers": 1,
+      "obstacle_mode": "corridor"
+    },
+    {
+      "slot": 34,
+      "terminal_count": 5,
+      "layers": 1,
+      "obstacle_mode": "chokepoint"
+    },
+    {
+      "slot": 35,
+      "terminal_count": 5,
+      "layers": 2,
+      "obstacle_mode": "none"
+    },
+    {
+      "slot": 36,
+      "terminal_count": 5,
+      "layers": 2,
+      "obstacle_mode": "sparse"
+    },
+    {
+      "slot": 37,
+      "terminal_count": 5,
+      "layers": 2,
+      "obstacle_mode": "medium"
+    },
+    {
+      "slot": 38,
+      "terminal_count": 5,
+      "layers": 2,
+      "obstacle_mode": "corridor"
+    },
+    {
+      "slot": 39,
+      "terminal_count": 5,
+      "layers": 2,
+      "obstacle_mode": "chokepoint"
+    },
+    {
+      "slot": 40,
+      "terminal_count": 5,
+      "layers": 3,
+      "obstacle_mode": "none"
+    },
+    {
+      "slot": 41,
+      "terminal_count": 5,
+      "layers": 3,
+      "obstacle_mode": "sparse"
+    },
+    {
+      "slot": 42,
+      "terminal_count": 5,
+      "layers": 3,
+      "obstacle_mode": "medium"
+    },
+    {
+      "slot": 43,
+      "terminal_count": 5,
+      "layers": 3,
+      "obstacle_mode": "corridor"
+    },
+    {
+      "slot": 44,
+      "terminal_count": 5,
+      "layers": 3,
+      "obstacle_mode": "chokepoint"
+    },
+    {
+      "slot": 45,
+      "terminal_count": 6,
+      "layers": 1,
+      "obstacle_mode": "none"
+    },
+    {
+      "slot": 46,
+      "terminal_count": 6,
+      "layers": 1,
+      "obstacle_mode": "sparse"
+    },
+    {
+      "slot": 47,
+      "terminal_count": 6,
+      "layers": 1,
+      "obstacle_mode": "medium"
+    },
+    {
+      "slot": 48,
+      "terminal_count": 6,
+      "layers": 1,
+      "obstacle_mode": "corridor"
+    },
+    {
+      "slot": 49,
+      "terminal_count": 6,
+      "layers": 1,
+      "obstacle_mode": "chokepoint"
+    },
+    {
+      "slot": 50,
+      "terminal_count": 6,
+      "layers": 2,
+      "obstacle_mode": "none"
+    },
+    {
+      "slot": 51,
+      "terminal_count": 6,
+      "layers": 2,
+      "obstacle_mode": "sparse"
+    },
+    {
+      "slot": 52,
+      "terminal_count": 6,
+      "layers": 2,
+      "obstacle_mode": "medium"
+    },
+    {
+      "slot": 53,
+      "terminal_count": 6,
+      "layers": 2,
+      "obstacle_mode": "corridor"
+    },
+    {
+      "slot": 54,
+      "terminal_count": 6,
+      "layers": 2,
+      "obstacle_mode": "chokepoint"
+    },
+    {
+      "slot": 55,
+      "terminal_count": 6,
+      "layers": 3,
+      "obstacle_mode": "none"
+    },
+    {
+      "slot": 56,
+      "terminal_count": 6,
+      "layers": 3,
+      "obstacle_mode": "sparse"
+    },
+    {
+      "slot": 57,
+      "terminal_count": 6,
+      "layers": 3,
+      "obstacle_mode": "medium"
+    },
+    {
+      "slot": 58,
+      "terminal_count": 6,
+      "layers": 3,
+      "obstacle_mode": "corridor"
+    },
+    {
+      "slot": 59,
+      "terminal_count": 6,
+      "layers": 3,
+      "obstacle_mode": "chokepoint"
+    }
+  ],
+  "heldout_seed_rule": "seed_base + stratum_slot * 1000 + replacement_attempt",
+  "heldout_distribution_rule": "(stratum_slot // obstacle_mode_count + stratum_slot % obstacle_mode_count) mod terminal_distribution_count; fixed across feasibility replacement attempts",
+  "heldout_seed_base": 202611030000,
+  "negative_seed_rule": "negative_seed_base + negative_control_index",
+  "negative_seed_base": 202612000000,
+  "development_seed_rule": "development_seed_base + development_index + attempt * 1000",
+  "development_seed_base": 912000,
+  "cases": {
+    "development": [
+      {
+        "path": "development/layouts/development_000_seed912000.txt",
+        "seed": 912000,
+        "terminal_count": 3,
+        "layers": 1,
+        "obstacle_mode": "none",
+        "terminal_distribution": "compact"
+      },
+      {
+        "path": "development/layouts/development_001_seed912001.txt",
+        "seed": 912001,
+        "terminal_count": 4,
+        "layers": 1,
+        "obstacle_mode": "sparse",
+        "terminal_distribution": "branch_heavy"
+      },
+      {
+        "path": "development/layouts/development_002_seed912002.txt",
+        "seed": 912002,
+        "terminal_count": 5,
+        "layers": 1,
+        "obstacle_mode": "medium",
+        "terminal_distribution": "widely_separated"
+      },
+      {
+        "path": "development/layouts/development_003_seed912003.txt",
+        "seed": 912003,
+        "terminal_count": 6,
+        "layers": 1,
+        "obstacle_mode": "corridor",
+        "terminal_distribution": "barrier_sides"
+      },
+      {
+        "path": "development/layouts/development_004_seed912004.txt",
+        "seed": 912004,
+        "terminal_count": 3,
+        "layers": 2,
+        "obstacle_mode": "chokepoint",
+        "terminal_distribution": "asymmetric"
+      },
+      {
+        "path": "development/layouts/development_005_seed912005.txt",
+        "seed": 912005,
+        "terminal_count": 4,
+        "layers": 2,
+        "obstacle_mode": "none",
+        "terminal_distribution": "compact"
+      },
+      {
+        "path": "development/layouts/development_006_seed912006.txt",
+        "seed": 912006,
+        "terminal_count": 5,
+        "layers": 2,
+        "obstacle_mode": "sparse",
+        "terminal_distribution": "branch_heavy"
+      },
+      {
+        "path": "development/layouts/development_007_seed912007.txt",
+        "seed": 912007,
+        "terminal_count": 6,
+        "layers": 2,
+        "obstacle_mode": "medium",
+        "terminal_distribution": "widely_separated"
+      },
+      {
+        "path": "development/layouts/development_008_seed912008.txt",
+        "seed": 912008,
+        "terminal_count": 3,
+        "layers": 3,
+        "obstacle_mode": "corridor",
+        "terminal_distribution": "barrier_sides"
+      },
+      {
+        "path": "development/layouts/development_009_seed912009.txt",
+        "seed": 912009,
+        "terminal_count": 4,
+        "layers": 3,
+        "obstacle_mode": "chokepoint",
+        "terminal_distribution": "asymmetric"
+      },
+      {
+        "path": "development/layouts/development_010_seed912010.txt",
+        "seed": 912010,
+        "terminal_count": 5,
+        "layers": 3,
+        "obstacle_mode": "none",
+        "terminal_distribution": "compact"
+      },
+      {
+        "path": "development/layouts/development_011_seed912011.txt",
+        "seed": 912011,
+        "terminal_count": 6,
+        "layers": 3,
+        "obstacle_mode": "sparse",
+        "terminal_distribution": "branch_heavy"
+      }
+    ],
+    "heldout_feasible": [
+      {
+        "path": "heldout/layouts/feasible_000_k3_l1_none_compact_seed202611030000.txt",
+        "seed": 202611030000,
+        "stratum": 0,
+        "terminal_count": 3,
+        "layers": 1,
+        "obstacle_mode": "none",
+        "terminal_distribution": "compact"
+      },
+      {
+        "path": "heldout/layouts/feasible_001_k3_l1_sparse_widely_separated_seed202611031000.txt",
+        "seed": 202611031000,
+        "stratum": 1,
+        "terminal_count": 3,
+        "layers": 1,
+        "obstacle_mode": "sparse",
+        "terminal_distribution": "widely_separated"
+      },
+      {
+        "path": "heldout/layouts/feasible_002_k3_l1_medium_asymmetric_seed202611032000.txt",
+        "seed": 202611032000,
+        "stratum": 2,
+        "terminal_count": 3,
+        "layers": 1,
+        "obstacle_mode": "medium",
+        "terminal_distribution": "asymmetric"
+      },
+      {
+        "path": "heldout/layouts/feasible_003_k3_l1_corridor_branch_heavy_seed202611033000.txt",
+        "seed": 202611033000,
+        "stratum": 3,
+        "terminal_count": 3,
+        "layers": 1,
+        "obstacle_mode": "corridor",
+        "terminal_distribution": "branch_heavy"
+      },
+      {
+        "path": "heldout/layouts/feasible_004_k3_l1_chokepoint_barrier_sides_seed202611034000.txt",
+        "seed": 202611034000,
+        "stratum": 4,
+        "terminal_count": 3,
+        "layers": 1,
+        "obstacle_mode": "chokepoint",
+        "terminal_distribution": "barrier_sides"
+      },
+      {
+        "path": "heldout/layouts/feasible_005_k3_l2_none_widely_separated_seed202611035000.txt",
+        "seed": 202611035000,
+        "stratum": 5,
+        "terminal_count": 3,
+        "layers": 2,
+        "obstacle_mode": "none",
+        "terminal_distribution": "widely_separated"
+      },
+      {
+        "path": "heldout/layouts/feasible_006_k3_l2_sparse_asymmetric_seed202611036000.txt",
+        "seed": 202611036000,
+        "stratum": 6,
+        "terminal_count": 3,
+        "layers": 2,
+        "obstacle_mode": "sparse",
+        "terminal_distribution": "asymmetric"
+      },
+      {
+        "path": "heldout/layouts/feasible_007_k3_l2_medium_branch_heavy_seed202611037000.txt",
+        "seed": 202611037000,
+        "stratum": 7,
+        "terminal_count": 3,
+        "layers": 2,
+        "obstacle_mode": "medium",
+        "terminal_distribution": "branch_heavy"
+      },
+      {
+        "path": "heldout/layouts/feasible_008_k3_l2_corridor_barrier_sides_seed202611038000.txt",
+        "seed": 202611038000,
+        "stratum": 8,
+        "terminal_count": 3,
+        "layers": 2,
+        "obstacle_mode": "corridor",
+        "terminal_distribution": "barrier_sides"
+      },
+      {
+        "path": "heldout/layouts/feasible_009_k3_l2_chokepoint_compact_seed202611039000.txt",
+        "seed": 202611039000,
+        "stratum": 9,
+        "terminal_count": 3,
+        "layers": 2,
+        "obstacle_mode": "chokepoint",
+        "terminal_distribution": "compact"
+      },
+      {
+        "path": "heldout/layouts/feasible_010_k3_l3_none_asymmetric_seed202611040000.txt",
+        "seed": 202611040000,
+        "stratum": 10,
+        "terminal_count": 3,
+        "layers": 3,
+        "obstacle_mode": "none",
+        "terminal_distribution": "asymmetric"
+      },
+      {
+        "path": "heldout/layouts/feasible_011_k3_l3_sparse_branch_heavy_seed202611041000.txt",
+        "seed": 202611041000,
+        "stratum": 11,
+        "terminal_count": 3,
+        "layers": 3,
+        "obstacle_mode": "sparse",
+        "terminal_distribution": "branch_heavy"
+      },
+      {
+        "path": "heldout/layouts/feasible_012_k3_l3_medium_barrier_sides_seed202611042000.txt",
+        "seed": 202611042000,
+        "stratum": 12,
+        "terminal_count": 3,
+        "layers": 3,
+        "obstacle_mode": "medium",
+        "terminal_distribution": "barrier_sides"
+      },
+      {
+        "path": "heldout/layouts/feasible_013_k3_l3_corridor_compact_seed202611043000.txt",
+        "seed": 202611043000,
+        "stratum": 13,
+        "terminal_count": 3,
+        "layers": 3,
+        "obstacle_mode": "corridor",
+        "terminal_distribution": "compact"
+      },
+      {
+        "path": "heldout/layouts/feasible_014_k3_l3_chokepoint_widely_separated_seed202611044000.txt",
+        "seed": 202611044000,
+        "stratum": 14,
+        "terminal_count": 3,
+        "layers": 3,
+        "obstacle_mode": "chokepoint",
+        "terminal_distribution": "widely_separated"
+      },
+      {
+        "path": "heldout/layouts/feasible_015_k4_l1_none_branch_heavy_seed202611045000.txt",
+        "seed": 202611045000,
+        "stratum": 15,
+        "terminal_count": 4,
+        "layers": 1,
+        "obstacle_mode": "none",
+        "terminal_distribution": "branch_heavy"
+      },
+      {
+        "path": "heldout/layouts/feasible_016_k4_l1_sparse_barrier_sides_seed202611046000.txt",
+        "seed": 202611046000,
+        "stratum": 16,
+        "terminal_count": 4,
+        "layers": 1,
+        "obstacle_mode": "sparse",
+        "terminal_distribution": "barrier_sides"
+      },
+      {
+        "path": "heldout/layouts/feasible_017_k4_l1_medium_compact_seed202611047000.txt",
+        "seed": 202611047000,
+        "stratum": 17,
+        "terminal_count": 4,
+        "layers": 1,
+        "obstacle_mode": "medium",
+        "terminal_distribution": "compact"
+      },
+      {
+        "path": "heldout/layouts/feasible_018_k4_l1_corridor_widely_separated_seed202611048000.txt",
+        "seed": 202611048000,
+        "stratum": 18,
+        "terminal_count": 4,
+        "layers": 1,
+        "obstacle_mode": "corridor",
+        "terminal_distribution": "widely_separated"
+      },
+      {
+        "path": "heldout/layouts/feasible_019_k4_l1_chokepoint_asymmetric_seed202611049000.txt",
+        "seed": 202611049000,
+        "stratum": 19,
+        "terminal_count": 4,
+        "layers": 1,
+        "obstacle_mode": "chokepoint",
+        "terminal_distribution": "asymmetric"
+      },
+      {
+        "path": "heldout/layouts/feasible_020_k4_l2_none_barrier_sides_seed202611050000.txt",
+        "seed": 202611050000,
+        "stratum": 20,
+        "terminal_count": 4,
+        "layers": 2,
+        "obstacle_mode": "none",
+        "terminal_distribution": "barrier_sides"
+      },
+      {
+        "path": "heldout/layouts/feasible_021_k4_l2_sparse_compact_seed202611051000.txt",
+        "seed": 202611051000,
+        "stratum": 21,
+        "terminal_count": 4,
+        "layers": 2,
+        "obstacle_mode": "sparse",
+        "terminal_distribution": "compact"
+      },
+      {
+        "path": "heldout/layouts/feasible_022_k4_l2_medium_widely_separated_seed202611052000.txt",
+        "seed": 202611052000,
+        "stratum": 22,
+        "terminal_count": 4,
+        "layers": 2,
+        "obstacle_mode": "medium",
+        "terminal_distribution": "widely_separated"
+      },
+      {
+        "path": "heldout/layouts/feasible_023_k4_l2_corridor_asymmetric_seed202611053000.txt",
+        "seed": 202611053000,
+        "stratum": 23,
+        "terminal_count": 4,
+        "layers": 2,
+        "obstacle_mode": "corridor",
+        "terminal_distribution": "asymmetric"
+      },
+      {
+        "path": "heldout/layouts/feasible_024_k4_l2_chokepoint_branch_heavy_seed202611054000.txt",
+        "seed": 202611054000,
+        "stratum": 24,
+        "terminal_count": 4,
+        "layers": 2,
+        "obstacle_mode": "chokepoint",
+        "terminal_distribution": "branch_heavy"
+      },
+      {
+        "path": "heldout/layouts/feasible_025_k4_l3_none_compact_seed202611055000.txt",
+        "seed": 202611055000,
+        "stratum": 25,
+        "terminal_count": 4,
+        "layers": 3,
+        "obstacle_mode": "none",
+        "terminal_distribution": "compact"
+      },
+      {
+        "path": "heldout/layouts/feasible_026_k4_l3_sparse_widely_separated_seed202611056000.txt",
+        "seed": 202611056000,
+        "stratum": 26,
+        "terminal_count": 4,
+        "layers": 3,
+        "obstacle_mode": "sparse",
+        "terminal_distribution": "widely_separated"
+      },
+      {
+        "path": "heldout/layouts/feasible_027_k4_l3_medium_asymmetric_seed202611057000.txt",
+        "seed": 202611057000,
+        "stratum": 27,
+        "terminal_count": 4,
+        "layers": 3,
+        "obstacle_mode": "medium",
+        "terminal_distribution": "asymmetric"
+      },
+      {
+        "path": "heldout/layouts/feasible_028_k4_l3_corridor_branch_heavy_seed202611058000.txt",
+        "seed": 202611058000,
+        "stratum": 28,
+        "terminal_count": 4,
+        "layers": 3,
+        "obstacle_mode": "corridor",
+        "terminal_distribution": "branch_heavy"
+      },
+      {
+        "path": "heldout/layouts/feasible_029_k4_l3_chokepoint_barrier_sides_seed202611059000.txt",
+        "seed": 202611059000,
+        "stratum": 29,
+        "terminal_count": 4,
+        "layers": 3,
+        "obstacle_mode": "chokepoint",
+        "terminal_distribution": "barrier_sides"
+      },
+      {
+        "path": "heldout/layouts/feasible_030_k5_l1_none_widely_separated_seed202611060000.txt",
+        "seed": 202611060000,
+        "stratum": 30,
+        "terminal_count": 5,
+        "layers": 1,
+        "obstacle_mode": "none",
+        "terminal_distribution": "widely_separated"
+      },
+      {
+        "path": "heldout/layouts/feasible_031_k5_l1_sparse_asymmetric_seed202611061000.txt",
+        "seed": 202611061000,
+        "stratum": 31,
+        "terminal_count": 5,
+        "layers": 1,
+        "obstacle_mode": "sparse",
+        "terminal_distribution": "asymmetric"
+      },
+      {
+        "path": "heldout/layouts/feasible_032_k5_l1_medium_branch_heavy_seed202611062000.txt",
+        "seed": 202611062000,
+        "stratum": 32,
+        "terminal_count": 5,
+        "layers": 1,
+        "obstacle_mode": "medium",
+        "terminal_distribution": "branch_heavy"
+      },
+      {
+        "path": "heldout/layouts/feasible_033_k5_l1_corridor_barrier_sides_seed202611063000.txt",
+        "seed": 202611063000,
+        "stratum": 33,
+        "terminal_count": 5,
+        "layers": 1,
+        "obstacle_mode": "corridor",
+        "terminal_distribution": "barrier_sides"
+      },
+      {
+        "path": "heldout/layouts/feasible_034_k5_l1_chokepoint_compact_seed202611064000.txt",
+        "seed": 202611064000,
+        "stratum": 34,
+        "terminal_count": 5,
+        "layers": 1,
+        "obstacle_mode": "chokepoint",
+        "terminal_distribution": "compact"
+      },
+      {
+        "path": "heldout/layouts/feasible_035_k5_l2_none_asymmetric_seed202611065000.txt",
+        "seed": 202611065000,
+        "stratum": 35,
+        "terminal_count": 5,
+        "layers": 2,
+        "obstacle_mode": "none",
+        "terminal_distribution": "asymmetric"
+      },
+      {
+        "path": "heldout/layouts/feasible_036_k5_l2_sparse_branch_heavy_seed202611066000.txt",
+        "seed": 202611066000,
+        "stratum": 36,
+        "terminal_count": 5,
+        "layers": 2,
+        "obstacle_mode": "sparse",
+        "terminal_distribution": "branch_heavy"
+      },
+      {
+        "path": "heldout/layouts/feasible_037_k5_l2_medium_barrier_sides_seed202611067000.txt",
+        "seed": 202611067000,
+        "stratum": 37,
+        "terminal_count": 5,
+        "layers": 2,
+        "obstacle_mode": "medium",
+        "terminal_distribution": "barrier_sides"
+      },
+      {
+        "path": "heldout/layouts/feasible_038_k5_l2_corridor_compact_seed202611068000.txt",
+        "seed": 202611068000,
+        "stratum": 38,
+        "terminal_count": 5,
+        "layers": 2,
+        "obstacle_mode": "corridor",
+        "terminal_distribution": "compact"
+      },
+      {
+        "path": "heldout/layouts/feasible_039_k5_l2_chokepoint_widely_separated_seed202611069000.txt",
+        "seed": 202611069000,
+        "stratum": 39,
+        "terminal_count": 5,
+        "layers": 2,
+        "obstacle_mode": "chokepoint",
+        "terminal_distribution": "widely_separated"
+      },
+      {
+        "path": "heldout/layouts/feasible_040_k5_l3_none_branch_heavy_seed202611070000.txt",
+        "seed": 202611070000,
+        "stratum": 40,
+        "terminal_count": 5,
+        "layers": 3,
+        "obstacle_mode": "none",
+        "terminal_distribution": "branch_heavy"
+      },
+      {
+        "path": "heldout/layouts/feasible_041_k5_l3_sparse_barrier_sides_seed202611071000.txt",
+        "seed": 202611071000,
+        "stratum": 41,
+        "terminal_count": 5,
+        "layers": 3,
+        "obstacle_mode": "sparse",
+        "terminal_distribution": "barrier_sides"
+      },
+      {
+        "path": "heldout/layouts/feasible_042_k5_l3_medium_compact_seed202611072000.txt",
+        "seed": 202611072000,
+        "stratum": 42,
+        "terminal_count": 5,
+        "layers": 3,
+        "obstacle_mode": "medium",
+        "terminal_distribution": "compact"
+      },
+      {
+        "path": "heldout/layouts/feasible_043_k5_l3_corridor_widely_separated_seed202611073000.txt",
+        "seed": 202611073000,
+        "stratum": 43,
+        "terminal_count": 5,
+        "layers": 3,
+        "obstacle_mode": "corridor",
+        "terminal_distribution": "widely_separated"
+      },
+      {
+        "path": "heldout/layouts/feasible_044_k5_l3_chokepoint_asymmetric_seed202611074000.txt",
+        "seed": 202611074000,
+        "stratum": 44,
+        "terminal_count": 5,
+        "layers": 3,
+        "obstacle_mode": "chokepoint",
+        "terminal_distribution": "asymmetric"
+      },
+      {
+        "path": "heldout/layouts/feasible_045_k6_l1_none_barrier_sides_seed202611075000.txt",
+        "seed": 202611075000,
+        "stratum": 45,
+        "terminal_count": 6,
+        "layers": 1,
+        "obstacle_mode": "none",
+        "terminal_distribution": "barrier_sides"
+      },
+      {
+        "path": "heldout/layouts/feasible_046_k6_l1_sparse_compact_seed202611076000.txt",
+        "seed": 202611076000,
+        "stratum": 46,
+        "terminal_count": 6,
+        "layers": 1,
+        "obstacle_mode": "sparse",
+        "terminal_distribution": "compact"
+      },
+      {
+        "path": "heldout/layouts/feasible_047_k6_l1_medium_widely_separated_seed202611077000.txt",
+        "seed": 202611077000,
+        "stratum": 47,
+        "terminal_count": 6,
+        "layers": 1,
+        "obstacle_mode": "medium",
+        "terminal_distribution": "widely_separated"
+      },
+      {
+        "path": "heldout/layouts/feasible_048_k6_l1_corridor_asymmetric_seed202611078000.txt",
+        "seed": 202611078000,
+        "stratum": 48,
+        "terminal_count": 6,
+        "layers": 1,
+        "obstacle_mode": "corridor",
+        "terminal_distribution": "asymmetric"
+      },
+      {
+        "path": "heldout/layouts/feasible_049_k6_l1_chokepoint_branch_heavy_seed202611079000.txt",
+        "seed": 202611079000,
+        "stratum": 49,
+        "terminal_count": 6,
+        "layers": 1,
+        "obstacle_mode": "chokepoint",
+        "terminal_distribution": "branch_heavy"
+      },
+      {
+        "path": "heldout/layouts/feasible_050_k6_l2_none_compact_seed202611080000.txt",
+        "seed": 202611080000,
+        "stratum": 50,
+        "terminal_count": 6,
+        "layers": 2,
+        "obstacle_mode": "none",
+        "terminal_distribution": "compact"
+      },
+      {
+        "path": "heldout/layouts/feasible_051_k6_l2_sparse_widely_separated_seed202611081000.txt",
+        "seed": 202611081000,
+        "stratum": 51,
+        "terminal_count": 6,
+        "layers": 2,
+        "obstacle_mode": "sparse",
+        "terminal_distribution": "widely_separated"
+      },
+      {
+        "path": "heldout/layouts/feasible_052_k6_l2_medium_asymmetric_seed202611082000.txt",
+        "seed": 202611082000,
+        "stratum": 52,
+        "terminal_count": 6,
+        "layers": 2,
+        "obstacle_mode": "medium",
+        "terminal_distribution": "asymmetric"
+      },
+      {
+        "path": "heldout/layouts/feasible_053_k6_l2_corridor_branch_heavy_seed202611083000.txt",
+        "seed": 202611083000,
+        "stratum": 53,
+        "terminal_count": 6,
+        "layers": 2,
+        "obstacle_mode": "corridor",
+        "terminal_distribution": "branch_heavy"
+      },
+      {
+        "path": "heldout/layouts/feasible_054_k6_l2_chokepoint_barrier_sides_seed202611084000.txt",
+        "seed": 202611084000,
+        "stratum": 54,
+        "terminal_count": 6,
+        "layers": 2,
+        "obstacle_mode": "chokepoint",
+        "terminal_distribution": "barrier_sides"
+      },
+      {
+        "path": "heldout/layouts/feasible_055_k6_l3_none_widely_separated_seed202611085000.txt",
+        "seed": 202611085000,
+        "stratum": 55,
+        "terminal_count": 6,
+        "layers": 3,
+        "obstacle_mode": "none",
+        "terminal_distribution": "widely_separated"
+      },
+      {
+        "path": "heldout/layouts/feasible_056_k6_l3_sparse_asymmetric_seed202611086000.txt",
+        "seed": 202611086000,
+        "stratum": 56,
+        "terminal_count": 6,
+        "layers": 3,
+        "obstacle_mode": "sparse",
+        "terminal_distribution": "asymmetric"
+      },
+      {
+        "path": "heldout/layouts/feasible_057_k6_l3_medium_branch_heavy_seed202611087000.txt",
+        "seed": 202611087000,
+        "stratum": 57,
+        "terminal_count": 6,
+        "layers": 3,
+        "obstacle_mode": "medium",
+        "terminal_distribution": "branch_heavy"
+      },
+      {
+        "path": "heldout/layouts/feasible_058_k6_l3_corridor_barrier_sides_seed202611088000.txt",
+        "seed": 202611088000,
+        "stratum": 58,
+        "terminal_count": 6,
+        "layers": 3,
+        "obstacle_mode": "corridor",
+        "terminal_distribution": "barrier_sides"
+      },
+      {
+        "path": "heldout/layouts/feasible_059_k6_l3_chokepoint_compact_seed202611089000.txt",
+        "seed": 202611089000,
+        "stratum": 59,
+        "terminal_count": 6,
+        "layers": 3,
+        "obstacle_mode": "chokepoint",
+        "terminal_distribution": "compact"
+      }
+    ],
+    "heldout_infeasible": [
+      {
+        "path": "heldout/layouts/infeasible_000_k3_l1_seed202612000000.txt",
+        "seed": 202612000000,
+        "terminal_count": 3,
+        "layers": 1,
+        "obstacle_mode": "negative_control",
+        "terminal_distribution": "compact"
+      },
+      {
+        "path": "heldout/layouts/infeasible_001_k4_l1_seed202612000001.txt",
+        "seed": 202612000001,
+        "terminal_count": 4,
+        "layers": 1,
+        "obstacle_mode": "negative_control",
+        "terminal_distribution": "widely_separated"
+      },
+      {
+        "path": "heldout/layouts/infeasible_002_k5_l1_seed202612000002.txt",
+        "seed": 202612000002,
+        "terminal_count": 5,
+        "layers": 1,
+        "obstacle_mode": "negative_control",
+        "terminal_distribution": "asymmetric"
+      },
+      {
+        "path": "heldout/layouts/infeasible_003_k6_l1_seed202612000003.txt",
+        "seed": 202612000003,
+        "terminal_count": 6,
+        "layers": 1,
+        "obstacle_mode": "negative_control",
+        "terminal_distribution": "branch_heavy"
+      },
+      {
+        "path": "heldout/layouts/infeasible_004_k3_l2_seed202612000004.txt",
+        "seed": 202612000004,
+        "terminal_count": 3,
+        "layers": 2,
+        "obstacle_mode": "negative_control",
+        "terminal_distribution": "barrier_sides"
+      },
+      {
+        "path": "heldout/layouts/infeasible_005_k4_l2_seed202612000005.txt",
+        "seed": 202612000005,
+        "terminal_count": 4,
+        "layers": 2,
+        "obstacle_mode": "negative_control",
+        "terminal_distribution": "compact"
+      },
+      {
+        "path": "heldout/layouts/infeasible_006_k5_l2_seed202612000006.txt",
+        "seed": 202612000006,
+        "terminal_count": 5,
+        "layers": 2,
+        "obstacle_mode": "negative_control",
+        "terminal_distribution": "widely_separated"
+      },
+      {
+        "path": "heldout/layouts/infeasible_007_k6_l2_seed202612000007.txt",
+        "seed": 202612000007,
+        "terminal_count": 6,
+        "layers": 2,
+        "obstacle_mode": "negative_control",
+        "terminal_distribution": "asymmetric"
+      },
+      {
+        "path": "heldout/layouts/infeasible_008_k3_l3_seed202612000008.txt",
+        "seed": 202612000008,
+        "terminal_count": 3,
+        "layers": 3,
+        "obstacle_mode": "negative_control",
+        "terminal_distribution": "branch_heavy"
+      },
+      {
+        "path": "heldout/layouts/infeasible_009_k4_l3_seed202612000009.txt",
+        "seed": 202612000009,
+        "terminal_count": 4,
+        "layers": 3,
+        "obstacle_mode": "negative_control",
+        "terminal_distribution": "barrier_sides"
+      },
+      {
+        "path": "heldout/layouts/infeasible_010_k5_l3_seed202612000010.txt",
+        "seed": 202612000010,
+        "terminal_count": 5,
+        "layers": 3,
+        "obstacle_mode": "negative_control",
+        "terminal_distribution": "compact"
+      },
+      {
+        "path": "heldout/layouts/infeasible_011_k6_l3_seed202612000011.txt",
+        "seed": 202612000011,
+        "terminal_count": 6,
+        "layers": 3,
+        "obstacle_mode": "negative_control",
+        "terminal_distribution": "widely_separated"
+      }
+    ]
+  }
+}

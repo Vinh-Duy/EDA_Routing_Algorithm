@@ -1,0 +1,35 @@
+{
+  "schema_version": 2,
+  "algorithm": "astar",
+  "success": true,
+  "termination_reason": "success",
+  "net_order": "numeric",
+  "terminal_order": "input",
+  "dimensions": [2,11,18],
+  "cost_model": {"planar":1,"via":6,"occupied_cell":100,"history_increment":50},
+  "metrics": {
+    "total_nets": 1,
+    "routed_nets": 1,
+    "success_rate": 1,
+    "unrouted_nets": 0,
+    "invalid_nets": 0,
+    "unresolved_conflicts": 0,
+    "unconnected_terminals": 0,
+    "wirelength": 24,
+    "via_count": 1,
+    "branch_count": 1,
+    "graph_steps": 25,
+    "weighted_cost": 30,
+    "search_cost": 30,
+    "search_count": 2,
+    "routing_passes": 1,
+    "reroute_iterations": 0,
+    "runtime_ms": 0.063637,
+    "nodes_expanded": 68
+  },
+  "obstacles": [],
+  "conflicts": [],
+  "nets": [
+    {"name":"Net1","source":{"z":1,"x":0,"y":14},"target":{"z":1,"x":10,"y":17},"terminals":[{"z":1,"x":0,"y":14},{"z":1,"x":10,"y":17},{"z":0,"x":1,"y":3}],"connected_terminals":3,"unconnected_terminals":0,"branch_count":1,"search_count":2,"attached_terminals":[{"z":1,"x":10,"y":17},{"z":0,"x":1,"y":3}],"valid":true,"local_valid":true,"search_cost":30,"path":[],"tree_edges":[[{"z":0,"x":1,"y":3},{"z":1,"x":1,"y":3}],[{"z":1,"x":0,"y":14},{"z":1,"x":1,"y":14}],[{"z":1,"x":1,"y":3},{"z":1,"x":1,"y":4}],[{"z":1,"x":1,"y":4},{"z":1,"x":1,"y":5}],[{"z":1,"x":1,"y":5},{"z":1,"x":1,"y":6}],[{"z":1,"x":1,"y":6},{"z":1,"x":1,"y":7}],[{"z":1,"x":1,"y":7},{"z":1,"x":1,"y":8}],[{"z":1,"x":1,"y":8},{"z":1,"x":1,"y":9}],[{"z":1,"x":1,"y":9},{"z":1,"x":1,"y":10}],[{"z":1,"x":1,"y":10},{"z":1,"x":1,"y":11}],[{"z":1,"x":1,"y":11},{"z":1,"x":1,"y":12}],[{"z":1,"x":1,"y":12},{"z":1,"x":1,"y":13}],[{"z":1,"x":1,"y":13},{"z":1,"x":1,"y":14}],[{"z":1,"x":1,"y":14},{"z":1,"x":2,"y":14}],[{"z":1,"x":2,"y":14},{"z":1,"x":3,"y":14}],[{"z":1,"x":3,"y":14},{"z":1,"x":4,"y":14}],[{"z":1,"x":4,"y":14},{"z":1,"x":5,"y":14}],[{"z":1,"x":5,"y":14},{"z":1,"x":6,"y":14}],[{"z":1,"x":6,"y":14},{"z":1,"x":7,"y":14}],[{"z":1,"x":7,"y":14},{"z":1,"x":8,"y":14}],[{"z":1,"x":8,"y":14},{"z":1,"x":9,"y":14}],[{"z":1,"x":9,"y":14},{"z":1,"x":10,"y":14}],[{"z":1,"x":10,"y":14},{"z":1,"x":10,"y":15}],[{"z":1,"x":10,"y":15},{"z":1,"x":10,"y":16}],[{"z":1,"x":10,"y":16},{"z":1,"x":10,"y":17}]]}
+  ]
+}

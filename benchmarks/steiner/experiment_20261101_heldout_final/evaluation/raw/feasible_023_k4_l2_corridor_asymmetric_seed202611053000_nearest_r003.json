@@ -1,0 +1,35 @@
+{
+  "schema_version": 2,
+  "algorithm": "astar",
+  "success": true,
+  "termination_reason": "success",
+  "net_order": "numeric",
+  "terminal_order": "nearest",
+  "dimensions": [2,10,12],
+  "cost_model": {"planar":1,"via":6,"occupied_cell":100,"history_increment":50},
+  "metrics": {
+    "total_nets": 1,
+    "routed_nets": 1,
+    "success_rate": 1,
+    "unrouted_nets": 0,
+    "invalid_nets": 0,
+    "unresolved_conflicts": 0,
+    "unconnected_terminals": 0,
+    "wirelength": 15,
+    "via_count": 1,
+    "branch_count": 0,
+    "graph_steps": 16,
+    "weighted_cost": 21,
+    "search_cost": 21,
+    "search_count": 9,
+    "routing_passes": 1,
+    "reroute_iterations": 0,
+    "runtime_ms": 0.255897,
+    "nodes_expanded": 677
+  },
+  "obstacles": [{"z":0,"x":5,"y":1},{"z":0,"x":5,"y":2},{"z":0,"x":5,"y":3},{"z":0,"x":5,"y":4},{"z":0,"x":5,"y":5},{"z":0,"x":5,"y":6},{"z":0,"x":5,"y":7},{"z":0,"x":5,"y":8},{"z":0,"x":5,"y":9},{"z":0,"x":5,"y":10},{"z":1,"x":5,"y":1},{"z":1,"x":5,"y":2},{"z":1,"x":5,"y":3},{"z":1,"x":5,"y":4},{"z":1,"x":5,"y":5},{"z":1,"x":5,"y":6},{"z":1,"x":5,"y":7},{"z":1,"x":5,"y":8},{"z":1,"x":5,"y":9},{"z":1,"x":5,"y":10}],
+  "conflicts": [],
+  "nets": [
+    {"name":"Net1","source":{"z":1,"x":9,"y":11},"target":{"z":0,"x":9,"y":11},"terminals":[{"z":1,"x":9,"y":11},{"z":0,"x":9,"y":11},{"z":0,"x":3,"y":3},{"z":1,"x":8,"y":11}],"connected_terminals":4,"unconnected_terminals":0,"branch_count":0,"search_count":9,"attached_terminals":[{"z":1,"x":8,"y":11},{"z":0,"x":9,"y":11},{"z":0,"x":3,"y":3}],"valid":true,"local_valid":true,"search_cost":21,"path":[],"tree_edges":[[{"z":0,"x":3,"y":3},{"z":0,"x":3,"y":4}],[{"z":0,"x":3,"y":4},{"z":0,"x":3,"y":5}],[{"z":0,"x":3,"y":5},{"z":0,"x":3,"y":6}],[{"z":0,"x":3,"y":6},{"z":0,"x":3,"y":7}],[{"z":0,"x":3,"y":7},{"z":0,"x":3,"y":8}],[{"z":0,"x":3,"y":8},{"z":0,"x":3,"y":9}],[{"z":0,"x":3,"y":9},{"z":0,"x":3,"y":10}],[{"z":0,"x":3,"y":10},{"z":0,"x":3,"y":11}],[{"z":0,"x":3,"y":11},{"z":0,"x":4,"y":11}],[{"z":0,"x":4,"y":11},{"z":0,"x":5,"y":11}],[{"z":0,"x":5,"y":11},{"z":0,"x":6,"y":11}],[{"z":0,"x":6,"y":11},{"z":0,"x":7,"y":11}],[{"z":0,"x":7,"y":11},{"z":0,"x":8,"y":11}],[{"z":0,"x":8,"y":11},{"z":0,"x":9,"y":11}],[{"z":0,"x":9,"y":11},{"z":1,"x":9,"y":11}],[{"z":1,"x":8,"y":11},{"z":1,"x":9,"y":11}]]}
+  ]
+}

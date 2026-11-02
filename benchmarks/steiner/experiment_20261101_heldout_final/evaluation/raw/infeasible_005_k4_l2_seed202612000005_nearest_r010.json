@@ -1,0 +1,35 @@
+{
+  "schema_version": 2,
+  "algorithm": "astar",
+  "success": false,
+  "termination_reason": "unreachable",
+  "net_order": "numeric",
+  "terminal_order": "nearest",
+  "dimensions": [2,7,9],
+  "cost_model": {"planar":1,"via":6,"occupied_cell":100,"history_increment":50},
+  "metrics": {
+    "total_nets": 1,
+    "routed_nets": 0,
+    "success_rate": 0,
+    "unrouted_nets": 1,
+    "invalid_nets": 0,
+    "unresolved_conflicts": 0,
+    "unconnected_terminals": 2,
+    "wirelength": 4,
+    "via_count": 1,
+    "branch_count": 0,
+    "graph_steps": 5,
+    "weighted_cost": 10,
+    "search_cost": 10,
+    "search_count": 6,
+    "routing_passes": 1,
+    "reroute_iterations": 0,
+    "runtime_ms": 0.101187,
+    "nodes_expanded": 274
+  },
+  "obstacles": [{"z":0,"x":3,"y":0},{"z":0,"x":3,"y":1},{"z":0,"x":3,"y":2},{"z":0,"x":3,"y":3},{"z":0,"x":3,"y":4},{"z":0,"x":3,"y":5},{"z":0,"x":3,"y":6},{"z":0,"x":3,"y":7},{"z":0,"x":3,"y":8},{"z":1,"x":3,"y":0},{"z":1,"x":3,"y":1},{"z":1,"x":3,"y":2},{"z":1,"x":3,"y":3},{"z":1,"x":3,"y":4},{"z":1,"x":3,"y":5},{"z":1,"x":3,"y":6},{"z":1,"x":3,"y":7},{"z":1,"x":3,"y":8}],
+  "conflicts": [],
+  "nets": [
+    {"name":"Net1","source":{"z":0,"x":0,"y":7},"target":{"z":0,"x":6,"y":1},"terminals":[{"z":0,"x":0,"y":7},{"z":0,"x":6,"y":1},{"z":1,"x":2,"y":5},{"z":1,"x":5,"y":2}],"connected_terminals":2,"unconnected_terminals":2,"branch_count":0,"search_count":6,"attached_terminals":[{"z":1,"x":2,"y":5}],"valid":false,"local_valid":false,"search_cost":10,"path":[],"tree_edges":[[{"z":0,"x":0,"y":7},{"z":0,"x":1,"y":7}],[{"z":0,"x":1,"y":7},{"z":0,"x":2,"y":7}],[{"z":0,"x":2,"y":5},{"z":0,"x":2,"y":6}],[{"z":0,"x":2,"y":5},{"z":1,"x":2,"y":5}],[{"z":0,"x":2,"y":6},{"z":0,"x":2,"y":7}]]}
+  ]
+}

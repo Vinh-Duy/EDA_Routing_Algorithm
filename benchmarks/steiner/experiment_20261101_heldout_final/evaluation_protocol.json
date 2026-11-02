@@ -1,0 +1,46 @@
+{
+  "protocol_version": 1,
+  "methods": [
+    "input",
+    "nearest"
+  ],
+  "search_algorithm": "astar",
+  "net_order": "numeric",
+  "routing_passes": 1,
+  "physical_cost": {
+    "planar": 1,
+    "via": 6
+  },
+  "terminal_limit": 6,
+  "oracle_legal_vertex_limit": 512,
+  "heldout_feasible_target": 60,
+  "terminal_distribution_balance": "Orthogonal rotated assignment: every terminal-count/layer block contains each distribution once; each obstacle mode is paired with all distributions across blocks.",
+  "negative_control_target": 12,
+  "development_target": 12,
+  "feasibility_selection": "Accept the first candidate in each predeclared terminal-count/layer/obstacle stratum that the exact oracle reports optimal; retain every attempted seed and rejection in candidate_manifest.jsonl. Selection does not inspect either router.",
+  "negative_control_rule": "Place a fully blocked row across every layer and select terminals on both sides; accept only when the exact oracle proves infeasible.",
+  "repetitions": 11,
+  "warmups": 1,
+  "execution_order": "warmup input then nearest; alternate strategy order by measured repetition",
+  "primary_metrics": [
+    "oracle_optimal_physical_cost",
+    "router_success",
+    "router_physical_cost",
+    "relative_optimality_gap",
+    "paired_gap_delta_nearest_minus_input"
+  ],
+  "relative_gap": "(router_physical_cost - oracle_optimal_cost) / oracle_optimal_cost",
+  "zero_optimum_rule": "relative gap is null; absolute gap and route success remain recorded",
+  "failure_rule": "Failed routes receive no physical cost or optimality gap and are counted separately.",
+  "paired_significance": "Layout is the unit; bootstrap paired mean-gap CI and exact two-sided sign test.",
+  "runtime_rule": "Record router-internal and process wall times; summarize repetitions within layout; report within-layout repeat spread and treat microsecond-scale timing as descriptive.",
+  "strata": [
+    "terminal_count",
+    "layer_count",
+    "obstacle_density_band",
+    "obstacle_configuration",
+    "terminal_spatial_distribution",
+    "oracle_feasibility"
+  ],
+  "no_tuning": "No held-out case may be used to change terminal ordering, tie-breaking, search settings, or routing parameters."
+}
