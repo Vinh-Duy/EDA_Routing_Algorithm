@@ -1,9 +1,12 @@
-"""Exact vertex-disjoint routing oracle for tiny layouts, independent of C++ search.
+"""Exact multi-net two-pin vertex-disjoint path oracle for tiny layouts.
 
 Enumerates simple paths, then minimizes total physical cost over disjoint path
 combinations. Exponential by design: at most 16 traversable cells and four nets.
 A deterministic work budget bounds enumeration and combination search. Exhausting
 it returns unknown, never infeasible or an uncertified optimum.
+
+This solves a different problem from single-net Steiner routing; see
+steiner_oracle.py for the Dreyfus-Wagner tree reference.
 """
 import argparse
 from functools import lru_cache
