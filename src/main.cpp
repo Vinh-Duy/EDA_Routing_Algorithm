@@ -12,16 +12,23 @@ int main(int argc, char** argv) {
         std::string input="data/chip_layout_hell.txt", output="output.json", algorithm="astar";
         int maxIterations=10;
         NetOrder order=NetOrder::Numeric;
+        TerminalOrder terminalOrder=TerminalOrder::Input;
+        NearestSelector nearestSelector=NearestSelector::MultiSource;
         for (int i=1;i<argc;++i) {
             std::string arg=argv[i];
             if (arg=="--help") {
                 std::cout << "Usage: router [--input FILE] [--algorithm astar|bfs|dijkstra]\n"
-                             "              [--output FILE] [--max-iterations N] [--net-order numeric|reverse] [--help]\n"
+                             "              [--output FILE] [--max-iterations N] [--net-order numeric|reverse]\n"
+                             "              [--terminal-order input|nearest] [--nearest-selector repeated|multisource]\n"
+                             "              [--help]\n"
                              "Defaults: data/chip_layout_hell.txt, astar, output.json, 10 total passes.\n"
+                             "Nearest selector defaults to multisource; it applies only with --terminal-order nearest.\n"
                              "Exit: 0 validated success; 2 routing incomplete/conflicted; 1 input/I/O error.\n";
                 return 0;
             }
-            if (arg!="--input" && arg!="--output" && arg!="--algorithm" && arg!="--max-iterations" && arg!="--net-order")
+            if (arg!="--input" && arg!="--output" && arg!="--algorithm" &&
+                arg!="--max-iterations" && arg!="--net-order" && arg!="--terminal-order" &&
+                arg!="--nearest-selector")
                 throw std::invalid_argument("Unknown option: "+arg);
             if (++i>=argc) throw std::invalid_argument("Missing value for "+arg);
             std::string value=argv[i];
@@ -32,6 +39,16 @@ int main(int argc, char** argv) {
                 if (value!="numeric" && value!="reverse")
                     throw std::invalid_argument("net-order must be numeric or reverse");
                 order=value=="reverse" ? NetOrder::Reverse : NetOrder::Numeric;
+            }
+            else if (arg=="--terminal-order") {
+                if (value!="input" && value!="nearest")
+                    throw std::invalid_argument("terminal-order must be input or nearest");
+                terminalOrder=value=="nearest" ? TerminalOrder::Nearest : TerminalOrder::Input;
+            }
+            else if (arg=="--nearest-selector") {
+                if (value!="repeated" && value!="multisource")
+                    throw std::invalid_argument("nearest-selector must be repeated or multisource");
+                nearestSelector=value=="repeated" ? NearestSelector::Repeated : NearestSelector::MultiSource;
             }
             else maxIterations=positiveInteger(value);
         }
@@ -45,7 +62,7 @@ int main(int argc, char** argv) {
         if (std::filesystem::exists(output) && std::filesystem::equivalent(input,output))
             throw std::invalid_argument("Input and output must refer to different files");
         Layout layout=readLayoutFile(input);
-        RoutingRun run=routeAll(layout,*router,maxIterations,order);
+        RoutingRun run=routeAll(layout,*router,maxIterations,order,terminalOrder,nearestSelector);
         writeRun(output,algorithm,layout,run);
         std::cout << (run.validation.success ? "SUCCESS" : "INCOMPLETE") << ": "
                   << run.validation.routed_nets << '/' << layout.nets.size() << " valid nets, "

@@ -22,7 +22,8 @@ class CLITests(unittest.TestCase):
         self.assertEqual(self.run_router('--help').returncode,0)
         for args in [('--unknown',),('--input',),('--algorithm','bogus'),('--max-iterations','0'),
                      ('--max-iterations','-1'),('--max-iterations','10001'),('--input','missing.txt'),
-                     ('--net-order','unknown')]:
+                     ('--net-order','unknown'),('--terminal-order','unknown'),
+                     ('--nearest-selector','unknown')]:
             self.assertEqual(self.run_router(*args).returncode,1,args)
 
     def test_all_original_and_generated_datasets(self):
@@ -39,7 +40,8 @@ class CLITests(unittest.TestCase):
                         self.assertEqual(validate(path,data),proc.returncode==0)
                         again=self.run_router('--input',str(path),'--algorithm',algorithm,'--output',str(output))
                         other=json.loads(output.read_text())
-                        data['metrics'].pop('runtime_ms'); other['metrics'].pop('runtime_ms')
+                        for timing in ('runtime_ms','selection_runtime_ms','route_runtime_ms'):
+                            data['metrics'].pop(timing,None); other['metrics'].pop(timing,None)
                         self.assertEqual(data,other)
                         self.assertEqual(proc.returncode,again.returncode)
 
@@ -64,6 +66,41 @@ class CLITests(unittest.TestCase):
                     data=json.loads(out.read_text())
                     self.assertEqual(data['net_order'],'reverse')
                     self.assertEqual(validate(path,data),proc.returncode==0)
+
+    def test_terminal_order_is_additive_and_nearest_is_selectable(self):
+        layout=ROOT/'benchmarks/steiner/layouts/branch_sharing_saves_cost.txt'
+        with tempfile.TemporaryDirectory() as directory:
+            output=Path(directory)/'route.json'
+            input_proc=self.run_router('--input',str(layout),'--output',str(output))
+            self.assertEqual(input_proc.returncode,0,input_proc.stderr)
+            input_data=json.loads(output.read_text())
+            self.assertEqual(input_data['terminal_order'],'input')
+            self.assertEqual(validate(layout,input_data),True)
+            nearest_proc=self.run_router('--input',str(layout),'--output',str(output),
+                                         '--terminal-order','nearest')
+            self.assertEqual(nearest_proc.returncode,0,nearest_proc.stderr)
+            nearest_data=json.loads(output.read_text())
+            self.assertEqual(nearest_data['terminal_order'],'nearest')
+            self.assertEqual(nearest_data['metrics']['search_count'],
+                             nearest_data['nets'][0]['search_count'])
+            self.assertTrue(nearest_data['nets'][0]['attached_terminals'])
+            self.assertEqual(validate(layout,nearest_data),True)
+            repeated_proc=self.run_router('--input',str(layout),'--output',str(output),
+                '--terminal-order','nearest','--nearest-selector','repeated')
+            self.assertEqual(repeated_proc.returncode,0,repeated_proc.stderr)
+            repeated_data=json.loads(output.read_text())
+            self.assertEqual(repeated_data['nearest_selector'],'repeated')
+            self.assertEqual(repeated_data['nets'][0]['attached_terminals'],
+                             nearest_data['nets'][0]['attached_terminals'])
+            self.assertEqual(repeated_data['nets'][0]['tree_edges'],
+                             nearest_data['nets'][0]['tree_edges'])
+            for result in (nearest_data,repeated_data):
+                metrics=result['metrics']
+                self.assertEqual(metrics['route_searches']+
+                                 metrics['selection_dijkstra_runs'],metrics['search_count'])
+                self.assertEqual(metrics['route_nodes_expanded']+
+                                 metrics['selection_settled_vertices'],metrics['nodes_expanded'])
+                self.assertEqual(validate(layout,result),True)
 
     def test_python_validator_rejects_tampering(self):
         with tempfile.TemporaryDirectory() as directory:

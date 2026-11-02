@@ -78,6 +78,9 @@ def _validate(layout_path, data):
     check(type(data['success']) is bool, 'Success must be boolean')
     check(data['algorithm'] in ('astar', 'dijkstra', 'bfs'), 'Unknown algorithm')
     check(data.get('net_order','numeric') in ('numeric','reverse'), 'Unknown net order')
+    check(data.get('terminal_order','input') in ('input','nearest'), 'Unknown terminal order')
+    if 'nearest_selector' in data:
+        check(data['nearest_selector'] in ('repeated','multisource'), 'Unknown nearest selector')
     check(type(data['schema_version']) is int, 'Schema version type')
     check(all(type(v) is int for v in data['dimensions']), 'Dimension types')
     check(all(type(v) is int for v in data['cost_model'].values()), 'Cost model types')
@@ -104,6 +107,12 @@ def _validate(layout_path, data):
         expected_terminals = [sources[name], targets[name], *extras.get(name, [])]
         if 'terminals' in net:
             check([point(p) for p in net['terminals']] == expected_terminals, name + ' terminals')
+        if 'attached_terminals' in net:
+            attached = [point(p) for p in net['attached_terminals']]
+            check(all(p in expected_terminals[1:] for p in attached), name + ' attached terminals')
+            check(len(attached) == len(set(attached)), name + ' duplicate attached terminal')
+            check(type(net.get('search_count')) is int and net['search_count'] >= len(attached),
+                  name + ' search count')
         if len(expected_terminals) > 2:
             edges = net.get('tree_edges')
             if not isinstance(edges, list):
@@ -246,6 +255,33 @@ def _validate(layout_path, data):
     if 'branch_count' in m:
         check(type(m['branch_count']) is int and m['branch_count'] >= 0, 'Metric branch_count type')
         check(m['branch_count'] == branches, 'Metric branch_count')
+    if 'search_count' in m:
+        check(type(m['search_count']) is int and m['search_count'] >= 0, 'Metric search_count type')
+        check(m['search_count'] == sum(net.get('search_count', 0) for net in nets),
+              'Metric search_count')
+    additive_integer_metrics = (
+        'selection_dijkstra_runs', 'selection_settled_vertices', 'selection_edges_examined',
+        'selection_heap_pushes', 'selection_heap_pops', 'route_searches',
+        'route_nodes_expanded')
+    for key in additive_integer_metrics:
+        if key in m:
+            check(type(m[key]) is int and m[key] >= 0, 'Metric ' + key)
+    for key in ('selection_runtime_ms','route_runtime_ms'):
+        if key in m:
+            check(type(m[key]) in (int,float) and math.isfinite(m[key]) and m[key] >= 0,
+                  'Metric ' + key)
+    if 'selection_dijkstra_runs' in m:
+        check(m['selection_dijkstra_runs'] <= m['search_count'],
+              'Selection Dijkstra runs exceed total searches')
+    if 'route_searches' in m:
+        check(m['route_searches'] <= m['search_count'],
+              'Route searches exceed total searches')
+    if 'route_searches' in m and 'selection_dijkstra_runs' in m:
+        check(m['route_searches'] + m['selection_dijkstra_runs'] == m['search_count'],
+              'Search-count components mismatch')
+    if 'route_nodes_expanded' in m and 'selection_settled_vertices' in m:
+        check(m['route_nodes_expanded'] + m['selection_settled_vertices'] == m['nodes_expanded'],
+              'Expanded-node components mismatch')
     check(data['success'] == (routed == len(sources)), 'Overall success')
     check(m['routing_passes'] >= 1 and m['reroute_iterations'] == m['routing_passes']-1, 'Iteration count')
     check(m['runtime_ms'] >= 0 and math.isfinite(m['runtime_ms']), 'Runtime')

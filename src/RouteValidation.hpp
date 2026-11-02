@@ -83,6 +83,8 @@ inline Validation validateRouteTrees(const Layout& l, const std::vector<RouteTre
         Cost wire=0,vias=0;
         bool hasCycle=false;
         int rootId=-1;
+        for (Point3D terminal:terminals)
+            if (!l.legal(terminal,net)) malformed=true;
         if (!terminals.empty() && l.contains(terminals.front())) {
             rootId=l.index(terminals.front());
             // A coincident source/target is a valid zero-edge net and still

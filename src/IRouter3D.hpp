@@ -53,6 +53,13 @@ struct Layout {
         const auto& cell = cells.at(index(p));
         if (cell=="#") return false;
         if (cell==".") return true;
+        for (const auto& other:nets) {
+            if (other.name==net.name) continue;
+            const auto otherTerminals=other.terminals.empty()
+                ? std::vector<Point3D>{other.src,other.dst} : other.terminals;
+            if (std::find(otherTerminals.begin(),otherTerminals.end(),p)!=otherTerminals.end())
+                return false;
+        }
         if (!net.terminals.empty())
             return std::find(net.terminals.begin(),net.terminals.end(),p)!=net.terminals.end();
         return p == net.src || p == net.dst;
@@ -68,6 +75,9 @@ inline std::array<Point3D, 6> neighbors(Point3D p) {
 struct SearchResult {
     Path path;
     std::uint64_t expanded = 0;
+    std::uint64_t edges_examined = 0;
+    std::uint64_t heap_pushes = 0;
+    std::uint64_t heap_pops = 0;
     Cost search_cost = 0; // Weighted cost at search time, also evaluated for BFS.
 };
 class IRouter3D {

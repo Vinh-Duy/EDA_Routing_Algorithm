@@ -100,7 +100,8 @@ def main():
                 raise ValueError('Net ordering mismatch')
             # Compare every non-timing result across repetitions, including full paths.
             stable = json.loads(json.dumps(data))
-            del stable['metrics']['runtime_ms']
+            for timing in ('runtime_ms', 'selection_runtime_ms', 'route_runtime_ms'):
+                stable['metrics'].pop(timing, None)
             signature = json.dumps(stable, sort_keys=True)
             key = (path.stem, algorithm)
             if key in fingerprints and fingerprints[key] != signature:

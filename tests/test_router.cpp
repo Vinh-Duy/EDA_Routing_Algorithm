@@ -9,6 +9,7 @@
 #include <iostream>
 #include <random>
 #include <limits>
+#include <filesystem>
 
 void require(bool value, const char* message) { if (!value) throw std::runtime_error(message); }
 Layout parse(const std::string& text) { std::istringstream in(text); return readLayout(in); }
@@ -61,6 +62,18 @@ int main() {
         for(auto r:routers) require(search(l,*r).path.size()==1 && routeAll(l,*r,1).validation.success,"zero length");
         l.cells[0]="#"; for(auto r:routers) require(search(l,*r).path.empty(),"blocked source");
         l.nets[0].src={-1,0,0}; for(auto r:routers) require(search(l,*r).path.empty(),"out of bounds");
+    });
+    test("zero-edge tree still validates terminal legality",[&] {
+        Layout legal{1,1,1,{"."},{{"Net1",{0,0,0},{0,0,0}}}};
+        require(validateRouteTrees(legal,{RouteTree3D{}}).success,"legal coincident terminal rejected");
+        Layout blocked{1,1,1,{"#"},{{"Net1",{0,0,0},{0,0,0}}}};
+        auto invalid=validateRouteTrees(blocked,{RouteTree3D{}});
+        require(!invalid.success && !invalid.local_valid[0] && invalid.invalid_nets==1,
+                "illegal zero-edge terminal accepted");
+        Layout foreign{1,1,2,{"S2","."},
+            {{"Net1",{0,0,0},{0,0,0}},{"Net2",{0,0,0},{0,0,1}}}};
+        invalid=validateRouteTrees(foreign,{RouteTree3D{},RouteTree3D{}});
+        require(!invalid.success && !invalid.local_valid[0],"foreign zero-edge terminal accepted");
     });
     test("validator rejects jumps obstacles pins cycles wrong endpoints",[&] {
         auto l=parse("2 3\nS1 # T1\nS2 . T2\n");
@@ -209,6 +222,138 @@ int main() {
                     "four-terminal tree metrics");
             auto checked=validateRouteTrees(l,first.trees);
             require(checked.success && checked.branch_counts[0]==1,"independent tree validation");
+        }
+    });
+    test("nearest terminal ordering is selectable, weighted, and deterministic",[&] {
+        auto l=parse("3 5\nT1 . . . .\n. S1 P1 . .\n. . . . .\n");
+        auto input=routeAll(l,astar,1);
+        auto nearest=routeAll(l,astar,1,NetOrder::Numeric,TerminalOrder::Nearest);
+        require(input.terminal_order=="input" && input.attached_terminals[0].size()==2 &&
+                input.attached_terminals[0][0]==l.nets[0].dst,
+                "default input order changed");
+        require(nearest.terminal_order=="nearest" && nearest.attached_terminals[0].size()==2 &&
+                nearest.attached_terminals[0][0]==l.nets[0].terminals[2],
+                "nearest terminal was not selected first");
+        require(nearest.validation.success && nearest.search_counts[0]>=2,
+                "nearest search accounting or completion failed");
+
+        auto weighted=parse("2 1 3\nS1 . P1\nT1 # #\n");
+        auto weightedNearest=routeAll(weighted,bfs,1,NetOrder::Numeric,TerminalOrder::Nearest);
+        require(weightedNearest.attached_terminals[0][0]==weighted.nets[0].terminals[2],
+                "nearest order minimized unweighted hops instead of weighted distance");
+
+        auto tie=parse("1 5\nP1 . S1 . T1\n");
+        auto first=routeAll(tie,dijkstra,1,NetOrder::Numeric,TerminalOrder::Nearest);
+        auto again=routeAll(tie,dijkstra,1,NetOrder::Numeric,TerminalOrder::Nearest);
+        require(first.attached_terminals==again.attached_terminals &&
+                first.attached_terminals[0][0]==Point3D{0,0,0},
+                "equal-distance tie did not use coordinate ordering");
+
+        auto unreachable=parse("1 5\nS1 P1 # . T1\n");
+        auto partial=routeAll(unreachable,astar,1,NetOrder::Numeric,TerminalOrder::Nearest);
+        require(!partial.validation.success && partial.termination_reason=="unreachable" &&
+                partial.attached_terminals[0]==std::vector<Point3D>{{0,0,1}} &&
+                partial.validation.unconnected_terminals==1,
+                "unreachable candidate blocked a reachable terminal or was accepted");
+    });
+    test("repeated and multisource nearest selectors choose identical candidates",[&] {
+        auto compare=[&](Layout l, const std::vector<Point3D>& treePoints,
+                         const std::vector<int>& occupancy, const std::vector<Cost>& history,
+                         bool expectedFound, std::size_t expectedIndex) {
+            const auto& net=l.nets[0];
+            const auto terminals=net.terminals.empty()
+                ? std::vector<Point3D>{net.src,net.dst} : net.terminals;
+            std::vector<bool> ownTree(l.cells.size(),false);
+            std::vector<int> sources;
+            for (Point3D point:treePoints) {
+                ownTree[l.index(point)]=true;
+                sources.push_back(l.index(point));
+            }
+            auto old=selectNearestByRepeatedDijkstra(
+                l,net,terminals,occupancy,history,ownTree);
+            auto optimized=selectNearestByMultiSourceDijkstra(
+                l,net,terminals,sources,occupancy,history,ownTree);
+            require(old.found==expectedFound && optimized.found==expectedFound,
+                    "selector reachability differs from expectation");
+            if (expectedFound)
+                require(old.terminal_index==expectedIndex &&
+                        optimized.terminal_index==expectedIndex,
+                        "selector chose an unexpected terminal");
+            else
+                require(!old.found && !optimized.found,"unreachable selectors returned a candidate");
+        };
+        auto zeroPenalty=[](const Layout& l) {
+            return std::pair<std::vector<int>,std::vector<Cost>>(
+                std::vector<int>(l.cells.size()),std::vector<Cost>(l.cells.size()));
+        };
+        {
+            auto l=parse("3 5\nT1 . . . .\n. S1 P1 . .\n. . . . .\n");
+            auto [occupancy,history]=zeroPenalty(l);
+            compare(l,{l.nets[0].src},occupancy,history,true,2);
+        }
+        {
+            auto l=parse("1 5\nP1 . S1 . T1\n");
+            auto [occupancy,history]=zeroPenalty(l);
+            compare(l,{l.nets[0].src},occupancy,history,true,2);
+        }
+        {
+            auto l=parse("2 1 3\nS1 . P1\nT1 # #\n");
+            auto [occupancy,history]=zeroPenalty(l);
+            compare(l,{l.nets[0].src},occupancy,history,true,2);
+        }
+        {
+            auto l=parse("1 5\nS1 . P1 # T1\n");
+            auto [occupancy,history]=zeroPenalty(l);
+            compare(l,{l.nets[0].src},occupancy,history,true,2);
+        }
+        {
+            auto l=parse("3 3\nS1 . P1\n. . T1\n. . .\n");
+            auto [occupancy,history]=zeroPenalty(l);
+            occupancy[l.index({0,0,1})]=1;
+            history[l.index({0,0,1})]=5;
+            compare(l,{l.nets[0].src},occupancy,history,true,1);
+        }
+        {
+            auto l=parse("1 7\nS1 . P1 # T1 # P1\n");
+            auto [occupancy,history]=zeroPenalty(l);
+            compare(l,{l.nets[0].src},occupancy,history,true,2);
+        }
+        {
+            auto l=parse("1 5\nS1 # P1 . T1\n");
+            auto [occupancy,history]=zeroPenalty(l);
+            compare(l,{l.nets[0].src},occupancy,history,false,0);
+        }
+        {
+            auto l=parse("1 5\nS1 . P1 . T1\n");
+            auto [occupancy,history]=zeroPenalty(l);
+            compare(l,{l.nets[0].src,l.nets[0].terminals[2]},
+                    occupancy,history,true,1);
+        }
+        {
+            auto l=parse("1 7\nP1 . . S1 . . T1\n");
+            auto [occupancy,history]=zeroPenalty(l);
+            compare(l,{l.nets[0].src,{0,0,2},{0,0,4}},
+                    occupancy,history,true,2);
+        }
+    });
+    test("six fixed Steiner fixtures have identical repeated and multisource routes",[&] {
+        for (const auto& entry:std::filesystem::directory_iterator("benchmarks/steiner/layouts")) {
+            const auto l=readLayoutFile(entry.path().string());
+            const auto old=routeAll(l,astar,1,NetOrder::Numeric,TerminalOrder::Nearest,
+                                    NearestSelector::Repeated);
+            const auto optimized=routeAll(l,astar,1,NetOrder::Numeric,TerminalOrder::Nearest,
+                                         NearestSelector::MultiSource);
+            require(old.attached_terminals==optimized.attached_terminals,
+                    "terminal sequence changed on fixed fixture");
+            require(old.trees==optimized.trees &&
+                    old.validation.success==optimized.validation.success &&
+                    old.termination_reason==optimized.termination_reason &&
+                    old.validation.weighted_cost==optimized.validation.weighted_cost &&
+                    old.validation.wirelength==optimized.validation.wirelength &&
+                    old.validation.via_count==optimized.validation.via_count,
+                    "route semantics changed on fixed fixture");
+            require(optimized.selection_dijkstra_runs<=old.selection_dijkstra_runs,
+                    "multisource selector used more selection searches");
         }
     });
     test("multi-terminal VIA cost and obstacle avoidance",[&] {
