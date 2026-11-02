@@ -26,6 +26,9 @@ electrical analysis, or a complete physical-design workflow.
 - Built deterministic correctness tests, 200 seeded oracle comparisons, sanitizer
   checks, CLI regression tests, and a GCC/Clang CI configuration; added a tiny
   multi-net exact reference checked against 60 independent edge-subset cases.
+- Added an independent weighted single-net Steiner oracle using Dreyfus-Wagner
+  dynamic programming, reconstructed witnesses, and exhaustive edge-subset
+  cross-checks on fixed and seeded tiny graphs.
 - Developed reproducible experiments with raw CSV, input/source hashes, measured
   timing variation, explicit failures, and controlled seed/order comparisons.
 - Added backwards-compatible `P<id>` terminals, multi-source tree growth, edge-tree
@@ -51,10 +54,12 @@ converge. Deterministic BFS does not respond to those weights, so it stops after
 one pass while retaining its failure status. Numeric net order remains the
 default; reverse order is an optional controlled experiment. Paths remain indexed
 by their original net identities under either schedule. For a multi-terminal net,
-the router starts at S and attaches T followed by P terminals in row-major input
-order. Each attachment is a multi-source search from the existing tree to the new
-terminal. This greedy schedule is deterministic but may miss a better branch order
-or globally shorter tree. Shared branches are stored as unique undirected edges.
+the router starts at S and, by default, attaches T followed by P terminals in
+row-major input order. An opt-in nearest order uses weighted Dijkstra probes to
+select the closest reachable remaining terminal, then routes it using the chosen
+production algorithm. Ties use coordinates then input index. Both schedules are
+greedy and may miss a globally shorter tree. Shared branches are stored as unique
+undirected edges.
 
 ## E. Actual experiments completed
 
@@ -86,6 +91,13 @@ or globally shorter tree. Shared branches are stored as unique undirected edges.
   GitHub workflow has not yet run. A separate [compatibility check](../benchmarks/multiterminal/COMPATIBILITY.md)
   matched route geometry and core metrics against the prior source snapshot on all
   42 original two-pin layout/algorithm pairs.
+- The new [paired exact single-net terminal-order experiment](../benchmarks/steiner/experiment_20261101_paired/RESULTS.md)
+  records 48 A* invocations (three measured repetitions and one warm-up per
+  strategy/case) across six identical single-net cases. Both strategies succeed
+  and attain the exact optimum on all five feasible cases; both correctly fail
+  the disconnected case. There is no cost improvement in this selected corpus.
+  Nearest uses more searches/nodes and has higher median router time on each
+  feasible case. This is a small descriptive result, not a population estimate.
 
 ## F. What the results show
 
@@ -103,6 +115,13 @@ These intentionally selected tiny examples explain limitations, not their freque
 For multi-terminal routing, exhaustive edge-subset enumeration confirms that the
 five-terminal 3×3 branch fixture has a four-edge optimum, which all three growth
 variants attain. This single tiny case is not evidence of general Steiner optimality.
+
+The separate paired single-net experiment finds no physical-cost difference
+between input and nearest ordering on its five feasible fixed fixtures: both
+match the exact optimum in all five, while nearest performs extra distance
+probes and has greater measured search effort. The disconnected fixture is
+proved infeasible by the exact reference and rejected by both strategies. See
+the per-instance measurements in the linked experiment report.
 
 ## G. What the results do not establish
 

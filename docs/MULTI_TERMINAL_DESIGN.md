@@ -2,11 +2,11 @@
 
 ## Scope
 
-Add multi-terminal support to the existing grid router while retaining the
-current two-terminal file format, algorithms, return codes, and JSON `path`
-representation for legacy nets. This is a deterministic incremental tree-growth
-heuristic; it is **not** a Rectilinear Steiner Minimum Tree solver and makes no
-global optimality claim.
+This document describes the multi-terminal support added to the existing grid
+router while retaining the current two-terminal file format, algorithms, return
+codes, and JSON `path` representation for legacy nets. The router uses
+deterministic incremental tree growth; it is **not** a Rectilinear Steiner
+Minimum Tree solver and makes no global optimality claim.
 
 ## Input and in-memory model
 
@@ -29,13 +29,22 @@ acyclic, and contain every terminal.
 
 ## Incremental deterministic growth
 
-Start each net's tree at its S terminal. Visit remaining terminals in the
-deterministic order T then P row-major. For each terminal outside the current
-tree, run a multi-source shortest-path search initialized with every current
-tree vertex at distance zero; stop when the requested terminal is removed from
-the queue. Add the recovered path's edges to the tree. If a terminal was already
-incorporated by an earlier branch, skip it. Fixed neighbor ordering and the
-existing stable queue tie-breaks make results repeatable.
+Start each net's tree at its S terminal. The default `input` terminal-order
+strategy visits remaining terminals in deterministic T then P row-major order,
+preserving the pre-existing behavior. The optional `nearest` strategy runs
+weighted Dijkstra distance probes from the current tree to each remaining
+in-bounds terminal, then selects the closest reachable terminal. Equal costs
+are resolved by `(z, x, y, input index)`. The selected terminal is connected
+using the chosen production algorithm's existing multi-source search. If no
+candidate is reachable, growth stops and the independent validator reports an
+incomplete tree. A terminal already incorporated by an earlier branch is
+skipped.
+
+The output records the selected strategy, successful attachment order, and
+number of searches. Nearest-mode search counts and expanded nodes include its
+distance probes as well as the actual selected-target searches. The default
+input strategy still performs exactly one search per attempted unconnected
+terminal.
 
 A* and Dijkstra use the existing planar/VIA base costs (1/6), plus the existing
 nonnegative occupancy and history penalties for cells owned by other nets. Cells
@@ -83,7 +92,12 @@ weighted and BFS search, obstacle/VIA handling, shared same-net branches,
 foreign-net conflicts, disconnected terminals, exact tree metrics, JSON round-trip
 validation, visualization, repeated-run equality, and an independent tiny exact
 reference. `make test` and the CLI smoke workflow now exercise multi-terminal cases.
-The current local run passed 21 C++ test groups and 26 Python tests (two optional
+The local suite now also tests selectable nearest-terminal growth and a separate
+single-net Dreyfus-Wagner exact oracle against exhaustive tiny edge subsets. The
+paired single-net comparison is documented in
+[STEINER_EVALUATION.md](STEINER_EVALUATION.md); it must not be confused with the
+historical S/T-only projections below. The earlier local run passed 21 C++ test
+groups and 26 Python tests (two optional
 Plotly tests skipped because Plotly is not installed locally); the updated GitHub
 workflow has not yet run. The fixed-layout experiment recorded 120 observations
 with no execution or validation errors, plus 24 excluded warm-ups.

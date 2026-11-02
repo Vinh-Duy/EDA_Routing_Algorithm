@@ -13,6 +13,13 @@ obstacle, pin, and unit-cell-capacity constraints. It is a verification tool for
 tiny examples, not an alternative production router. The C++ algorithms,
 default ordering, and historical experimental data are unchanged.
 
+This is a vertex-disjoint path-combination oracle, not a Steiner-tree oracle:
+within each net it enumerates one S-to-T path and does not permit same-net
+branching. The separate [Dreyfus-Wagner single-net reference and paired
+terminal-order evaluation](STEINER_EVALUATION.md) models S/T/P terminals and
+reconstructs an exact weighted tree. Do not interpret the results of one oracle
+as evidence for the other problem.
+
 ## Why the answer is exact
 
 1. For each net, construct the legal graph directly from coordinate adjacency,

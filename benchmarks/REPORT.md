@@ -289,11 +289,16 @@ virtual environment.
 ## 11. Limitations
 
 This is a discrete educational model, not industrial global or detailed routing.
-It lacks multi-terminal nets, real placement/technology input formats, wire width,
-spacing/enclosure rules, preferred layer directions, blockages with fractional
-capacity, timing and parasitics, crosstalk, antenna rules, via stacks/enclosures,
-and manufacturing design-rule checks. A conflict-free result is valid only under
-the stated cell model, not a manufacturable layout.
+The source snapshot measured in this historical report predates multi-terminal
+support. The current code supports deterministic incremental S/T/P tree growth
+and an optional nearest-terminal order; neither guarantees an optimal Steiner
+tree. The current single-net exact reference and paired evaluation are documented
+in [STEINER_EVALUATION.md](../docs/STEINER_EVALUATION.md). The project still
+lacks real placement/technology input formats, wire width, spacing/enclosure
+rules, preferred layer directions, blockages with fractional capacity, timing
+and parasitics, crosstalk, antenna rules, via stacks/enclosures, and manufacturing
+design-rule checks. A conflict-free result is valid only under the stated cell
+model, not a manufacturable layout.
 
 The full-rip-up heuristic uses fixed net order and empirical cost constants,
 recomputes whole searches, and can oscillate or exhaust its pass budget. There is
@@ -313,8 +318,10 @@ its success checks, inputs, and timing boundaries were not comparable.
 
 Evaluate more independently generated instances and seeds; report paired runtime
 and search-effort distributions across designs. Explore net-order policies,
-selective rip-up, best-pass retention, and explicit stagnation detection. Add
-controlled experiments for VIA/occupancy/history weights. Extend to multi-pin
-nets, layer-specific direction/capacity constraints, and meaningful geometric
-design rules before considering physical-design integration. Keep route validation
-independent as these constraints evolve.
+selective rip-up, best-pass retention, and explicit stagnation detection. Evaluate
+the current input-order and nearest-terminal policies on a larger independently
+generated corpus against the exact single-net reference. Add controlled
+experiments for VIA/occupancy/history weights, layer-specific direction/capacity
+constraints, and meaningful geometric design rules before considering
+physical-design integration. Keep route validation independent as these
+constraints evolve.
